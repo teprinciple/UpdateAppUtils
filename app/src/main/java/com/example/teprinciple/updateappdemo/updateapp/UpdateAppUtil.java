@@ -71,6 +71,7 @@ public class UpdateAppUtil {
                                 //服务器apk path,这里放了百度云盘的apk 作为测试
                                 String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk";
                                 DownloadAppUtils.downloadForAutoInstall(context, apkPath, "demo.apk", "更新demo");
+//                                DownloadAppUtils.downloadForWebView(context,apkPath);
                             }
                         });
                         dialog .setContent("发现新版本:demo2.0\n是否下载更新?");
