@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
 
 import teprinciple.library.customview.ConfirmDialog;
-import teprinciple.library.customview.feature.Callback;
+import teprinciple.library.feature.Callback;
 
 
 /**

@@ -1,4 +1,4 @@
-package teprinciple.library.customview.feature;
+package teprinciple.library.feature;
 
 /**
  * Created by sanmu on 2016/10/13 0013.

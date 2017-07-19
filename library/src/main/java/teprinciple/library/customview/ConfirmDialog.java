@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import teprinciple.library.R;
-import teprinciple.library.customview.feature.Callback;
+import teprinciple.library.feature.Callback;
 
 
 /**
