@@ -1,4 +1,4 @@
-package com.example.teprinciple.updateappdemo.customview;
+package teprinciple.library.customview;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,14 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.teprinciple.updateappdemo.R;
-import com.example.teprinciple.updateappdemo.customview.feature.Callback;
+import teprinciple.library.R;
+import teprinciple.library.customview.feature.Callback;
 
 
 /**
  * Created by Teprinciple on 2016/10/13.
  */
-public class ConfirmDialog extends Dialog implements View.OnClickListener {
+public class ConfirmDialog extends Dialog {
 
     Callback callback;
     private TextView content;
@@ -31,8 +31,22 @@ public class ConfirmDialog extends Dialog implements View.OnClickListener {
         sureBtn = (TextView)mView.findViewById(R.id.dialog_confirm_sure);
         cancleBtn = (TextView)mView.findViewById(R.id.dialog_confirm_cancle);
         content = (TextView) mView.findViewById(R.id.dialog_confirm_title);
-        sureBtn.setOnClickListener(this);
-        cancleBtn.setOnClickListener(this);
+
+
+        sureBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                callback.callback();
+                ConfirmDialog.this.cancel();
+            }
+        });
+        cancleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfirmDialog.this.cancel();
+            }
+        });
         super.setContentView(mView);
     }
 
@@ -42,19 +56,5 @@ public class ConfirmDialog extends Dialog implements View.OnClickListener {
         return this;
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.dialog_confirm_cancle:
-                this.cancel();
-                break;
-
-            case R.id.dialog_confirm_sure:
-                callback.callback();
-                this.cancel();
-                break;
-        }
-    }
 
 }

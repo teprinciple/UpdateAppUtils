@@ -1,4 +1,4 @@
-package com.example.teprinciple.updateappdemo.updateapp;
+package teprinciple.library.util;
 
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 
 /**

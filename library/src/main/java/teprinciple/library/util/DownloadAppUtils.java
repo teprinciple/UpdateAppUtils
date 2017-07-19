@@ -1,4 +1,4 @@
-package com.example.teprinciple.updateappdemo.updateapp;
+package teprinciple.library.util;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -7,10 +7,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
-
 
 
 /**

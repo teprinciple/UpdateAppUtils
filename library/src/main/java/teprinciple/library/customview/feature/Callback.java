@@ -1,4 +1,4 @@
-package com.example.teprinciple.updateappdemo.customview.feature;
+package teprinciple.library.customview.feature;
 
 /**
  * Created by sanmu on 2016/10/13 0013.

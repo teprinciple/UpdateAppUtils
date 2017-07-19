@@ -4,7 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.teprinciple.updateappdemo.updateapp.UpdateAppUtil;
+import teprinciple.library.util.UpdateAppUtil;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +16,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateApp(View view) {
-        UpdateAppUtil.updateApp(this);
+
+        //服务器apk path,这里放了百度云盘的apk 作为测试
+        String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk";
+
+        //首先获取自己的服务器上的版本号，以及apk的下载地址
+        UpdateAppUtil.updateApp(this,2,apkPath,"测试2.0");
+
     }
 }
