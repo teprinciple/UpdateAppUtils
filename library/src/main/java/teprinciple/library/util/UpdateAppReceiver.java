@@ -51,13 +51,7 @@ public class UpdateAppReceiver extends BroadcastReceiver {
                         }
                     }
                 }
-            }/* else if (DownloadManager.ACTION_NOTIFICATION_CLICKED.equals(intent.getAction())) {//点击通知取消下载
-                DownloadManager downloadManager = (DownloadManager) context
-                        .getSystemService(Context.DOWNLOAD_SERVICE);
-                long[] ids = intent.getLongArrayExtra(DownloadManager.EXTRA_NOTIFICATION_CLICK_DOWNLOAD_IDS);
-                //点击通知栏取消下载
-                downloadManager.remove(ids);
-            }*/
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

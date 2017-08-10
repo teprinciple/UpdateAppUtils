@@ -34,7 +34,6 @@ public class UpdateAppUtil {
 
 
 
-
     public static void updateApp(final Activity activity, int serverVersion, final String apkPath, final String appName){
 
         if (serverVersion>getAPPLocalVersion(activity)){
@@ -42,9 +41,8 @@ public class UpdateAppUtil {
             ConfirmDialog dialog = new ConfirmDialog(activity, new Callback() {
                 @Override
                 public void callback() {
-
                     DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", appName);
-//                                DownloadAppUtils.downloadForWebView(activity,apkPath);
+//                  DownloadAppUtils.downloadForWebView(activity,apkPath);
                 }
             });
             dialog .setContent("发现新版本:"+appName+"\n是否下载更新?");
