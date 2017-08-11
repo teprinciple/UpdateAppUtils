@@ -36,7 +36,6 @@ public class UpdateAppUtils {
     private int localVersionCode = 0;
     private String localVersionName="";
 
-
     private UpdateAppUtils(Activity activity) {
         this.activity = activity;
         getAPPLocalVersion(activity);
