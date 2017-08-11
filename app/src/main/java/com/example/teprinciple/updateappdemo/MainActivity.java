@@ -12,8 +12,6 @@ public class MainActivity extends AppCompatActivity {
     //服务器apk path,这里放了百度云盘的apk 作为测试
     String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
         UpdateAppUtils.from(this)
                 .checkBy(UpdateAppUtils.CHECK_BY_VERSION_NAME)
                 .serverVersionName("2.0")
+                .serverVersionCode(2)
                 .apkPath(apkPath)
+                .downloadBy(UpdateAppUtils.DOWNLOAD_BY_BROWSER)
+                .isForce(true)
                 .update();
     }
 }
