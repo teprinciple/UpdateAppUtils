@@ -1,4 +1,4 @@
-package teprinciple.library.util;
+package util;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -39,7 +39,6 @@ public class DownloadAppUtils {
      * @param url
      */
     public static void downloadForAutoInstall(Context context, String url, String fileName, String title) {
-        //LogUtil.e("App 下载 url="+url+",fileName="+fileName+",title="+title);
         if (TextUtils.isEmpty(url)) {
             return;
         }

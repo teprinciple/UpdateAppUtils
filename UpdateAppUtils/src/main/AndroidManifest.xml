@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-          package="teprinciple.library"
+          package="teprinciple.updateapputils"
 >
 
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -13,7 +13,7 @@
     >
 
         <receiver
-            android:name=".util.UpdateAppReceiver"
+            android:name="util.UpdateAppReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

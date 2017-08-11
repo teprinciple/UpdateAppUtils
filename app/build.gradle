@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.example.teprinciple.updateappdemo"
         minSdkVersion 19
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -26,5 +26,5 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
-    compile project(':UpdateAppUtils')
+    compile project(':updateapputils')
 }

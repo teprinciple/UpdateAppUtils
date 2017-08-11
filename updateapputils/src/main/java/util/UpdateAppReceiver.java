@@ -1,4 +1,4 @@
-package teprinciple.library.util;
+package util;
 
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -19,7 +19,6 @@ public class UpdateAppReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         // 处理下载完成
         Cursor c=null;
         try {

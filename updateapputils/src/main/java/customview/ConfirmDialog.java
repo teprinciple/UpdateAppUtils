@@ -1,4 +1,4 @@
-package teprinciple.library.customview;
+package customview;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,8 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import teprinciple.library.R;
-import teprinciple.library.feature.Callback;
+
+import feature.Callback;
+import teprinciple.updateapputils.R;
 
 
 /**
@@ -36,14 +37,14 @@ public class ConfirmDialog extends Dialog {
         sureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                callback.callback();
+                callback.callback(1);
                 ConfirmDialog.this.cancel();
             }
         });
         cancleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                callback.callback(0);
                 ConfirmDialog.this.cancel();
             }
         });

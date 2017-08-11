@@ -23,6 +23,30 @@
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="点击更新app"
+        android:text="最基本使用"
         android:onClick="updateApp"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="浏览器下载apk"
+        android:onClick="downloadByWeb"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="强制更新，不更新退出app"
+        android:onClick="forceUpdate"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="通过Version_Name判断更新，不同则更新\n（当前Version_Name1.0）"
+        android:onClick="checkByName"/>
+
+
+
 </LinearLayout>
