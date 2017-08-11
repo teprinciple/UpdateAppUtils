@@ -31,7 +31,7 @@ dependencies {
 #### 更多配置使用
 ```
 UpdateAppUtils.from(this)
-                .checkBy(UpdateAppUtils.CHECK_BY_VERSION_NAME) //更新检测方式：通过VersionCode或VersionName。默认为VersionCode
+                .checkBy(UpdateAppUtils.CHECK_BY_VERSION_NAME) //更新检测方式，默认为VersionCode
                 .serverVersionCode(2)
                 .serverVersionName("2.0")
                 .apkPath(apkPath)
