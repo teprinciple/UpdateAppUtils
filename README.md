@@ -58,3 +58,4 @@ UpdateAppUtils.from(this)
     DOWNLOAD_BY_BROWSER：通过手机浏览器下载
 
 ```
+#### 文章地址：[《UpdateAppUtils一行代码实现app在线更新》](http://www.jianshu.com/p/9c91bb984c85)
