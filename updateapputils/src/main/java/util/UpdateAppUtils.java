@@ -5,7 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -35,6 +39,8 @@ public class UpdateAppUtils {
     private boolean isForce = false; //是否强制更新
     private int localVersionCode = 0;
     private String localVersionName="";
+
+
 
     private UpdateAppUtils(Activity activity) {
         this.activity = activity;
@@ -115,7 +121,8 @@ public class UpdateAppUtils {
                 == PackageManager.PERMISSION_GRANTED){
             realUpdate();
         }else {//申请权限
-            Toast.makeText(activity, "请申请读写SD卡权限", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         }
 
     }
@@ -143,6 +150,34 @@ public class UpdateAppUtils {
         dialog.setCancelable(false);
         dialog.show();
     }
+
+
+
+
+
+
+//    public static void onRequestPermissionsResult(int requestCode,
+//                                            @NonNull String[] permissions,
+//                                            @NonNull int[] grantResults){
+//
+//        switch (requestCode){
+//            case 1:
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+////                    realUpdate();
+//                    mHandler.sendEmptyMessage(1);
+//                }else {
+//                    //提示用户没有授予权限
+//                }
+//                break;
+//        }
+//
+//
+//
+//    }
+
+
+
+
 
 
 

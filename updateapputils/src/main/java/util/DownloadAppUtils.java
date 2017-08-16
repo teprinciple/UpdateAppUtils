@@ -61,7 +61,7 @@ public class DownloadAppUtils {
             downloadUpdateApkFilePath = filePath + File.separator + fileName;
             // 若存在，则删除
             deleteFile(downloadUpdateApkFilePath);
-            Uri fileUri = Uri.parse("file://" + downloadUpdateApkFilePath);
+            Uri fileUri = Uri.fromFile(new File(downloadUpdateApkFilePath));
             request.setDestinationUri(fileUri);
             downloadUpdateApkId = downloadManager.enqueue(request);
         } catch (Exception e) {
