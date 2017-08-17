@@ -1,4 +1,4 @@
-# UpdateAppUtils1.1
+# UpdateAppUtils1.2
 ### 一行代码，快速实现app在线下载更新<br>  A simple library for Android update app
 
 
@@ -10,7 +10,7 @@
 compile引入
 ```
 dependencies {
-    compile 'com.teprinciple:updateapputils:1.1'
+    compile 'com.teprinciple:updateapputils:1.2'
 }
 ```
 
