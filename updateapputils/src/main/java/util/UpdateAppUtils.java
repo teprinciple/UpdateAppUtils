@@ -117,13 +117,16 @@ public class UpdateAppUtils {
 
     private void toUpdate() {
 
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED){
-            realUpdate();
-        }else {//申请权限
-            ActivityCompat.requestPermissions(activity,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        }
+        realUpdate();
+
+        //尝试在内部适配6.0
+//        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                == PackageManager.PERMISSION_GRANTED){
+//            realUpdate();
+//        }else {//申请权限
+//            ActivityCompat.requestPermissions(activity,
+//                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+//        }
 
     }
 
@@ -154,12 +157,10 @@ public class UpdateAppUtils {
 
 
 
-
-
+    //尝试在内部适配6.0 可能会引起内存泄露
 //    public static void onRequestPermissionsResult(int requestCode,
 //                                            @NonNull String[] permissions,
 //                                            @NonNull int[] grantResults){
-//
 //        switch (requestCode){
 //            case 1:
 //                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
@@ -170,14 +171,7 @@ public class UpdateAppUtils {
 //                }
 //                break;
 //        }
-//
-//
-//
 //    }
-
-
-
-
 
 
 
