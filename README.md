@@ -58,4 +58,40 @@ UpdateAppUtils.from(this)
     DOWNLOAD_BY_BROWSER：通过手机浏览器下载
 
 ```
+
+#### 关于适配Android6.0、Android7.0
+
+##### 适配Android7.0
+
+1、注册provider
+```
+    <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+    /provider>
+```
+2、新建file_paths.xml文件
+```
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path path="Android/data/包名/"    name="files_root" />
+    <external-path path="." name="external_storage_root" />
+</paths>
+```
+可参见demo中的代码
+
+
+##### 适配Android6.0
+关于6.0适配，请自行在调用API时申请WRITE_EXTERNAL_STORAGE权限，可以参加demo中的代码
+
 #### 文章地址：[《UpdateAppUtils一行代码实现app在线更新》](http://www.jianshu.com/p/9c91bb984c85)
+
+
+#### 更新日志
+1.2     适配Android7.0，并在demo中加入适配6.0和7.0的代码<br>
+1.1     适配更多SdkVersion
