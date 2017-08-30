@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 .serverVersionCode(2)
                 .serverVersionName("2.0")
                 .apkPath(apkPath)
+                .updateInfo("1.修复若干bug\n2.美化部分页面\n3.增加微信支付方式")
+//                .showNotification(false)
                 .update();
     }
 

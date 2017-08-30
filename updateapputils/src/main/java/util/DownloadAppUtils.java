@@ -50,20 +50,29 @@ public class DownloadAppUtils {
             //在通知栏中显示
             request.setVisibleInDownloadsUi(true);
             request.setTitle(title);
+
+            // VISIBILITY_VISIBLE:                   下载过程中可见, 下载完后自动消失 (默认)
+           // VISIBILITY_VISIBLE_NOTIFY_COMPLETED:  下载过程中和下载完成后均可见
+           // VISIBILITY_HIDDEN:                    始终不显示通知
+            if (!UpdateAppUtils.showNotification)
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+
+
+
             String filePath = null;
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {//外部存储卡
                 filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-
             } else {
                 Log.i(TAG,"没有SD卡");
                 return;
             }
+
             downloadUpdateApkFilePath = filePath + File.separator + fileName;
-            // 若存在，则删除
-            deleteFile(downloadUpdateApkFilePath);
+            deleteFile(downloadUpdateApkFilePath);// 若存在，则删除
             Uri fileUri = Uri.fromFile(new File(downloadUpdateApkFilePath));
             request.setDestinationUri(fileUri);
             downloadUpdateApkId = downloadManager.enqueue(request);
+
         } catch (Exception e) {
             e.printStackTrace();
             downloadForWebView(context, url);

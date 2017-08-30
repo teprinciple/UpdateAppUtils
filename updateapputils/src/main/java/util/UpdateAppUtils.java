@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -39,7 +42,8 @@ public class UpdateAppUtils {
     private boolean isForce = false; //是否强制更新
     private int localVersionCode = 0;
     private String localVersionName="";
-
+    public static boolean showNotification = true;
+    private String updateInfo = "";
 
 
     private UpdateAppUtils(Activity activity) {
@@ -65,6 +69,18 @@ public class UpdateAppUtils {
         this.downloadBy = downloadBy;
         return this;
     }
+
+    public UpdateAppUtils showNotification(boolean showNotification){
+        this.showNotification = showNotification;
+        return this;
+    }
+
+    public UpdateAppUtils updateInfo(String updateInfo){
+        this.updateInfo = updateInfo;
+        return this;
+    }
+
+
 
     public UpdateAppUtils serverVersionCode(int serverVersionCode){
         this.serverVersionCode = serverVersionCode;
@@ -141,7 +157,21 @@ public class UpdateAppUtils {
 
                     case 1:  //sure
                         if (downloadBy == DOWNLOAD_BY_APP) {
-                            DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
+                            if (isWifiConnected(activity)){
+                                DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
+                            }else {
+                                new ConfirmDialog(activity, new Callback() {
+                                    @Override
+                                    public void callback(int position) {
+                                        if (position==1){
+                                            DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
+                                        }else {
+                                            if (isForce)activity.finish();
+                                        }
+                                    }
+                                }).setContent("目前手机不是WiFi状态\n确认是否继续下载更新？").show();
+                            }
+
                         }else if (downloadBy == DOWNLOAD_BY_BROWSER){
                             DownloadAppUtils.downloadForWebView(activity,apkPath);
                         }
@@ -149,7 +179,12 @@ public class UpdateAppUtils {
                 }
             }
         });
-        dialog .setContent("发现新版本:"+serverVersionName+"\n是否下载更新?");
+
+        String content = "发现新版本:"+serverVersionName+"\n是否下载更新?";
+        if (!TextUtils.isEmpty(updateInfo)){
+            content = "发现新版本:"+serverVersionName+"是否下载更新?\n\n"+updateInfo;
+        }
+        dialog .setContent(content);
         dialog.setCancelable(false);
         dialog.show();
     }
@@ -174,5 +209,19 @@ public class UpdateAppUtils {
 //    }
 
 
+
+    /**
+     * 检测wifi是否连接
+     */
+    public static boolean isWifiConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

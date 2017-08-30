@@ -38,6 +38,8 @@ UpdateAppUtils.from(this)
                 .serverVersionCode(2)
                 .serverVersionName("2.0")
                 .apkPath(apkPath)
+                .showNotification(false) //是否显示下载进度到通知栏，默认为true
+                .updateInfo(info)  //更新日志信息 String
                 .downloadBy(UpdateAppUtils.DOWNLOAD_BY_BROWSER) //下载方式：app下载、手机浏览器下载。默认app下载
                 .isForce(true) //是否强制更新，默认false 强制更新情况下用户不同意更新则不能使用app
                 .update();
@@ -87,11 +89,12 @@ UpdateAppUtils.from(this)
 
 
 ##### 适配Android6.0
-关于6.0适配，请自行在调用API时申请WRITE_EXTERNAL_STORAGE权限，可以参加demo中的代码
+关于6.0适配，请自行在调用API时申请WRITE_EXTERNAL_STORAGE权限，可以参考demo中的代码
 
 #### 文章地址：[《UpdateAppUtils一行代码实现app在线更新》](http://www.jianshu.com/p/9c91bb984c85)
 
 
 #### 更新日志
+1.3     增加接口方法 showNotification(false)//是否显示下载进度到通知栏；updateInfo(info)//更新日志信息；下载前WiFi判断。<br>
 1.2     适配Android7.0，并在demo中加入适配6.0和7.0的代码<br>
 1.1     适配更多SdkVersion
