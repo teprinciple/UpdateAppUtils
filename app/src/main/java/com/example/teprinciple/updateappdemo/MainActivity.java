@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         checkAndUpdate(4);
     }
 
+    public void kotlin(View view) {
+        checkAndUpdate(5);
+    }
+
     private void checkAndUpdate(int code) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             realUpdate(code);
@@ -79,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
             case 4:
                 update4();
                 break;
+            case 5:
+                startActivity(new Intent(this,KotlinDemoActivity.class));
+                break;
+
         }
     }
 
@@ -152,4 +160,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 }

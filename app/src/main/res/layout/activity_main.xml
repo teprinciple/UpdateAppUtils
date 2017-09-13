@@ -47,6 +47,14 @@
         android:text="通过Version_Name判断更新，不同则更新\n（当前Version_Name1.0）"
         android:onClick="checkByName"/>
 
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kotlin"
+        android:onClick="kotlin"/>
+
+
 
 
 </LinearLayout>
