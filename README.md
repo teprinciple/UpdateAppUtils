@@ -1,4 +1,4 @@
-# UpdateAppUtils1.3
+# UpdateAppUtils1.3.1
 ### 一行代码，快速实现app在线下载更新<br>  A simple library for Android update app
 
 
@@ -34,7 +34,7 @@ dependencies {
 
 #### Kotlin代码调用完全一样
 ```
-    private fun update() {
+   private fun update() {
         val apkPath:String = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk"
 
         UpdateAppUtils.from(this)
