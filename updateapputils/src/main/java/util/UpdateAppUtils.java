@@ -152,7 +152,7 @@ public class UpdateAppUtils {
             public void callback(int position) {
                 switch (position){
                     case 0:  //cancle
-                        if (isForce)activity.finish();
+                        if (isForce)System.exit(0);
                         break;
 
                     case 1:  //sure
