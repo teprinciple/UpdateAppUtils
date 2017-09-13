@@ -112,7 +112,7 @@ UpdateAppUtils.from(this)
 
 
 #### 更新日志
-1.3.1   修复部分bug，在demo中加入kotlin调用代码
+1.3.1   修复部分bug，在demo中加入kotlin调用代码<br>
 1.3     增加接口方法 showNotification(false)//是否显示下载进度到通知栏；updateInfo(info)//更新日志信息；下载前WiFi判断。<br>
 1.2     适配Android7.0，并在demo中加入适配6.0和7.0的代码<br>
 1.1     适配更多SdkVersion
