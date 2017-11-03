@@ -18,6 +18,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
+import com.liulishuo.filedownloader.FileDownloader;
+
 import customview.ConfirmDialog;
 import feature.Callback;
 
@@ -157,7 +161,8 @@ public class UpdateAppUtils {
                     case 1:  //sure
                         if (downloadBy == DOWNLOAD_BY_APP) {
                             if (isWifiConnected(activity)){
-                                DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
+//                                DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
+                                DownloadAppUtils.download(activity, apkPath, serverVersionName);
                             }else {
                                 new ConfirmDialog(activity, new Callback() {
                                     @Override
@@ -204,5 +209,9 @@ public class UpdateAppUtils {
         }
         return false;
     }
+
+
+
+
 
 }
