@@ -41,10 +41,11 @@ public class UpdateAppReceiver extends BroadcastReceiver {
                         downloadManager.remove(downloadId);
 
                     } else if (status == DownloadManager.STATUS_SUCCESSFUL) {
+
                         if (DownloadAppUtils.downloadUpdateApkFilePath != null) {
                             Intent i = new Intent(Intent.ACTION_VIEW);
                             File apkFile = new File(DownloadAppUtils.downloadUpdateApkFilePath);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            if ( UpdateAppUtils.needFitAndroidN &&  Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                 i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 Uri contentUri = FileProvider.getUriForFile(
                                         context, context.getPackageName() + ".fileprovider", apkFile);

@@ -42,9 +42,17 @@ public class UpdateAppUtils {
     private boolean isForce = false; //是否强制更新
     private int localVersionCode = 0;
     private String localVersionName="";
+    public static boolean needFitAndroidN = true; //提供给 整个工程不需要适配到7.0的项目 置为false
     public static boolean showNotification = true;
     private String updateInfo = "";
 
+
+
+
+    public UpdateAppUtils setNeedFitAndroidN(boolean needFitAndroidN) {
+        UpdateAppUtils.needFitAndroidN = needFitAndroidN;
+        return this;
+    }
 
     private UpdateAppUtils(Activity activity) {
         this.activity = activity;
@@ -135,15 +143,6 @@ public class UpdateAppUtils {
 
         realUpdate();
 
-        //尝试在内部适配6.0
-//        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                == PackageManager.PERMISSION_GRANTED){
-//            realUpdate();
-//        }else {//申请权限
-//            ActivityCompat.requestPermissions(activity,
-//                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-//        }
-
     }
 
     private void realUpdate() {
@@ -189,24 +188,6 @@ public class UpdateAppUtils {
         dialog.show();
     }
 
-
-
-
-    //尝试在内部适配6.0 可能会引起内存泄露
-//    public static void onRequestPermissionsResult(int requestCode,
-//                                            @NonNull String[] permissions,
-//                                            @NonNull int[] grantResults){
-//        switch (requestCode){
-//            case 1:
-//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-////                    realUpdate();
-//                    mHandler.sendEmptyMessage(1);
-//                }else {
-//                    //提示用户没有授予权限
-//                }
-//                break;
-//        }
-//    }
 
 
 
