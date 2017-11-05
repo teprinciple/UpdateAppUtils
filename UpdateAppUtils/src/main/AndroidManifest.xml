@@ -17,7 +17,7 @@
         <receiver
             android:name="util.UpdateAppReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="teprinciple.update"/>
             </intent-filter>

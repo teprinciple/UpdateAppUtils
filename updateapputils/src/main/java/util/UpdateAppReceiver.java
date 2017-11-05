@@ -5,9 +5,6 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -15,7 +12,7 @@ import android.support.v4.content.FileProvider;
 
 import java.io.File;
 
-import teprinciple.updateapputils.R;
+
 
 /**
  * Created by Teprinciple on 2017/11/3.
@@ -23,34 +20,19 @@ import teprinciple.updateapputils.R;
 
  public class UpdateAppReceiver extends BroadcastReceiver {
 
-    private Drawable mDrawable;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        int notifyId = 1001;
+        int notifyId = 1;
         int progress = intent.getIntExtra("progress", 0);
         String title = intent.getStringExtra("title");
-
-
-        PackageManager manager = context.getApplicationContext().getPackageManager();
-        try {
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(), PackageManager.GET_UNINSTALLED_PACKAGES);
-            mDrawable = info.applicationInfo.loadIcon(manager);
-
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
 
         NotificationManager nm = null;
         if (UpdateAppUtils.showNotification){
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            builder.setContentTitle(title);
-
-//            builder.setSmallIcon()
-
-            builder.setSmallIcon(R.drawable.ic_launcher);
+            builder.setContentTitle("正在下载 "+title);
+            builder.setSmallIcon(android.R.mipmap.sym_def_app_icon);
             builder.setProgress(100,progress,false);
 
             Notification notification = builder.build();

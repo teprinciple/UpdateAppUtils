@@ -1,26 +1,13 @@
 package util;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.liulishuo.filedownloader.BaseDownloadTask;
-import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
-import com.liulishuo.filedownloader.FileDownloader;
 
 import customview.ConfirmDialog;
 import feature.Callback;
@@ -53,7 +40,7 @@ public class UpdateAppUtils {
 
 
 
-    public UpdateAppUtils setNeedFitAndroidN(boolean needFitAndroidN) {
+    public UpdateAppUtils needFitAndroidN(boolean needFitAndroidN) {
         UpdateAppUtils.needFitAndroidN = needFitAndroidN;
         return this;
     }
@@ -195,8 +182,6 @@ public class UpdateAppUtils {
     }
 
 
-
-
     /**
      * 检测wifi是否连接
      */
@@ -210,9 +195,6 @@ public class UpdateAppUtils {
         }
         return false;
     }
-
-
-
 
 
 }

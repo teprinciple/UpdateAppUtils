@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 .apkPath(apkPath)
                 .updateInfo("1.修复若干bug\n2.美化部分页面\n3.增加微信支付方式")
 //                .showNotification(false)
+//                .needFitAndroidN(false)
                 .update();
     }
 
