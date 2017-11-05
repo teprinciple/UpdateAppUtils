@@ -168,7 +168,8 @@ public class UpdateAppUtils {
                                     @Override
                                     public void callback(int position) {
                                         if (position==1){
-                                            DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
+                                            DownloadAppUtils.download(activity, apkPath, serverVersionName);
+                                            //DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
                                         }else {
                                             if (isForce)activity.finish();
                                         }

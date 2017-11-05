@@ -19,16 +19,6 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="util.TestReserver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
                 <action android:name="teprinciple.update"/>
             </intent-filter>
         </receiver>

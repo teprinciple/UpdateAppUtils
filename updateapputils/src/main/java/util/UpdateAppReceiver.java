@@ -1,68 +1,82 @@
 package util;
 
-import android.app.DownloadManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 
 import java.io.File;
 
+import teprinciple.updateapputils.R;
 
 /**
- * 注册
- * <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
- * <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+ * Created by Teprinciple on 2017/11/3.
  */
-public class UpdateAppReceiver extends BroadcastReceiver {
-    public UpdateAppReceiver() {
-    }
+
+ public class UpdateAppReceiver extends BroadcastReceiver {
+
+    private Drawable mDrawable;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // 处理下载完成
-        Cursor c = null;
 
-        if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(intent.getAction())) {
-            if (DownloadAppUtils.downloadUpdateApkId >= 0) {
-                long downloadId = DownloadAppUtils.downloadUpdateApkId;
-                DownloadManager.Query query = new DownloadManager.Query();
-                query.setFilterById(downloadId);
-                DownloadManager downloadManager = (DownloadManager) context
-                        .getSystemService(Context.DOWNLOAD_SERVICE);
-                c = downloadManager.query(query);
-                if (c.moveToFirst()) {
-                    int status = c.getInt(c
-                            .getColumnIndex(DownloadManager.COLUMN_STATUS));
-                    if (status == DownloadManager.STATUS_FAILED) {
-                        downloadManager.remove(downloadId);
+        int notifyId = 1001;
+        int progress = intent.getIntExtra("progress", 0);
+        String title = intent.getStringExtra("title");
 
-                    } else if (status == DownloadManager.STATUS_SUCCESSFUL) {
 
-                        if (DownloadAppUtils.downloadUpdateApkFilePath != null) {
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            File apkFile = new File(DownloadAppUtils.downloadUpdateApkFilePath);
-                            if ( UpdateAppUtils.needFitAndroidN &&  Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                Uri contentUri = FileProvider.getUriForFile(
-                                        context, context.getPackageName() + ".fileprovider", apkFile);
-                                i.setDataAndType(contentUri, "application/vnd.android.package-archive");
-                            } else {
-                                i.setDataAndType(Uri.fromFile(apkFile),
-                                        "application/vnd.android.package-archive");
-                            }
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(i);
-                        }
-                    }
-                }
-                c.close();
-            }
+        PackageManager manager = context.getApplicationContext().getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), PackageManager.GET_UNINSTALLED_PACKAGES);
+            mDrawable = info.applicationInfo.loadIcon(manager);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
 
 
+        NotificationManager nm = null;
+        if (UpdateAppUtils.showNotification){
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+            builder.setContentTitle(title);
+
+//            builder.setSmallIcon()
+
+            builder.setSmallIcon(R.drawable.ic_launcher);
+            builder.setProgress(100,progress,false);
+
+            Notification notification = builder.build();
+            nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.notify(notifyId,notification);
+        }
+
+
+        if (progress == 100){
+            if (nm!=null)nm.cancel(notifyId);
+
+            if (DownloadAppUtils.downloadUpdateApkFilePath != null) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                File apkFile = new File(DownloadAppUtils.downloadUpdateApkFilePath);
+                if ( UpdateAppUtils.needFitAndroidN &&  Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    Uri contentUri = FileProvider.getUriForFile(
+                            context, context.getPackageName() + ".fileprovider", apkFile);
+                    i.setDataAndType(contentUri, "application/vnd.android.package-archive");
+                } else {
+                    i.setDataAndType(Uri.fromFile(apkFile),
+                            "application/vnd.android.package-archive");
+                }
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            }
+        }
     }
 }
