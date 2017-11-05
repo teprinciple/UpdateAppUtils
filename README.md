@@ -10,7 +10,7 @@
 compile引入
 ```
 dependencies {
-    compile 'com.teprinciple:updateapputils:1.3.1'
+    compile 'com.teprinciple:updateapputils:1.4'
 }
 ```
 
@@ -104,6 +104,12 @@ UpdateAppUtils.from(this)
 ```
 可参见demo中的代码
 
+如果你的版本没有适配到Android7.0 为了不进行上述操作，可以直接这样设置：
+
+```
+UpdateAppUtils.needFitAndroidN(false)
+```
+
 
 ##### 适配Android6.0
 关于6.0适配，请自行在调用API时申请WRITE_EXTERNAL_STORAGE权限，可以参考demo中的代码
@@ -112,6 +118,10 @@ UpdateAppUtils.from(this)
 
 
 #### 更新日志
+1.4
+使用[hhh](http://www.jianshu.com/p/9c91bb984c85)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题
+增加接口UpdateAppUtils.needFitAndroidN(false)，避免不需要适配7.0，也要设置FileProvider
+
 1.3.1   修复部分bug，在demo中加入kotlin调用代码<br>
 1.3     增加接口方法 showNotification(false)//是否显示下载进度到通知栏；<br>updateInfo(info)//更新日志信息；下载前WiFi判断。<br>
 1.2     适配Android7.0，并在demo中加入适配6.0和7.0的代码<br>
