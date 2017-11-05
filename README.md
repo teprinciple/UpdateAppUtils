@@ -1,4 +1,4 @@
-# UpdateAppUtils1.3.1
+# UpdateAppUtils1.4
 ### 一行代码，快速实现app在线下载更新<br>  A simple library for Android update app
 
 
@@ -121,11 +121,11 @@ UpdateAppUtils.needFitAndroidN(false)
 1.4<br>
 使用[filedownloader](https://github.com/lingochamp/FileDownloader)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题<br>
 增加接口UpdateAppUtils.needFitAndroidN(false)，避免不需要适配7.0，也要设置FileProvider<br>
-1.3.1<br>
+<br>1.3.1<br>
 修复部分bug，在demo中加入kotlin调用代码<br>
-1.3<br>
+<br>1.3<br>
 增加接口方法 showNotification(false)//是否显示下载进度到通知栏；<br>updateInfo(info)//更新日志信息；下载前WiFi判断。<br>
-1.2<br>
+<br>1.2<br>
 适配Android7.0，并在demo中加入适配6.0和7.0的代码<br>
-1.1<br>
+<br>1.1<br>
 适配更多SdkVersion
