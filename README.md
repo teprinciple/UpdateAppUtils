@@ -119,7 +119,7 @@ UpdateAppUtils.needFitAndroidN(false)
 
 #### 更新日志
 1.4
-使用[hhh](http://www.jianshu.com/p/9c91bb984c85)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题
+使用[filedownloader](https://github.com/lingochamp/FileDownloader)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题
 增加接口UpdateAppUtils.needFitAndroidN(false)，避免不需要适配7.0，也要设置FileProvider
 
 1.3.1   修复部分bug，在demo中加入kotlin调用代码<br>
