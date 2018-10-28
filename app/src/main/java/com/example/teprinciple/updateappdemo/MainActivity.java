@@ -1,7 +1,9 @@
 package com.example.teprinciple.updateappdemo;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import customview.ConfirmDialog;
 import feature.Callback;
+import util.UpdateAppReceiver;
 import util.UpdateAppUtils;
 
 
@@ -25,10 +28,22 @@ public class MainActivity extends AppCompatActivity {
     String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk";
     private int code = 0;
 
+    private BroadcastReceiver receiver = new UpdateAppReceiver();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 动态注册receiver
+        IntentFilter intentFilter = new IntentFilter("teprinciple.update");
+        registerReceiver(receiver,intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     public void updateApp(View view) {
@@ -65,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
         }
+
+
+
     }
 
 
@@ -161,6 +179,4 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
 }

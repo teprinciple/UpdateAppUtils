@@ -3,6 +3,7 @@ package util;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,14 +30,11 @@ import java.io.File;
  */
 class DownloadAppUtils {
     private static final String TAG = DownloadAppUtils.class.getSimpleName();
-    public static long downloadUpdateApkId = -1;//下载更新Apk 下载任务对应的Id
     public static String downloadUpdateApkFilePath;//下载更新Apk 文件路径
 
 
     /**
      * 通过浏览器下载APK包
-     * @param context
-     * @param url
      */
     public static void downloadForWebView(Context context, String url) {
         Uri uri = Uri.parse(url);
@@ -46,8 +44,7 @@ class DownloadAppUtils {
     }
 
 
-
-    public static void download(final Context context, String url,final String serverVersionName) {
+    public static void download(final Context context, String url, final String serverVersionName) {
 
         String packageName = context.getPackageName();
         String filePath = null;
@@ -58,7 +55,7 @@ class DownloadAppUtils {
             return;
         }
 
-        String apkLocalPath= filePath + File.separator + packageName + "_"+serverVersionName+".apk";
+        String apkLocalPath = filePath + File.separator + packageName + "_" + serverVersionName + ".apk";
 
         downloadUpdateApkFilePath = apkLocalPath;
 
@@ -73,7 +70,7 @@ class DownloadAppUtils {
 
                     @Override
                     protected void progress(BaseDownloadTask task, long soFarBytes, long totalBytes) {
-                        send(context, (int) (soFarBytes*100.0/totalBytes),serverVersionName);
+                        send(context, (int) (soFarBytes * 100.0 / totalBytes), serverVersionName);
                     }
 
                     @Override
@@ -82,12 +79,12 @@ class DownloadAppUtils {
 
                     @Override
                     protected void completed(BaseDownloadTask task) {
-                        send(context,100,serverVersionName);
+                        send(context, 100, serverVersionName);
                     }
 
                     @Override
                     protected void error(BaseDownloadTask task, Throwable e) {
-                        Toast.makeText(context, "下载出错", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "下载出错", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -97,14 +94,11 @@ class DownloadAppUtils {
     }
 
 
+    private static void send(Context context, int progress, String serverVersionName) {
 
-
-    private static void send(Context context,int progress,String serverVersionName) {
         Intent intent = new Intent("teprinciple.update");
-        intent.putExtra("progress",progress);
-        intent.putExtra("title",serverVersionName);
+        intent.putExtra("progress", progress);
+        intent.putExtra("title", serverVersionName);
         context.sendBroadcast(intent);
     }
-
-
 }
