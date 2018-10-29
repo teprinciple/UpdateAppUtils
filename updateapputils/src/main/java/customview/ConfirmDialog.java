@@ -33,7 +33,6 @@ public class ConfirmDialog extends Dialog {
         cancleBtn = (TextView)mView.findViewById(R.id.dialog_confirm_cancle);
         content = (TextView) mView.findViewById(R.id.dialog_confirm_title);
 
-
         sureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +55,4 @@ public class ConfirmDialog extends Dialog {
         content.setText(s);
         return this;
     }
-
-
 }

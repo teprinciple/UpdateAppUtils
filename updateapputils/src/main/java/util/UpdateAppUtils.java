@@ -9,8 +9,10 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.util.Log;
 
+import activity.UpdateAppActivity;
 import customview.ConfirmDialog;
 import feature.Callback;
+import model.UpdateBean;
 
 
 /**
@@ -19,12 +21,14 @@ import feature.Callback;
 public class UpdateAppUtils {
 
     private final String TAG = "UpdateAppUtils";
+
     public static final int CHECK_BY_VERSION_NAME = 1001;
     public static final int CHECK_BY_VERSION_CODE = 1002;
     public static final int DOWNLOAD_BY_APP = 1003;
     public static final int DOWNLOAD_BY_BROWSER = 1004;
 
     private Activity activity;
+
     private int checkBy = CHECK_BY_VERSION_CODE;
     private int downloadBy = DOWNLOAD_BY_APP;
     private int serverVersionCode = 0;
@@ -37,6 +41,8 @@ public class UpdateAppUtils {
     public static boolean showNotification = true;
     private String updateInfo = "";
 
+    // todo 将所有的 属性 放入model
+    private UpdateBean updateBean = new UpdateBean();
 
     public UpdateAppUtils needFitAndroidN(boolean needFitAndroidN) {
         UpdateAppUtils.needFitAndroidN = needFitAndroidN;
@@ -54,37 +60,44 @@ public class UpdateAppUtils {
 
     public UpdateAppUtils checkBy(int checkBy) {
         this.checkBy = checkBy;
+        updateBean.setCheckBy(checkBy);
         return this;
     }
 
     public UpdateAppUtils apkPath(String apkPath) {
         this.apkPath = apkPath;
+        updateBean.setApkPath(apkPath);
         return this;
     }
 
     public UpdateAppUtils downloadBy(int downloadBy) {
         this.downloadBy = downloadBy;
+        updateBean.setDownloadBy(downloadBy);
         return this;
     }
 
     public UpdateAppUtils showNotification(boolean showNotification) {
         this.showNotification = showNotification;
+        updateBean.setShowNotification(showNotification);
         return this;
     }
 
     public UpdateAppUtils updateInfo(String updateInfo) {
         this.updateInfo = updateInfo;
+        updateBean.setUpdateInfo(updateInfo);
         return this;
     }
 
 
     public UpdateAppUtils serverVersionCode(int serverVersionCode) {
         this.serverVersionCode = serverVersionCode;
+        updateBean.setServerVersionCode(serverVersionCode);
         return this;
     }
 
     public UpdateAppUtils serverVersionName(String serverVersionName) {
         this.serverVersionName = serverVersionName;
+        updateBean.setServerVersionName(serverVersionName);
         return this;
     }
 
@@ -100,6 +113,9 @@ public class UpdateAppUtils {
             PackageInfo info = manager.getPackageInfo(ctx.getPackageName(), 0);
             localVersionName = info.versionName; // 版本名
             localVersionCode = info.versionCode; // 版本号
+
+            updateBean.setLocalVersionCode(info.versionCode);
+            updateBean.setLocalVersionName(info.versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -129,7 +145,9 @@ public class UpdateAppUtils {
 
     private void toUpdate() {
 
-        realUpdate();
+         realUpdate();
+
+        // UpdateAppActivity.launch(activity,isForce,updateInfo,serverVersionName);
 
     }
 

@@ -23,6 +23,7 @@ public class UpdateAppReceiver extends BroadcastReceiver {
 
     private String notificationChannel = "1001";
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
 
