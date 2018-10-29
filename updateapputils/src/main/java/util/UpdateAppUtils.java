@@ -29,25 +29,9 @@ public class UpdateAppUtils {
 
     private Activity activity;
 
-    private int checkBy = CHECK_BY_VERSION_CODE;
-    private int downloadBy = DOWNLOAD_BY_APP;
-    private int serverVersionCode = 0;
-    private String apkPath = "";
-    private String serverVersionName = "";
-    private boolean isForce = false; //是否强制更新
-    private int localVersionCode = 0;
-    private String localVersionName = "";
-    public static boolean needFitAndroidN = true; //提供给 整个工程不需要适配到7.0的项目 置为false
-    public static boolean showNotification = true;
-    private String updateInfo = "";
 
-    // todo 将所有的 属性 放入model
+    // 将所有的 属性 放入model
     private UpdateBean updateBean = new UpdateBean();
-
-    public UpdateAppUtils needFitAndroidN(boolean needFitAndroidN) {
-        UpdateAppUtils.needFitAndroidN = needFitAndroidN;
-        return this;
-    }
 
     private UpdateAppUtils(Activity activity) {
         this.activity = activity;
@@ -59,60 +43,54 @@ public class UpdateAppUtils {
     }
 
     public UpdateAppUtils checkBy(int checkBy) {
-        this.checkBy = checkBy;
         updateBean.setCheckBy(checkBy);
         return this;
     }
 
     public UpdateAppUtils apkPath(String apkPath) {
-        this.apkPath = apkPath;
         updateBean.setApkPath(apkPath);
         return this;
     }
 
     public UpdateAppUtils downloadBy(int downloadBy) {
-        this.downloadBy = downloadBy;
         updateBean.setDownloadBy(downloadBy);
         return this;
     }
 
     public UpdateAppUtils showNotification(boolean showNotification) {
-        this.showNotification = showNotification;
         updateBean.setShowNotification(showNotification);
         return this;
     }
 
     public UpdateAppUtils updateInfo(String updateInfo) {
-        this.updateInfo = updateInfo;
         updateBean.setUpdateInfo(updateInfo);
         return this;
     }
 
 
     public UpdateAppUtils serverVersionCode(int serverVersionCode) {
-        this.serverVersionCode = serverVersionCode;
         updateBean.setServerVersionCode(serverVersionCode);
         return this;
     }
 
     public UpdateAppUtils serverVersionName(String serverVersionName) {
-        this.serverVersionName = serverVersionName;
         updateBean.setServerVersionName(serverVersionName);
         return this;
     }
 
     public UpdateAppUtils isForce(boolean isForce) {
-        this.isForce = isForce;
+        updateBean.setForce(isForce);
         return this;
     }
 
-    //获取apk的版本号 currentVersionCode
+
+    /**
+     * 获取apk的版本号 currentVersionCode
+     */
     private void getAPPLocalVersion(Context ctx) {
         PackageManager manager = ctx.getPackageManager();
         try {
             PackageInfo info = manager.getPackageInfo(ctx.getPackageName(), 0);
-            localVersionName = info.versionName; // 版本名
-            localVersionCode = info.versionCode; // 版本号
 
             updateBean.setLocalVersionCode(info.versionCode);
             updateBean.setLocalVersionName(info.versionName);
@@ -121,33 +99,39 @@ public class UpdateAppUtils {
         }
     }
 
+    /**
+     * 检查更新
+     */
     public void update() {
 
-        switch (checkBy) {
+        switch (updateBean.getCheckBy()) {
             case CHECK_BY_VERSION_CODE:
-                if (serverVersionCode > localVersionCode) {
+                if (updateBean.getServerVersionCode() > updateBean.getLocalVersionCode()) {
                     toUpdate();
                 } else {
-                    Log.i(TAG, "当前版本是最新版本" + serverVersionCode + "/" + serverVersionName);
+                    Log.i(TAG, "当前版本是最新版本" + updateBean.getServerVersionCode() + "/" + updateBean.getServerVersionName());
                 }
                 break;
 
             case CHECK_BY_VERSION_NAME:
-                if (!serverVersionName.equals(localVersionName)) {
+                if (!updateBean.getServerVersionName().equals(updateBean.getLocalVersionName())) {
                     toUpdate();
                 } else {
-                    Log.i(TAG, "当前版本是最新版本" + serverVersionCode + "/" + serverVersionName);
+                    Log.i(TAG, "当前版本是最新版本" + updateBean.getServerVersionCode() + "/" + updateBean.getServerVersionName());
                 }
                 break;
         }
 
     }
 
+    /**
+     * 更新
+     */
     private void toUpdate() {
 
-         realUpdate();
+        //realUpdate();
 
-        // UpdateAppActivity.launch(activity,isForce,updateInfo,serverVersionName);
+        UpdateAppActivity.launch(activity, false, updateBean.getUpdateInfo(), "2.q");
 
     }
 
@@ -157,39 +141,39 @@ public class UpdateAppUtils {
             public void callback(int position) {
                 switch (position) {
                     case 0:  //cancle
-                        if (isForce) System.exit(0);
+                        if (updateBean.getForce()) System.exit(0);
                         break;
 
                     case 1:  //sure
-                        if (downloadBy == DOWNLOAD_BY_APP) {
+                        if (updateBean.getDownloadBy() == DOWNLOAD_BY_APP) {
                             if (isWifiConnected(activity)) {
 //                                DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
-                                DownloadAppUtils.download(activity, apkPath, serverVersionName);
+                                DownloadAppUtils.download(activity, updateBean.getApkPath(), updateBean.getServerVersionName());
                             } else {
                                 new ConfirmDialog(activity, new Callback() {
                                     @Override
                                     public void callback(int position) {
                                         if (position == 1) {
-                                            DownloadAppUtils.download(activity, apkPath, serverVersionName);
+                                            DownloadAppUtils.download(activity, updateBean.getApkPath(), updateBean.getServerVersionName());
                                             //DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
                                         } else {
-                                            if (isForce) activity.finish();
+                                            if (updateBean.getForce()) activity.finish();
                                         }
                                     }
                                 }).setContent("目前手机不是WiFi状态\n确认是否继续下载更新？").show();
                             }
 
-                        } else if (downloadBy == DOWNLOAD_BY_BROWSER) {
-                            DownloadAppUtils.downloadForWebView(activity, apkPath);
+                        } else if (updateBean.getDownloadBy() == DOWNLOAD_BY_BROWSER) {
+                            DownloadAppUtils.downloadForWebView(activity, updateBean.getApkPath());
                         }
                         break;
                 }
             }
         });
 
-        String content = "发现新版本:" + serverVersionName + "\n是否下载更新?";
-        if (!TextUtils.isEmpty(updateInfo)) {
-            content = "发现新版本:" + serverVersionName + "是否下载更新?\n\n" + updateInfo;
+        String content = "发现新版本:" + updateBean.getServerVersionName() + "\n是否下载更新?";
+        if (!TextUtils.isEmpty(updateBean.getUpdateInfo())) {
+            content = "发现新版本:" + updateBean.getServerVersionName() + "是否下载更新?\n\n" + updateBean.getUpdateInfo();
         }
         dialog.setContent(content);
         dialog.setCancelable(false);

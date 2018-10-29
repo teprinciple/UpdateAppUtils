@@ -23,7 +23,6 @@ public class UpdateAppReceiver extends BroadcastReceiver {
 
     private String notificationChannel = "1001";
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -35,9 +34,9 @@ public class UpdateAppReceiver extends BroadcastReceiver {
 
         // 显示通知栏
         int notifyId = 1;
-        if (UpdateAppUtils.showNotification) {
-            showNotification(context, notifyId, progress, title, notificationChannel, nm);
-        }
+//        if (UpdateAppUtils.showNotification) {
+        showNotification(context, notifyId, progress, title, notificationChannel, nm);
+//        }
 
         // 下载完成
         if (progress == 100) {
@@ -47,7 +46,7 @@ public class UpdateAppReceiver extends BroadcastReceiver {
 
 
     /**
-     *下载完成后的逻辑
+     * 下载完成后的逻辑
      */
     private void handleDownloadComplete(Context context, int notifyId, NotificationManager nm) {
         // 关闭通知栏
@@ -107,7 +106,7 @@ public class UpdateAppReceiver extends BroadcastReceiver {
 
         Intent i = new Intent(Intent.ACTION_VIEW);
         File apkFile = new File(DownloadAppUtils.downloadUpdateApkFilePath);
-        if (UpdateAppUtils.needFitAndroidN && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
             i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Uri contentUri = FileProvider.getUriForFile(

@@ -1,22 +1,24 @@
 package model;
 
+import util.UpdateAppUtils;
+
 public class UpdateBean {
 
-    private int downloadBy; // 下载方式：浏览器下载 app下载
-    private String apkPath; // apk 下载地址
-    private String updateInfo; // 更新说明
+    private int downloadBy = UpdateAppUtils.DOWNLOAD_BY_APP; // 下载方式：默认app下载
+    private String apkPath = ""; // apk 下载地址
+    private String updateInfo = ""; // 更新说明
 
-    private Boolean isForce; // 是否强制更新
+    private Boolean isForce = false; // 是否强制更新
 
-    private String serverVersionName; // 服务器上版本名
-    private int serverVersionCode; // 服务器上版本号
+    private String serverVersionName = ""; // 服务器上版本名
+    private int serverVersionCode = 0; // 服务器上版本号
 
-    private String localVersionName; // 当前本地版本名
-    private int localVersionCode; // 当前本地版本号
+    private String localVersionName = ""; // 当前本地版本名
+    private int localVersionCode = 0; // 当前本地版本号
 
-    private int checkBy; // 检查方式 按版本名或版本号
+    private int checkBy = UpdateAppUtils.CHECK_BY_VERSION_CODE; // 检查方式 按版本名或版本号
 
-    private boolean showNotification; // 是否在通知栏显示
+    private boolean showNotification = true; // 是否在通知栏显示
 
     public boolean isShowNotification() {
         return showNotification;
