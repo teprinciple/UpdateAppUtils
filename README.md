@@ -1,4 +1,4 @@
-# UpdateAppUtils1.5
+# UpdateAppUtils1.5.1
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 ### 适配Android6.0、7.0、8.0
 ![](update.gif)
@@ -9,7 +9,7 @@
 compile引入
 ```
 dependencies {
-    compile 'com.teprinciple:updateapputils:1.5.0'
+    compile 'com.teprinciple:updateapputils:1.5.1'
 }
 ```
 
@@ -82,9 +82,9 @@ UpdateAppUtils.from(this)
 
 
 #### 更新日志
-1.5.0<br>
+1.5.1<br>
 库内部适配至Android8.0
-1.4<br>
+<br>1.4<br>
 使用[filedownloader](https://github.com/lingochamp/FileDownloader)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题，且提高了下载速度<br>
 增加接口UpdateAppUtils.needFitAndroidN(false)，避免不需要适配7.0，也要设置FileProvider<br>
 <br>1.3.1<br>

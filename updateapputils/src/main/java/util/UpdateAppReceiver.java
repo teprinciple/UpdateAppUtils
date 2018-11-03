@@ -114,7 +114,7 @@ public class UpdateAppReceiver extends BroadcastReceiver {
 
             i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Uri contentUri = FileProvider.getUriForFile(
-                    context, "teprinciple.updateapputils.fileprovider", apkFile);
+                    context, context.getPackageName() + ".fileprovider", apkFile);
             i.setDataAndType(contentUri, "application/vnd.android.package-archive");
 
         } else {
