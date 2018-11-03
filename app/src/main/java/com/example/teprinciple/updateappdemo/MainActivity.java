@@ -1,24 +1,10 @@
 package com.example.teprinciple.updateappdemo;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
-import customview.ConfirmDialog;
-import feature.Callback;
-import util.UpdateAppReceiver;
 import util.UpdateAppUtils;
 
 
@@ -28,62 +14,34 @@ public class MainActivity extends AppCompatActivity {
     String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk";
     private int code = 0;
 
-    private BroadcastReceiver receiver = new UpdateAppReceiver();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // 动态注册receiver
-        IntentFilter intentFilter = new IntentFilter("teprinciple.update");
-        registerReceiver(receiver,intentFilter);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(receiver);
     }
 
     public void updateApp(View view) {
-        checkAndUpdate(1);
+        realUpdate(1);
     }
 
     public void downloadByWeb(View view) {
-        checkAndUpdate(2);
+        realUpdate(2);
     }
 
 
     public void forceUpdate(View view) {
-        checkAndUpdate(3);
+        realUpdate(3);
     }
 
 
     public void checkByName(View view) {
-        checkAndUpdate(4);
+        realUpdate(4);
     }
 
     public void kotlin(View view) {
-        checkAndUpdate(5);
+        realUpdate(5);
     }
 
-    private void checkAndUpdate(int code) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            realUpdate(code);
-        } else {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                realUpdate(code);
-            } else {//申请权限
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
-        }
-
-
-
-    }
 
 
     private void realUpdate(int code) {
@@ -151,32 +109,5 @@ public class MainActivity extends AppCompatActivity {
                 .downloadBy(UpdateAppUtils.DOWNLOAD_BY_BROWSER)
                 .isForce(true)
                 .update();
-    }
-
-
-    //权限请求结果
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case 1:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    realUpdate(code);
-                } else {
-                    new ConfirmDialog(this, new Callback() {
-                        @Override
-                        public void callback(int position) {
-                            if (position==1){
-                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                intent.setData(Uri.parse("package:" + getPackageName())); // 根据包名打开对应的设置界面
-                                startActivity(intent);
-                            }
-                        }
-                    }).setContent("暂无读写SD卡权限\n是否前往设置？").show();
-                }
-                break;
-        }
-
     }
 }

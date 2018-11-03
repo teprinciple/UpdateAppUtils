@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 
 import java.io.File;
@@ -34,9 +32,9 @@ public class UpdateAppReceiver extends BroadcastReceiver {
 
         // 显示通知栏
         int notifyId = 1;
-//        if (UpdateAppUtils.showNotification) {
-        showNotification(context, notifyId, progress, title, notificationChannel, nm);
-//        }
+        if (UpdateAppUtils.showNotification) {
+            showNotification(context, notifyId, progress, title, notificationChannel, nm);
+        }
 
         // 下载完成
         if (progress == 100) {
@@ -67,7 +65,6 @@ public class UpdateAppReceiver extends BroadcastReceiver {
     /**
      * 通知栏显示
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void showNotification(Context context, int notifyId, int progress, String title, String notificationChannel, NotificationManager nm) {
 
         String notificationName = "notification";
@@ -88,13 +85,20 @@ public class UpdateAppReceiver extends BroadcastReceiver {
         Notification.Builder builder = new Notification.Builder(context);
 
         //NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setChannelId(notificationChannel);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder.setChannelId(notificationChannel);
+        }
 
         builder.setContentTitle("正在下载 " + title);
         builder.setSmallIcon(android.R.mipmap.sym_def_app_icon);
         builder.setProgress(100, progress, false);
 
-        Notification notification = builder.build();
+        Notification notification = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            notification = builder.build();
+        }else {
+            notification = builder.getNotification();
+        }
 
         nm.notify(notifyId, notification);
     }
@@ -110,7 +114,7 @@ public class UpdateAppReceiver extends BroadcastReceiver {
 
             i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Uri contentUri = FileProvider.getUriForFile(
-                    context, context.getPackageName() + ".fileprovider", apkFile);
+                    context, "teprinciple.updateapputils.fileprovider", apkFile);
             i.setDataAndType(contentUri, "application/vnd.android.package-archive");
 
         } else {

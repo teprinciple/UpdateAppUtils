@@ -1,22 +1,10 @@
 package util;
 
-import android.app.AlertDialog;
-import android.app.DownloadManager;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.provider.Settings;
-import android.support.v4.content.FileProvider;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
@@ -28,7 +16,7 @@ import java.io.File;
 /**
  * Created by Teprinciple on 2016/12/13.
  */
-class DownloadAppUtils {
+public class DownloadAppUtils {
     private static final String TAG = DownloadAppUtils.class.getSimpleName();
     public static String downloadUpdateApkFilePath;//下载更新Apk 文件路径
 
@@ -66,6 +54,7 @@ class DownloadAppUtils {
                 .setListener(new FileDownloadLargeFileListener() {
                     @Override
                     protected void pending(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+
                     }
 
                     @Override
@@ -95,7 +84,6 @@ class DownloadAppUtils {
 
 
     private static void send(Context context, int progress, String serverVersionName) {
-
         Intent intent = new Intent("teprinciple.update");
         intent.putExtra("progress", progress);
         intent.putExtra("title", serverVersionName);

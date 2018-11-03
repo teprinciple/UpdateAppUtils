@@ -1,33 +1,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="teprinciple.updateapputils">
 
-          package="teprinciple.updateapputils"
-    >
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
-        android:theme="@style/AppTheme"
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
         <activity
             android:name="activity.UpdateAppActivity"
-            android:theme="@style/DialogActivityTheme">
-        </activity>
+            android:theme="@style/DialogActivityTheme" />
 
-        <receiver
-            android:name="util.UpdateAppReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="teprinciple.update"/>
-            </intent-filter>
-        </receiver>
 
+        <service android:name="util.UpdateAppService"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="teprinciple.updateapputils.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/update_file_paths"/>
+        </provider>
 
     </application>
 

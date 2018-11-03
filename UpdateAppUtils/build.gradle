@@ -47,7 +47,7 @@ def gitUrl = 'https://github.com/teprinciple/UpdateAppDemo.git'   // Git仓库�
 group = "com.teprinciple"          // Maven Group ID for the artifact，一般填你唯一的包名
 install {
     repositories.mavenInstaller {
-        // This generates POM.file_paths with proper parameters
+        // This generates POM.update_file_paths with proper parameters
         pom {
             project {
                 packaging 'aar'

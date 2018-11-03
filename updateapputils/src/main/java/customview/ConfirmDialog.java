@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 
-import feature.Callback;
 import teprinciple.updateapputils.R;
 
 
@@ -29,8 +28,8 @@ public class ConfirmDialog extends Dialog {
 
     private void setCustomDialog() {
         View mView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_confirm, null);
-        sureBtn = (TextView)mView.findViewById(R.id.dialog_confirm_sure);
-        cancleBtn = (TextView)mView.findViewById(R.id.dialog_confirm_cancle);
+        sureBtn = (TextView) mView.findViewById(R.id.dialog_confirm_sure);
+        cancleBtn = (TextView) mView.findViewById(R.id.dialog_confirm_cancle);
         content = (TextView) mView.findViewById(R.id.dialog_confirm_title);
 
         sureBtn.setOnClickListener(new View.OnClickListener() {
@@ -51,8 +50,12 @@ public class ConfirmDialog extends Dialog {
     }
 
 
-    public ConfirmDialog setContent(String s){
+    public ConfirmDialog setContent(String s) {
         content.setText(s);
         return this;
+    }
+
+    public interface Callback {
+        void callback(int position);
     }
 }
