@@ -1,4 +1,4 @@
-# UpdateAppUtils1.4
+# UpdateAppUtils1.5
 ### 一行代码，快速实现app在线下载更新<br>  A simple library for Android update app
 
 
@@ -10,16 +10,13 @@
 compile引入
 ```
 dependencies {
-    compile 'com.teprinciple:updateapputils:1.4'
+    compile 'com.teprinciple:updateapputils:1.5.0'
 }
 ```
 
 ## 使用
 更新检测一般放在MainActivity或者启动页上，
 在请求服务器版本检测接口获取到versionCode、versionName、最新apkPath后调用。
-
-
-
 
 
 
@@ -78,46 +75,16 @@ UpdateAppUtils.from(this)
 
 ```
 
-#### 关于适配Android6.0、Android7.0
+#### 关于适配Android6.0、7.0、8.0
 
-##### 适配Android7.0
-
-1、注册provider
-```
-    <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-    /provider>
-```
-2、新建file_paths.xml文件
-```
-<?xml version="1.0" encoding="utf-8"?>
-<paths>
-    <external-path path="Android/data/包名/"    name="files_root" />
-    <external-path path="." name="external_storage_root" />
-</paths>
-```
-可参见demo中的代码
-
-如果你的版本没有适配到Android7.0 为了不进行上述操作，可以直接这样设置：
-
-```
-UpdateAppUtils.needFitAndroidN(false)
-```
-
-
-##### 适配Android6.0
-关于6.0适配，请自行在调用API时申请WRITE_EXTERNAL_STORAGE权限，可以参考demo中的代码
+库内部已经完全适配至8.0,你可以不用再对该库进行适配
 
 #### 文章地址：[《UpdateAppUtils一行代码实现app在线更新》](http://www.jianshu.com/p/9c91bb984c85)
 
 
 #### 更新日志
+1.5.0<br>
+库内部适配至Android8.0
 1.4<br>
 使用[filedownloader](https://github.com/lingochamp/FileDownloader)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题，且提高了下载速度<br>
 增加接口UpdateAppUtils.needFitAndroidN(false)，避免不需要适配7.0，也要设置FileProvider<br>
