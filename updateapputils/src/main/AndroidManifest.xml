@@ -15,11 +15,11 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="activity.UpdateAppActivity"
+            android:name="ui.UpdateAppActivity"
             android:theme="@style/DialogActivityTheme" />
 
 
-        <service android:name="util.UpdateAppService"/>
+        <service android:name="update.UpdateAppService"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

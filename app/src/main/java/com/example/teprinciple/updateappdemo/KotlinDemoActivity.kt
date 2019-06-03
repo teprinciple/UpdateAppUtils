@@ -2,7 +2,7 @@ package com.example.teprinciple.updateappdemo
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import util.UpdateAppUtils
+import update.UpdateAppUtils
 
 class KotlinDemoActivity : AppCompatActivity() {
 
@@ -15,11 +15,11 @@ class KotlinDemoActivity : AppCompatActivity() {
     }
 
     private fun update() {
-        val apkPath:String = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk"
-        UpdateAppUtils.from(this)
-                .serverVersionCode(2)
-                .serverVersionName("2.0")
-                .apkPath(apkPath)
-                .update()
+        val apkPath: String = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk"
+        UpdateAppUtils
+            .serverVersionCode(2)
+            .serverVersionName("2.0")
+            .apkPath(apkPath)
+            .update(this)
     }
 }

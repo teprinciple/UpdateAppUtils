@@ -4,4 +4,4 @@
 
 [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html)
 
-#### 重构全新2.0
+#### kotlin 全新2.0

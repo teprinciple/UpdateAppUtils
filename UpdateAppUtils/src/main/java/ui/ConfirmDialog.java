@@ -1,4 +1,4 @@
-package customview;
+package ui;
 
 import android.app.Dialog;
 import android.content.Context;

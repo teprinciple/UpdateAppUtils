@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import util.UpdateAppUtils;
+import update.UpdateAppUtils;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -69,45 +69,56 @@ public class MainActivity extends AppCompatActivity {
 
     //基本更新
     private void updat1() {
-        UpdateAppUtils.from(this)
-                .serverVersionCode(2)
-                .serverVersionName("2.0")
-                .apkPath(apkPath)
-                .updateInfo("1.修复若干bug\n2.美化部分页面\n3.增加微信支付方式")
-//                .showNotification(false)
-//                .needFitAndroidN(false)
-                .update();
+
+        UpdateAppUtils
+                .INSTANCE
+                .apkPath("")
+                .downloadBy(1234);
+
+
+//        update.UpdateAppUtils.Companion.from(this)
+//                .serverVersionCode(2)
+//                .serverVersionName("2.0")
+//                .apkPath(apkPath)
+//                .updateInfo("1.修复若干bug\n2.美化部分页面\n3.增加微信支付方式")
+////                .showNotification(false)
+////                .needFitAndroidN(false)
+//                .update();
     }
 
     //通过浏览器下载
     private void update2() {
-        UpdateAppUtils.from(this)
-                .serverVersionCode(2)
-                .serverVersionName("2.0")
-                .apkPath(apkPath)
-                .downloadBy(UpdateAppUtils.DOWNLOAD_BY_BROWSER)
-                .update();
+//        update.UpdateAppUtils.Companion.from(this)
+//                .serverVersionCode(2)
+//                .serverVersionName("2.0")
+//                .apkPath(apkPath)
+//                .downloadBy(update.UpdateAppUtils.Companion.getDOWNLOAD_BY_BROWSER())
+//                .update();
     }
 
     //强制更新
     private void update3() {
-        UpdateAppUtils.from(this)
-                .serverVersionCode(2)
-                .serverVersionName("2.0")
-                .apkPath(apkPath)
-                .isForce(true)
-                .update();
+
+//        update.UpdateAppUtils.
+//                .serverVersionCode(2)
+//                .serverVersionName("2.0")
+//                .apkPath(apkPath)
+//                .isForce(true)
+//                .update();
     }
 
     //根据versionName判断跟新
     private void update4() {
-        UpdateAppUtils.from(this)
-                .checkBy(UpdateAppUtils.CHECK_BY_VERSION_NAME)
-                .serverVersionName("2.0")
-                .serverVersionCode(2)
-                .apkPath(apkPath)
-                .downloadBy(UpdateAppUtils.DOWNLOAD_BY_BROWSER)
-                .isForce(true)
-                .update();
+
+
+
+//        update.UpdateAppUtils
+//                .checkBy(update.UpdateAppUtils.Companion.getCHECK_BY_VERSION_NAME())
+//                .serverVersionName("2.0")
+//                .serverVersionCode(2)
+//                .apkPath(apkPath)
+//                .downloadBy(update.UpdateAppUtils.Companion.getDOWNLOAD_BY_BROWSER())
+//                .isForce(true)
+//                .update();
     }
 }

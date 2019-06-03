@@ -22,6 +22,10 @@ android {
         abortOnError false
     }
 
+    androidExtensions {
+        experimental = true
+    }
+
 }
 
 dependencies {
@@ -100,7 +104,7 @@ repositories {
 //    configurations = ['archives']
 //    pkg {
 //        repo = "maven" ////跟上面创建的Maven仓库名字保持一致
-//        name = "UpdateAppUtils"    //发布到JCenter上的项目名字
+//        name = "update.UpdateAppUtils"    //发布到JCenter上的项目名字
 //        websiteUrl = siteUrl
 //        vcsUrl = gitUrl
 //        licenses = ["Apache-2.0"]
