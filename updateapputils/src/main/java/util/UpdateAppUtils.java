@@ -124,6 +124,6 @@ public class UpdateAppUtils {
      * 更新
      */
     private void toUpdate() {
-        UpdateAppActivity.launch(activity, updateBean);
+        UpdateAppActivity.Companion.launch(activity, updateBean);
     }
 }
