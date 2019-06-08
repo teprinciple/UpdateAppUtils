@@ -15,7 +15,7 @@ class KotlinDemoActivity : AppCompatActivity() {
     }
 
     private fun update() {
-        val apkPath:String = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk"
+        val apkPath:String = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_9.6.63.apk"
         UpdateAppUtils.from(this)
                 .serverVersionCode(2)
                 .serverVersionName("2.0")

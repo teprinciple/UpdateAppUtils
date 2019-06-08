@@ -11,7 +11,7 @@ import util.UpdateAppUtils;
 public class MainActivity extends AppCompatActivity {
 
     //服务器apk path,这里放了百度云盘的apk 作为测试
-    String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk";
+    String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_9.6.63.apk";
     private int code = 0;
 
     @Override

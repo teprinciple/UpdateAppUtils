@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import customview.ConfirmDialog;
 import model.UpdateBean;
@@ -81,6 +82,10 @@ public class UpdateAppActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 
     private void initOperation() {
 
@@ -130,14 +135,13 @@ public class UpdateAppActivity extends AppCompatActivity {
 
         if (updateBean.getDownloadBy() == UpdateAppUtils.DOWNLOAD_BY_APP) {
             if (isWifiConnected(this)) {
-
-                DownloadAppUtils.download(this, updateBean.getApkPath(), updateBean.getServerVersionName());
+                realDownload();
             } else {
                 new ConfirmDialog(this, new ConfirmDialog.Callback() {
                     @Override
                     public void callback(int position) {
                         if (position == 1) {
-                            DownloadAppUtils.download(UpdateAppActivity.this, updateBean.getApkPath(), updateBean.getServerVersionName());
+                            realDownload();
                         } else {
                             if (updateBean.getForce()) {
                                 System.exit(0);
@@ -152,7 +156,17 @@ public class UpdateAppActivity extends AppCompatActivity {
             DownloadAppUtils.downloadForWebView(this, updateBean.getApkPath());
         }
 
-        finish();
+        //finish();
+    }
+
+    private void realDownload() {
+        DownloadAppUtils.download(this, updateBean.getApkPath(), updateBean.getServerVersionName());
+        if (!updateBean.getForce()) {
+            Toast.makeText(this,"更新下载中",Toast.LENGTH_SHORT).show();
+            finish();
+        }else {
+            content.setText("更新下载中...");
+        }
     }
 
 

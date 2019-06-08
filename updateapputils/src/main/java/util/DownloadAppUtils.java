@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
@@ -73,7 +74,7 @@ public class DownloadAppUtils {
 
                     @Override
                     protected void error(BaseDownloadTask task, Throwable e) {
-                        //Toast.makeText(context, "下载出错", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "下载出错", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
