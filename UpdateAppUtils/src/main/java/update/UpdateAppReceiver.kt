@@ -6,11 +6,10 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.graphics.BitmapFactory
 import android.os.Build
-import android.support.v4.content.FileProvider
-
-import java.io.File
+import teprinciple.updateapputils.R
+import util.Utils
 
 
 /**
@@ -29,11 +28,14 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // 显示通知栏
+        // 显示通知栏  TODO
         val notifyId = 1
-        if (UpdateAppUtils.showNotification) {
-            showNotification(context, notifyId, progress, title, notificationChannel, nm)
-        }
+//        if (UpdateAppUtils.showNotification) {
+//            showNotification(context, notifyId, progress, title, notificationChannel, nm)
+//        }
+
+
+        showNotification(context, notifyId, progress, title, notificationChannel, nm)
 
         // 下载完成
         if (progress == 100) {
@@ -56,7 +58,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
         // 安装apk
         if (DownloadAppUtils.downloadUpdateApkFilePath != null) {
-            toInstall(context)
+            Utils.installApk(context, DownloadAppUtils.downloadUpdateApkFilePath)
         }
     }
 
@@ -83,14 +85,20 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
         val builder = Notification.Builder(context)
 
-        //NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId(notificationChannel)
         }
 
         builder.setContentTitle("正在下载 $title")
-        builder.setSmallIcon(android.R.mipmap.sym_def_app_icon)
+
+        // 设置通知图标
+        builder.setSmallIcon(R.drawable.ic_logo)
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.resources,R.drawable.ic_logo))
+
         builder.setProgress(100, progress, false)
+
+        // 设置只想一次
+        builder.setOnlyAlertOnce(true)
 
         var notification: Notification? = null
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
@@ -100,27 +108,5 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         }
 
         nm.notify(notifyId, notification)
-    }
-
-    /**
-     * 跳转安装
-     */
-    private fun toInstall(context: Context) {
-
-        val i = Intent(Intent.ACTION_VIEW)
-        val apkFile = File(DownloadAppUtils.downloadUpdateApkFilePath)
-
-        // android 7.0 fileprovider 适配
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            i.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-            val contentUri = FileProvider.getUriForFile(
-                context, context.packageName + ".fileprovider", apkFile)
-            i.setDataAndType(contentUri, "application/vnd.android.package-archive")
-        } else {
-            i.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive")
-        }
-
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(i)
     }
 }

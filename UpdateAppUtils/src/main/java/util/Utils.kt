@@ -1,9 +1,15 @@
 package util
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.Uri
+import android.os.Build
+import android.support.v4.content.FileProvider
+import update.DownloadAppUtils
+import java.io.File
 
 /**
  * desc: Utils
@@ -11,10 +17,33 @@ import android.net.ConnectivityManager
  */
 internal object Utils {
 
+
+    /**
+     * 跳转安装
+     */
+    fun installApk(context: Context,apkPath: String) {
+
+        val i = Intent(Intent.ACTION_VIEW)
+        val apkFile = File(apkPath)
+
+        // android 7.0 fileprovider 适配
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            i.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            val contentUri = FileProvider.getUriForFile(
+                context, context.packageName + ".fileprovider", apkFile)
+            i.setDataAndType(contentUri, "application/vnd.android.package-archive")
+        } else {
+            i.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive")
+        }
+
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(i)
+    }
+
     /**
      * 检测wifi是否连接
      */
-    private fun isWifiConnected(context: Context): Boolean {
+    fun isWifiConnected(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
         if (cm != null) {
             val networkInfo = cm.activeNetworkInfo
@@ -28,7 +57,7 @@ internal object Utils {
     /**
      * 获取apk的版本号 currentVersionCode
      */
-    private fun getAPPLocalVersion(ctx: Context): PackageInfo?{
+    fun getAPPLocalVersion(ctx: Context): PackageInfo? {
         val manager = ctx.packageManager
         return try {
             manager.getPackageInfo(ctx.packageName, 0)

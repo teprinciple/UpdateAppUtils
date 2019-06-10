@@ -1,13 +1,8 @@
 package update
 
-import android.app.Activity
 import android.content.Context
-import android.content.pm.PackageManager
-import android.util.Log
-
-import ui.UpdateAppActivity
-import extension.TAG
 import model.UpdateConfig
+import ui.UpdateAppActivity
 
 
 /**
@@ -39,7 +34,6 @@ object UpdateAppUtils {
      */
     fun showNotification(showNotification: Boolean): UpdateAppUtils {
         updateConfig.isShowNotification = showNotification
-        //this.showNotification = showNotification
         return this
     }
 
@@ -48,16 +42,6 @@ object UpdateAppUtils {
      */
     fun isForce(isForce: Boolean): UpdateAppUtils {
         updateConfig.force = isForce
-        return this
-    }
-
-
-    /**
-     *@param checkBy 检查更新方式
-     *
-     */
-    fun checkBy(checkBy: Int): UpdateAppUtils {
-        updateConfig.checkBy = checkBy
         return this
     }
 
@@ -79,39 +63,24 @@ object UpdateAppUtils {
     }
 
 
-
-
     /**
      * 检查更新
      */
-    fun update(activity: Activity) {
-
-        when (updateConfig.checkBy) {
-            CHECK_BY_VERSION_CODE -> if (updateConfig.serverVersionCode > updateConfig.localVersionCode) {
-                toUpdate(activity)
-            } else {
-                Log.i(TAG, "当前版本是最新版本" + updateConfig.serverVersionCode + "/" + updateConfig.serverVersionName)
-            }
-
-            CHECK_BY_VERSION_NAME -> if (updateConfig.serverVersionName != updateConfig.localVersionName) {
-                toUpdate(activity)
-            } else {
-                Log.i(TAG, "当前版本是最新版本" + updateConfig.serverVersionCode + "/" + updateConfig.serverVersionName)
-            }
-        }
+    fun update(context: Context) {
+        toUpdate(context)
     }
+
 
     /**
      * 更新
      */
-    private fun toUpdate(activity: Activity) {
-        UpdateAppActivity.launch(activity, updateConfig)
+    private fun toUpdate(context: Context) {
+        UpdateAppActivity.launch(context, updateConfig)
     }
 
 
-    val CHECK_BY_VERSION_NAME = 1001
-    val CHECK_BY_VERSION_CODE = 1002
-    val DOWNLOAD_BY_APP = 1003
-    val DOWNLOAD_BY_BROWSER = 1004
-    var showNotification = true
+    @JvmStatic
+    fun getInstance(): UpdateAppUtils {
+        return this
+    }
 }

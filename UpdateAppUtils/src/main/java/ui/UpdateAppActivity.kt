@@ -13,8 +13,11 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.TextView
+import model.DownLoadBy
 import model.UpdateConfig
 import teprinciple.updateapputils.R
+import update.DownloadAppUtils
+import update.UpdateAppService
 
 internal class UpdateAppActivity : AppCompatActivity() {
 
@@ -98,12 +101,18 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
     private fun download() {
 
-//        startService(Intent(this, UpdateAppService::class.java))
-//
-//        if (updateConfig!!.downloadBy == update.UpdateAppUtils.DOWNLOAD_BY_APP) {
+        startService(Intent(this, UpdateAppService::class.java))
+
+        if (updateConfig?.downloadBy == DownLoadBy.APP) {
+
+
+
+            DownloadAppUtils.download(this, updateConfig?.apkPath ?:"", updateConfig?.serverVersionName ?: "")
+
+
+            // TODO 优化
 //            if (isWifiConnected(this)) {
 //
-//                DownloadAppUtils.download(this, updateConfig!!.apkPath, updateConfig!!.serverVersionName)
 //            } else {
 //                ConfirmDialog(this, ConfirmDialog.Callback { position ->
 //                    if (position == 1) {
@@ -117,9 +126,9 @@ internal class UpdateAppActivity : AppCompatActivity() {
 //                    }
 //                }).setContent("目前手机不是WiFi状态\n确认是否继续下载更新？").show()
 //            }
-//        } else if (updateConfig!!.downloadBy == update.UpdateAppUtils.DOWNLOAD_BY_BROWSER) {
-//            DownloadAppUtils.downloadForWebView(this, updateConfig?.apkPath ?: "")
-//        }
+        } else{
+            DownloadAppUtils.downloadForWebView(this, updateConfig?.apkPath ?: "")
+        }
 
         finish()
     }
@@ -135,13 +144,13 @@ internal class UpdateAppActivity : AppCompatActivity() {
             PERMISSION_CODE -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 download()
             } else {
-                ConfirmDialog(this, ConfirmDialog.Callback { position ->
-                    if (position == 1) {
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        intent.data = Uri.parse("package:$packageName") // 根据包名打开对应的设置界面
-                        startActivity(intent)
-                    }
-                }).setContent("暂无读写SD卡权限\n是否前往设置？").show()
+//                ConfirmDialog(this, ConfirmDialog.Callback { position ->
+//                    if (position == 1) {
+//                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+//                        intent.data = Uri.parse("package:$packageName") // 根据包名打开对应的设置界面
+//                        startActivity(intent)
+//                    }
+//                }).setContent("暂无读写SD卡权限\n是否前往设置？").show()
             }
         }
     }

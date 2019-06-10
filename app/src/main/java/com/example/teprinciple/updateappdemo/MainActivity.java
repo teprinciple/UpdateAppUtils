@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import model.DownLoadBy;
 import update.UpdateAppUtils;
 
 
 public class MainActivity extends AppCompatActivity {
 
     //服务器apk path,这里放了百度云盘的apk 作为测试
-    String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk";
+    String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_9.6.63.apk";
     private int code = 0;
 
     @Override
@@ -71,19 +72,12 @@ public class MainActivity extends AppCompatActivity {
     private void updat1() {
 
         UpdateAppUtils
-                .INSTANCE
-                .apkPath("")
-                .downloadBy(1234);
+                .getInstance()
+                .apkPath(apkPath)
+                .serverVersionName("4.0")
+                .downloadBy(DownLoadBy.APP)
+                .update(this);
 
-
-//        update.UpdateAppUtils.Companion.from(this)
-//                .serverVersionCode(2)
-//                .serverVersionName("2.0")
-//                .apkPath(apkPath)
-//                .updateInfo("1.修复若干bug\n2.美化部分页面\n3.增加微信支付方式")
-////                .showNotification(false)
-////                .needFitAndroidN(false)
-//                .update();
     }
 
     //通过浏览器下载

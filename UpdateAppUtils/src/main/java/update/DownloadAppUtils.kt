@@ -84,6 +84,8 @@ internal object DownloadAppUtils {
      * 发送通知进度
      */
     private fun send(context: Context, progress: Int, serverVersionName: String) {
+
+        // todo 这里需要优化
         val intent = Intent("teprinciple.update")
         intent.putExtra("progress", progress)
         intent.putExtra("title", serverVersionName)
