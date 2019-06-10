@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import model.DownLoadBy;
-import update.UpdateAppUtils;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
     //基本更新
     private void updat1() {
 
-        UpdateAppUtils
-                .getInstance()
-                .apkPath(apkPath)
-                .serverVersionName("4.0")
-                .downloadBy(DownLoadBy.APP)
-                .update(this);
+//        UpdateAppUtils
+//                .getInstance()
+//                .apkPath(apkPath)
+//                .serverVersionName("4.0")
+//                .downloadBy(DownLoadBy.APP)
+//                .update(this);
 
     }
 
