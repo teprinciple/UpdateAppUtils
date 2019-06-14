@@ -19,7 +19,6 @@ import java.io.File
  */
 internal object DownloadAppUtils {
 
-
     var downloadUpdateApkFilePath: String = "" //下载更新Apk 文件路径
 
     /**
@@ -33,13 +32,13 @@ internal object DownloadAppUtils {
     }
 
     /**
-     * App 下载APK包 并
+     * App下载APK包，下载完成后安装
      */
     fun download(context: Context, url: String, serverVersionName: String) {
 
         val packageName = context.packageName
         var filePath: String? = null
-        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {//外部存储卡
+        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) { //外部存储卡
             filePath = Environment.getExternalStorageDirectory().absolutePath
         } else {
             Log.i(TAG, "没有SD卡")
@@ -84,7 +83,6 @@ internal object DownloadAppUtils {
      * 发送通知进度
      */
     private fun send(context: Context, progress: Int, serverVersionName: String) {
-
         // todo 这里需要优化
         val intent = Intent("teprinciple.update")
         intent.putExtra("progress", progress)

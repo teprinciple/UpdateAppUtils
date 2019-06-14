@@ -4,20 +4,18 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.TextView
 import model.DownLoadBy
-import model.UpdateConfig
 import teprinciple.updateapputils.R
 import update.DownloadAppUtils
 import update.UpdateAppService
+import update.UpdateAppUtils
 
 internal class UpdateAppActivity : AppCompatActivity() {
 
@@ -25,20 +23,17 @@ internal class UpdateAppActivity : AppCompatActivity() {
     private var sureBtn: TextView? = null
     private var cancleBtn: TextView? = null
 
-    private var updateConfig: UpdateConfig? = null
-
+    private val updateConfig by lazy { UpdateAppUtils.updateConfig }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // TODO 可以从这里设置不同的UI
         setContentView(R.layout.view_version_tips_dialog)
-
-        updateConfig = intent.getParcelableExtra(KEY_OF_INTENT_UPDATE_BEAN)
 
         initView()
         initOperation()
     }
-
 
     private fun initView() {
         sureBtn = findViewById(R.id.dialog_confirm_sure) as TextView
@@ -46,19 +41,18 @@ internal class UpdateAppActivity : AppCompatActivity() {
         content = findViewById(R.id.dialog_confirm_title) as TextView
 
 
-        var contentStr = "发现新版本:" + updateConfig!!.serverVersionName + "\n是否下载更新?"
-        if (!TextUtils.isEmpty(updateConfig!!.updateInfo)) {
-            contentStr = "发现新版本:" + updateConfig!!.serverVersionName + "是否下载更新?\n\n" + updateConfig!!.updateInfo
+        var contentStr = "发现新版本:" + updateConfig.serverVersionName + "\n是否下载更新?"
+        if (!TextUtils.isEmpty(updateConfig.updateInfo)) {
+            contentStr = "发现新版本:" + updateConfig.serverVersionName + "是否下载更新?\n\n" + updateConfig.updateInfo
         }
 
         content!!.text = contentStr
 
-        if (updateConfig!!.force!!) {
+        if (updateConfig.force!!) {
             cancleBtn!!.text = "退出"
         } else {
             cancleBtn!!.text = "取消"
         }
-
     }
 
 
@@ -106,8 +100,8 @@ internal class UpdateAppActivity : AppCompatActivity() {
         if (updateConfig?.downloadBy == DownLoadBy.APP) {
 
 
-
-            DownloadAppUtils.download(this, updateConfig?.apkPath ?:"", updateConfig?.serverVersionName ?: "")
+            DownloadAppUtils.download(this, updateConfig?.apkUrl
+                ?: "", updateConfig?.serverVersionName ?: "")
 
 
             // TODO 优化
@@ -116,7 +110,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
 //            } else {
 //                ConfirmDialog(this, ConfirmDialog.Callback { position ->
 //                    if (position == 1) {
-//                        DownloadAppUtils.download(this@UpdateAppActivity, updateConfig!!.apkPath, updateConfig!!.serverVersionName)
+//                        DownloadAppUtils.download(this@UpdateAppActivity, updateConfig!!.apkUrl, updateConfig!!.serverVersionName)
 //                    } else {
 //                        if (updateConfig!!.force!!) {
 //                            System.exit(0)
@@ -126,8 +120,8 @@ internal class UpdateAppActivity : AppCompatActivity() {
 //                    }
 //                }).setContent("目前手机不是WiFi状态\n确认是否继续下载更新？").show()
 //            }
-        } else{
-            DownloadAppUtils.downloadForWebView(this, updateConfig?.apkPath ?: "")
+        } else {
+            DownloadAppUtils.downloadForWebView(this, updateConfig?.apkUrl ?: "")
         }
 
         finish()
@@ -156,14 +150,9 @@ internal class UpdateAppActivity : AppCompatActivity() {
     }
 
 
-
     companion object {
-
-        private val KEY_OF_INTENT_UPDATE_BEAN = "KEY_OF_INTENT_UPDATE_BEAN"
-
-        fun launch(context: Context, updateConfig: UpdateConfig) {
+        fun launch(context: Context) {
             val intent = Intent(context, UpdateAppActivity::class.java)
-            intent.putExtra(KEY_OF_INTENT_UPDATE_BEAN, updateConfig)
             context.startActivity(intent)
         }
 

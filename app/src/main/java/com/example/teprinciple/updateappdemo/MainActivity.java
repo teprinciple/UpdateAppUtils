@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        UpdateAppUtils
 //                .getInstance()
-//                .apkPath(apkPath)
+//                .apkUrl(apkUrl)
 //                .serverVersionName("4.0")
 //                .downloadBy(DownLoadBy.APP)
 //                .update(this);
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 //        update.UpdateAppUtils.Companion.from(this)
 //                .serverVersionCode(2)
 //                .serverVersionName("2.0")
-//                .apkPath(apkPath)
+//                .apkUrl(apkUrl)
 //                .downloadBy(update.UpdateAppUtils.Companion.getDOWNLOAD_BY_BROWSER())
 //                .update();
     }
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 //        update.UpdateAppUtils.
 //                .serverVersionCode(2)
 //                .serverVersionName("2.0")
-//                .apkPath(apkPath)
+//                .apkUrl(apkUrl)
 //                .isForce(true)
 //                .update();
     }
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 //                .checkBy(update.UpdateAppUtils.Companion.getCHECK_BY_VERSION_NAME())
 //                .serverVersionName("2.0")
 //                .serverVersionCode(2)
-//                .apkPath(apkPath)
+//                .apkUrl(apkUrl)
 //                .downloadBy(update.UpdateAppUtils.Companion.getDOWNLOAD_BY_BROWSER())
 //                .isForce(true)
 //                .update();

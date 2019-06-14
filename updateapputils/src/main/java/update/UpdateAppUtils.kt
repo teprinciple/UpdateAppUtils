@@ -11,13 +11,16 @@ import ui.UpdateAppActivity
 object UpdateAppUtils {
 
     // 将所有的 属性 放入model
-    private val updateConfig = UpdateConfig()
+    internal val updateConfig = UpdateConfig()
+
+    // 是否是debug模式，debug模式才会打印日志
+    internal val isDebug = true
 
     /**
      * apk 下载路径
      */
     fun apkPath(apkPath: String): UpdateAppUtils {
-        updateConfig.apkPath = apkPath
+        updateConfig.apkUrl = apkPath
         return this
     }
 
@@ -45,12 +48,10 @@ object UpdateAppUtils {
         return this
     }
 
-
     fun updateInfo(updateInfo: String): UpdateAppUtils {
         updateConfig.updateInfo = updateInfo
         return this
     }
-
 
     fun serverVersionCode(serverVersionCode: Int): UpdateAppUtils {
         updateConfig.serverVersionCode = serverVersionCode
@@ -62,7 +63,6 @@ object UpdateAppUtils {
         return this
     }
 
-
     /**
      * 检查更新
      */
@@ -70,14 +70,12 @@ object UpdateAppUtils {
         toUpdate(context)
     }
 
-
     /**
      * 更新
      */
     private fun toUpdate(context: Context) {
-        UpdateAppActivity.launch(context, updateConfig)
+        UpdateAppActivity.launch(context)
     }
-
 
     @JvmStatic
     fun getInstance(): UpdateAppUtils {

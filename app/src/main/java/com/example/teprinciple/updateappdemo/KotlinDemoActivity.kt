@@ -18,7 +18,7 @@ class KotlinDemoActivity : AppCompatActivity() {
 //        UpdateAppUtils
 //            .serverVersionCode(2)
 //            .serverVersionName("3.0")
-//            .apkPath(apkPath)
+//            .apkUrl(apkUrl)
 //            .update(this)
     }
 }
