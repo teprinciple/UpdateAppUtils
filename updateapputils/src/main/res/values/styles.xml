@@ -9,7 +9,7 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar"/>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"/>
 
     <style name="DialogActivityTheme" parent="Theme.AppCompat.Dialog">
         <item name="android:windowFrame">@null</item>

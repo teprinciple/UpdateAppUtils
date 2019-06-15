@@ -67,16 +67,12 @@ object UpdateAppUtils {
      * 检查更新
      */
     fun update(context: Context) {
-        toUpdate(context)
+        UpdateAppActivity.launch(context.applicationContext)
     }
 
     /**
-     * 更新
+     * 获取单例对象
      */
-    private fun toUpdate(context: Context) {
-        UpdateAppActivity.launch(context)
-    }
-
     @JvmStatic
     fun getInstance(): UpdateAppUtils {
         return this

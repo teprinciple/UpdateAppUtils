@@ -6,38 +6,39 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="270dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_dialog_confirm"
         android:orientation="vertical">
 
-
         <TextView
+            android:id="@+id/tv_update_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:gravity="center_horizontal"
-            android:text="提示"
+            android:text="版本更新啦!"
             android:textColor="@color/text_black"
-            android:textSize="19sp"
-            />
+            android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/dialog_confirm_title"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_horizontal"
-            android:lineSpacingExtra="5dp"
-            android:textColor="@color/text_black"
-            android:textSize="17sp"
-            />
+            android:layout_height="80dp"
+            android:overScrollMode="never">
 
+            <TextView
+                android:id="@+id/tv_update_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:lineSpacingExtra="5dp"
+                android:padding="12dp"
+                android:textColor="@color/text_black2"
+                android:textSize="14sp"/>
+        </ScrollView>
 
         <View
             android:layout_width="match_parent"
@@ -45,14 +46,13 @@
             android:layout_marginTop="13dp"
             android:background="#DFDFDF"/>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/dialog_confirm_cancle"
+                android:id="@+id/tv_update_cancel"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -60,8 +60,7 @@
                 android:gravity="center"
                 android:text="@string/cancel"
                 android:textColor="@color/text_blue"
-                android:textSize="17sp"
-                />
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="1dp"
@@ -69,7 +68,7 @@
                 android:background="#DFDFDF"/>
 
             <TextView
-                android:id="@+id/dialog_confirm_sure"
+                android:id="@+id/tv_update_sure"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -77,12 +76,8 @@
                 android:gravity="center"
                 android:text="@string/sure"
                 android:textColor="@color/text_blue"
-                android:textSize="17sp"
-                />
-
+                android:textSize="16sp"/>
         </LinearLayout>
 
     </LinearLayout>
-
-
 </LinearLayout>

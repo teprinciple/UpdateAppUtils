@@ -4,70 +4,65 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.text.TextUtils
 import android.widget.TextView
+import extension.no
+import extension.yes
 import model.DownLoadBy
 import teprinciple.updateapputils.R
 import update.DownloadAppUtils
 import update.UpdateAppService
 import update.UpdateAppUtils
+import util.AlertDialogUtil
 
 internal class UpdateAppActivity : AppCompatActivity() {
 
-    private var content: TextView? = null
-    private var sureBtn: TextView? = null
-    private var cancleBtn: TextView? = null
+    private lateinit var tvTitle: TextView
+    private lateinit var tvContent: TextView
+    private lateinit var tvSureBtn: TextView
+    private lateinit var tvCancelBtn: TextView
 
     private val updateConfig by lazy { UpdateAppUtils.updateConfig }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // TODO 可以从这里设置不同的UI
         setContentView(R.layout.view_version_tips_dialog)
-
         initView()
-        initOperation()
     }
 
     private fun initView() {
-        sureBtn = findViewById(R.id.dialog_confirm_sure) as TextView
-        cancleBtn = findViewById(R.id.dialog_confirm_cancle) as TextView
-        content = findViewById(R.id.dialog_confirm_title) as TextView
 
+        tvTitle = findViewById(R.id.tv_update_title) as TextView
+        tvContent = findViewById(R.id.tv_update_content) as TextView
+        tvCancelBtn = findViewById(R.id.tv_update_cancel) as TextView
+        tvSureBtn = findViewById(R.id.tv_update_sure) as TextView
 
-        var contentStr = "发现新版本:" + updateConfig.serverVersionName + "\n是否下载更新?"
-        if (!TextUtils.isEmpty(updateConfig.updateInfo)) {
-            contentStr = "发现新版本:" + updateConfig.serverVersionName + "是否下载更新?\n\n" + updateConfig.updateInfo
+        updateConfig.updateTitle.isNotEmpty().yes {
+            tvTitle.text = updateConfig.updateTitle
         }
 
-        content!!.text = contentStr
+        tvContent.text = updateConfig.updateInfo
 
-        if (updateConfig.force!!) {
-            cancleBtn!!.text = "退出"
-        } else {
-            cancleBtn!!.text = "取消"
-        }
-    }
-
-
-    private fun initOperation() {
-
-        cancleBtn!!.setOnClickListener {
-            if (updateConfig!!.force!!) {
+        tvCancelBtn.setOnClickListener {
+            updateConfig.force.yes {
                 System.exit(0)
-            } else {
+            }.no {
                 finish()
             }
         }
 
-        sureBtn!!.setOnClickListener { preDownLoad() }
+        tvSureBtn.setOnClickListener {
+            preDownLoad()
+        }
     }
+
 
     override fun onBackPressed() {
         // do noting
@@ -78,55 +73,40 @@ internal class UpdateAppActivity : AppCompatActivity() {
      * 预备下载 进行 6.0权限检查
      */
     private fun preDownLoad() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        // 6.0 以下不用动态权限申请
+        (Build.VERSION.SDK_INT < Build.VERSION_CODES.M).yes {
             download()
-        } else {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        }.no {
+            val writePermission = ContextCompat.checkSelfPermission(this, permission)
+            (writePermission == PackageManager.PERMISSION_GRANTED).yes {
                 download()
-
-            } else {//申请权限
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_CODE)
+            }.no {
+                // 申请权限
+                ActivityCompat.requestPermissions(this, arrayOf(permission), PERMISSION_CODE)
             }
         }
     }
 
-
+    /**
+     * 下载
+     */
     private fun download() {
-
+        // 开启服务 动态注册 receiver
         startService(Intent(this, UpdateAppService::class.java))
+        when (updateConfig.downloadBy) {
+            // App下载
+            DownLoadBy.APP -> {
+                // TODO 这里增加WIFI判断
+                DownloadAppUtils.download(this, updateConfig.apkUrl, updateConfig.serverVersionName)
+            }
 
-        if (updateConfig?.downloadBy == DownLoadBy.APP) {
-
-
-            DownloadAppUtils.download(this, updateConfig?.apkUrl
-                ?: "", updateConfig?.serverVersionName ?: "")
-
-
-            // TODO 优化
-//            if (isWifiConnected(this)) {
-//
-//            } else {
-//                ConfirmDialog(this, ConfirmDialog.Callback { position ->
-//                    if (position == 1) {
-//                        DownloadAppUtils.download(this@UpdateAppActivity, updateConfig!!.apkUrl, updateConfig!!.serverVersionName)
-//                    } else {
-//                        if (updateConfig!!.force!!) {
-//                            System.exit(0)
-//                        } else {
-//                            finish()
-//                        }
-//                    }
-//                }).setContent("目前手机不是WiFi状态\n确认是否继续下载更新？").show()
-//            }
-        } else {
-            DownloadAppUtils.downloadForWebView(this, updateConfig?.apkUrl ?: "")
+            // 浏览器下载
+            DownLoadBy.BROWSER -> {
+                DownloadAppUtils.downloadForWebView(this, updateConfig.apkUrl)
+            }
         }
-
-        finish()
+//        finish()
     }
-
 
     /**
      * 权限请求结果
@@ -135,27 +115,30 @@ internal class UpdateAppActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
-            PERMISSION_CODE -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            PERMISSION_CODE -> (grantResults[0] == PackageManager.PERMISSION_GRANTED).yes {
                 download()
-            } else {
-//                ConfirmDialog(this, ConfirmDialog.Callback { position ->
-//                    if (position == 1) {
-//                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-//                        intent.data = Uri.parse("package:$packageName") // 根据包名打开对应的设置界面
-//                        startActivity(intent)
-//                    }
-//                }).setContent("暂无读写SD卡权限\n是否前往设置？").show()
+            }.no {
+                ActivityCompat.shouldShowRequestPermissionRationale(this,permission).no {
+                    // 显示无权限弹窗
+                    AlertDialogUtil.show(this, "暂无储存权限，是否前往打开", onSureClick = {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        intent.data = Uri.parse("package:$packageName") // 根据包名打开对应的设置界面
+                        startActivity(intent)
+                    })
+                }
             }
         }
     }
 
-
     companion object {
         fun launch(context: Context) {
             val intent = Intent(context, UpdateAppActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
 
-        private val PERMISSION_CODE = 1001
+        private const val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+        private const val PERMISSION_CODE = 1001
     }
 }

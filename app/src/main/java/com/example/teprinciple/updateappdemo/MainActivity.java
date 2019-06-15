@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import update.UpdateAppUtils;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,11 +28,9 @@ public class MainActivity extends AppCompatActivity {
         realUpdate(2);
     }
 
-
     public void forceUpdate(View view) {
         realUpdate(3);
     }
-
 
     public void checkByName(View view) {
         realUpdate(4);
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     public void kotlin(View view) {
         realUpdate(5);
     }
-
 
 
     private void realUpdate(int code) {
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 update4();
                 break;
             case 5:
-                startActivity(new Intent(this,KotlinDemoActivity.class));
+                startActivity(new Intent(this, KotlinDemoActivity.class));
                 break;
 
         }
@@ -68,13 +67,11 @@ public class MainActivity extends AppCompatActivity {
     //基本更新
     private void updat1() {
 
-//        UpdateAppUtils
-//                .getInstance()
-//                .apkUrl(apkUrl)
-//                .serverVersionName("4.0")
-//                .downloadBy(DownLoadBy.APP)
-//                .update(this);
-
+        UpdateAppUtils
+                .getInstance()
+                .apkPath(apkPath)
+                .updateInfo("1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧")
+                .update(this);
     }
 
     //通过浏览器下载
@@ -100,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
     //根据versionName判断跟新
     private void update4() {
-
-
 
 //        update.UpdateAppUtils
 //                .checkBy(update.UpdateAppUtils.Companion.getCHECK_BY_VERSION_NAME())

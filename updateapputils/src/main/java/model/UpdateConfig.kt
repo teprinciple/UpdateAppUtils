@@ -10,10 +10,10 @@ import update.UpdateAppUtils
 internal data class UpdateConfig(
 
     var updateInfo: String? = "", // 更新内容
-    var updateTitle: String? = "", // 更新标题
+    var updateTitle: String = "", // 更新标题
     var force: Boolean? = false, // 是否强制更新
 
-    var serverVersionName: String? = "", // 服务器上版本名
+    var serverVersionName: String = "", // 服务器上版本名
     var serverVersionCode: Int = 0, // 服务器上版本号
     var localVersionName: String? = "", // 当前本地版本名
     var localVersionCode: Int = 0,// 当前本地版本号
@@ -21,8 +21,8 @@ internal data class UpdateConfig(
     var md5: String = "", // 服务器apk md5
     var needMd5Check: Boolean = false, // 是否需要进行md5校验
 
-    var downloadBy: Int = 0, // 下载方式：默认app下载
-    var apkUrl: String? = "", // apk 下载地址
+    var downloadBy: Int = DownLoadBy.APP, // 下载方式：默认app下载
+    var apkUrl: String = "", // apk 下载地址
     var apkSavePath: String = "", // apk下载存放位置
     var justDownload: Boolean = false, // 是否只下载apk，不进行安装
 
