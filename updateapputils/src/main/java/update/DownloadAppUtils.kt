@@ -10,6 +10,7 @@ import com.liulishuo.filedownloader.BaseDownloadTask
 import com.liulishuo.filedownloader.FileDownloadLargeFileListener
 import com.liulishuo.filedownloader.FileDownloader
 import extension.TAG
+import model.UpdateConfig
 
 import java.io.File
 
@@ -34,7 +35,7 @@ internal object DownloadAppUtils {
     /**
      * App下载APK包，下载完成后安装
      */
-    fun download(context: Context, url: String, serverVersionName: String) {
+    fun download(context: Context, updateConfig: UpdateConfig, onProgress: (Int) -> Unit = {}, onError: () -> Unit = {}) {
 
         val packageName = context.packageName
         var filePath: String? = null
@@ -45,48 +46,40 @@ internal object DownloadAppUtils {
             return
         }
 
-        val apkLocalPath = filePath + File.separator + packageName + "_" + serverVersionName + ".apk"
+        val apkLocalPath = filePath + File.separator + packageName + "_" + updateConfig.serverVersionName + ".apk"
 
         downloadUpdateApkFilePath = apkLocalPath
 
         FileDownloader.setup(context)
 
-        FileDownloader.getImpl().create(url)
+        FileDownloader.getImpl().create(updateConfig.apkUrl)
             .setPath(apkLocalPath)
             .setListener(object : FileDownloadLargeFileListener() {
+
                 override fun pending(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
 
                 }
 
                 override fun progress(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
-                    send(context, (soFarBytes * 100.0 / totalBytes).toInt(), serverVersionName)
+                    val progress = (soFarBytes * 100.0 / totalBytes).toInt()
+                    UpdateAppReceiver.send(context, progress)
+                    onProgress.invoke(progress)
                 }
 
                 override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {}
 
                 override fun completed(task: BaseDownloadTask) {
-                    send(context, 100, serverVersionName)
+                    UpdateAppReceiver.send(context, 100)
                 }
 
                 override fun error(task: BaseDownloadTask, e: Throwable) {
-                    //Toast.makeText(context, "下载出错", Toast.LENGTH_SHORT).show();
-
-                    // todo 将错误回调给调用着
+                    // todo 将错误回调给用户
+                    onError.invoke()
                 }
 
-                override fun warn(task: BaseDownloadTask) {}
+                override fun warn(task: BaseDownloadTask) {
+                }
+
             }).start()
-    }
-
-
-    /**
-     * 发送通知进度
-     */
-    private fun send(context: Context, progress: Int, serverVersionName: String) {
-        // todo 这里需要优化
-        val intent = Intent("teprinciple.update")
-        intent.putExtra("progress", progress)
-        intent.putExtra("title", serverVersionName)
-        context.sendBroadcast(intent)
     }
 }

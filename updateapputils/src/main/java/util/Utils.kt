@@ -8,7 +8,6 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.support.v4.content.FileProvider
-import update.DownloadAppUtils
 import java.io.File
 
 /**
@@ -17,11 +16,10 @@ import java.io.File
  */
 internal object Utils {
 
-
     /**
      * 跳转安装
      */
-    fun installApk(context: Context,apkPath: String) {
+    fun installApk(context: Context, apkPath: String) {
 
         val i = Intent(Intent.ACTION_VIEW)
         val apkFile = File(apkPath)

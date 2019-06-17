@@ -8,8 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
+import com.teprinciple.updateapputils.R
 import extension.yes
-import teprinciple.updateapputils.R
 import util.Utils
 
 /**
@@ -23,9 +23,11 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
     private val updateConfig = UpdateAppUtils.updateConfig
 
     override fun onReceive(context: Context, intent: Intent) {
+        // 进度
+        val progress = intent.getIntExtra(KEY_OF_INTENT_PROGRESS, 0)
 
-        val progress = intent.getIntExtra("progress", 0)
-        val title = intent.getStringExtra("title")
+        // 通知栏标题
+        val title = intent.getStringExtra(KEY_OF_INTENT_TITLE)
 
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -54,11 +56,10 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         }
 
         // 安装apk
-        if (DownloadAppUtils.downloadUpdateApkFilePath != null) {
+        DownloadAppUtils.downloadUpdateApkFilePath.isNotEmpty().yes {
             Utils.installApk(context, DownloadAppUtils.downloadUpdateApkFilePath)
         }
     }
-
 
     /**
      * 通知栏显示
@@ -67,12 +68,14 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
         val notificationName = "notification"
 
-        // 适配8.0
+        // 适配 8.0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // 通知渠道
             val channel = NotificationChannel(notificationChannel, notificationName, NotificationManager.IMPORTANCE_HIGH)
-            channel.enableLights(false) // 是否在桌面icon右上角展示小红点
-            channel.setShowBadge(false) // 是否在久按桌面图标时显示此渠道的通知
+            channel.enableLights(false)
+            // 是否在桌面icon右上角展示小红点
+            channel.setShowBadge(false)
+            // 是否在久按桌面图标时显示此渠道的通知
             channel.enableVibration(false)
             // 最后在notificationmanager中创建该通知渠道
             nm.createNotificationChannel(channel)
@@ -92,16 +95,35 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         builder.setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.ic_logo))
 
         builder.setProgress(100, progress, false)
-
-        // 设置只想一次
+        // 设置只响一次
         builder.setOnlyAlertOnce(true)
-
-        val notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            builder.build()
-        } else {
-            builder.notification
-        }
-
+        val notification = builder.build()
         nm.notify(notifyId, notification)
+    }
+
+    companion object {
+        /**
+         * 标题key
+         */
+        private const val KEY_OF_INTENT_TITLE = "KEY_OF_INTENT_TITLE"
+        /**
+         * 进度key
+         */
+        private const val KEY_OF_INTENT_PROGRESS = "KEY_OF_INTENT_PROGRESS"
+
+        /**
+         * ACTION_UPDATE
+         */
+        const val ACTION_UPDATE = "teprinciple.update"
+
+        /**
+         * 发送进度通知
+         */
+        fun send(context: Context, progress: Int, serverVersionName: String = "") {
+            val intent = Intent(ACTION_UPDATE)
+            intent.putExtra(KEY_OF_INTENT_PROGRESS, progress)
+            intent.putExtra(KEY_OF_INTENT_TITLE, serverVersionName)
+            context.sendBroadcast(intent)
+        }
     }
 }

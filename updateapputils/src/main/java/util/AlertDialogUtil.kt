@@ -20,7 +20,6 @@ object AlertDialogUtil {
         cancelText: String = "取消",
         sureText: String = "确认"
     ) {
-
         AlertDialog.Builder(activity)
             .setTitle(title)
             .setMessage(message)

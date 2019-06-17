@@ -12,14 +12,15 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import com.teprinciple.updateapputils.R
 import extension.no
 import extension.yes
 import model.DownLoadBy
-import teprinciple.updateapputils.R
 import update.DownloadAppUtils
 import update.UpdateAppService
 import update.UpdateAppUtils
 import util.AlertDialogUtil
+import util.Utils
 
 internal class UpdateAppActivity : AppCompatActivity() {
 
@@ -44,12 +45,15 @@ internal class UpdateAppActivity : AppCompatActivity() {
         tvCancelBtn = findViewById(R.id.tv_update_cancel) as TextView
         tvSureBtn = findViewById(R.id.tv_update_sure) as TextView
 
+        // 更新标题
         updateConfig.updateTitle.isNotEmpty().yes {
             tvTitle.text = updateConfig.updateTitle
         }
 
+        // 更新内容
         tvContent.text = updateConfig.updateInfo
 
+        // 取消
         tvCancelBtn.setOnClickListener {
             updateConfig.force.yes {
                 System.exit(0)
@@ -58,16 +62,15 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }
         }
 
+        // 确定
         tvSureBtn.setOnClickListener {
             preDownLoad()
         }
     }
 
-
     override fun onBackPressed() {
         // do noting
     }
-
 
     /**
      * 预备下载 进行 6.0权限检查
@@ -88,16 +91,25 @@ internal class UpdateAppActivity : AppCompatActivity() {
     }
 
     /**
-     * 下载
+     * 下载判断
      */
     private fun download() {
-        // 开启服务 动态注册 receiver
+        // 动态注册广播，8.0 静态注册收不到
+        // 开启服务注册，避免直接在Activity中注册广播生命周期随Activity终止而终止
         startService(Intent(this, UpdateAppService::class.java))
+
         when (updateConfig.downloadBy) {
             // App下载
             DownLoadBy.APP -> {
-                // TODO 这里增加WIFI判断
-                DownloadAppUtils.download(this, updateConfig.apkUrl, updateConfig.serverVersionName)
+                (updateConfig.checkWifi && !Utils.isWifiConnected(applicationContext)).yes {
+                    // 需要进行WiFi判断
+                    AlertDialogUtil.show(this, "当前没有连接Wifi，是否继续下载", onSureClick = {
+                        realDownload()
+                    })
+                }.no {
+                    // 不需要wifi判断，直接下载
+                    realDownload()
+                }
             }
 
             // 浏览器下载
@@ -105,7 +117,17 @@ internal class UpdateAppActivity : AppCompatActivity() {
                 DownloadAppUtils.downloadForWebView(this, updateConfig.apkUrl)
             }
         }
-//        finish()
+    }
+
+    /**
+     * 实际下载
+     */
+    private fun realDownload() {
+        DownloadAppUtils.download(this, updateConfig, onProgress = {
+            // TODO 在这里设置进度
+        }, onError = {
+
+        })
     }
 
     /**
@@ -118,7 +140,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
             PERMISSION_CODE -> (grantResults[0] == PackageManager.PERMISSION_GRANTED).yes {
                 download()
             }.no {
-                ActivityCompat.shouldShowRequestPermissionRationale(this,permission).no {
+                ActivityCompat.shouldShowRequestPermissionRationale(this, permission).no {
                     // 显示无权限弹窗
                     AlertDialogUtil.show(this, "暂无储存权限，是否前往打开", onSureClick = {
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -131,6 +153,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
     }
 
     companion object {
+
         fun launch(context: Context) {
             val intent = Intent(context, UpdateAppActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

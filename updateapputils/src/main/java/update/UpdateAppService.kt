@@ -16,7 +16,7 @@ internal class UpdateAppService : Service() {
     override fun onCreate() {
         super.onCreate()
         // 动态注册receiver 适配8.0 receiver 静态注册没收不到广播
-        val intentFilter = IntentFilter("teprinciple.update")
+        val intentFilter = IntentFilter(UpdateAppReceiver.ACTION_UPDATE)
         registerReceiver(receiver, intentFilter)
     }
 
