@@ -29,7 +29,9 @@ internal class UpdateAppActivity : AppCompatActivity() {
     private lateinit var tvSureBtn: TextView
     private lateinit var tvCancelBtn: TextView
 
-    private val updateConfig by lazy { UpdateAppUtils.updateConfig }
+    private val updateInfo by lazy { UpdateAppUtils.updateInfo }
+
+    private val updateConfig by lazy { updateInfo.config }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +48,10 @@ internal class UpdateAppActivity : AppCompatActivity() {
         tvSureBtn = findViewById(R.id.tv_update_sure) as TextView
 
         // 更新标题
-        updateConfig.updateTitle.isNotEmpty().yes {
-            tvTitle.text = updateConfig.updateTitle
-        }
+        tvTitle.text = updateInfo.updateTitle
 
         // 更新内容
-        tvContent.text = updateConfig.updateInfo
+        tvContent.text = updateInfo.updateContent
 
         // 取消
         tvCancelBtn.setOnClickListener {
@@ -114,7 +114,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
             // 浏览器下载
             DownLoadBy.BROWSER -> {
-                DownloadAppUtils.downloadForWebView(this, updateConfig.apkUrl)
+                DownloadAppUtils.downloadForWebView(this, updateInfo.apkUrl)
             }
         }
     }
@@ -123,7 +123,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
      * 实际下载
      */
     private fun realDownload() {
-        DownloadAppUtils.download(this, updateConfig, onProgress = {
+        DownloadAppUtils.download(this, updateInfo, onProgress = {
             // TODO 在这里设置进度
         }, onError = {
 

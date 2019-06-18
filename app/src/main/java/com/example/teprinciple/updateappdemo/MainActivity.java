@@ -67,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
     //基本更新
     private void updat1() {
 
-        UpdateAppUtils
-                .getInstance()
-                .apkPath(apkPath)
-                .updateInfo("1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧")
-                .update(this);
+//        UpdateAppUtils
+//                .getInstance()
+//                .apkPath(apkPath)
+//                .updateInfo("1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧")
+//                .update(this);
     }
 
     //通过浏览器下载

@@ -2,6 +2,7 @@ package update
 
 import android.content.Context
 import model.UpdateConfig
+import model.UpdateInfo
 import ui.UpdateAppActivity
 
 
@@ -10,56 +11,38 @@ import ui.UpdateAppActivity
  */
 object UpdateAppUtils {
 
-    // 将所有的 属性 放入model
-    internal val updateConfig = UpdateConfig()
-
-    // 是否是debug模式，debug模式才会打印日志
-    internal val isDebug = true
+    // 更新信息对象
+    internal val updateInfo = UpdateInfo()
 
     /**
-     * apk 下载路径
+     * 设置apk下载地址
      */
-    fun apkPath(apkPath: String): UpdateAppUtils {
-        updateConfig.apkUrl = apkPath
+    fun apkUrl(apkUrl: String): UpdateAppUtils {
+        updateInfo.apkUrl = apkUrl
         return this
     }
 
     /**
-     * @param downloadBy 下载方式
+     * 设置更新标题
      */
-    fun downloadBy(downloadBy: Int): UpdateAppUtils {
-        updateConfig.downloadBy = downloadBy
+    fun updateTitle(title: String): UpdateAppUtils {
+        updateInfo.updateTitle = title
         return this
     }
 
     /**
-     * 是否将下载进度显示到通知栏
+     * 设置更新内容
      */
-    fun showNotification(showNotification: Boolean): UpdateAppUtils {
-        updateConfig.isShowNotification = showNotification
+    fun updateContent(content: String): UpdateAppUtils {
+        updateInfo.updateContent = content
         return this
     }
 
     /**
-     * 是否强制更新
+     * 更改更新配置
      */
-    fun isForce(isForce: Boolean): UpdateAppUtils {
-        updateConfig.force = isForce
-        return this
-    }
-
-    fun updateInfo(updateInfo: String): UpdateAppUtils {
-        updateConfig.updateInfo = updateInfo
-        return this
-    }
-
-    fun serverVersionCode(serverVersionCode: Int): UpdateAppUtils {
-        updateConfig.serverVersionCode = serverVersionCode
-        return this
-    }
-
-    fun serverVersionName(serverVersionName: String): UpdateAppUtils {
-        updateConfig.serverVersionName = serverVersionName
+    fun changeConfig(config: UpdateConfig): UpdateAppUtils {
+        updateInfo.config = config
         return this
     }
 

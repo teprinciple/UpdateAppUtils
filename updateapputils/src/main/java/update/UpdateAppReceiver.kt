@@ -20,7 +20,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
     private val notificationChannel = "1001"
 
-    private val updateConfig = UpdateAppUtils.updateConfig
+    private val updateConfig by lazy { UpdateAppUtils.updateInfo.config }
 
     override fun onReceive(context: Context, intent: Intent) {
         // 进度
@@ -114,7 +114,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         /**
          * ACTION_UPDATE
          */
-        const val ACTION_UPDATE = "teprinciple.update"
+        const val ACTION_UPDATE = "teprinciple.update" // TODO 研究一下这里
 
         /**
          * 发送进度通知

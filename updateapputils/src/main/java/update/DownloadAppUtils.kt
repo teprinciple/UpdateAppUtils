@@ -11,6 +11,7 @@ import com.liulishuo.filedownloader.FileDownloadLargeFileListener
 import com.liulishuo.filedownloader.FileDownloader
 import extension.TAG
 import model.UpdateConfig
+import model.UpdateInfo
 
 import java.io.File
 
@@ -35,7 +36,7 @@ internal object DownloadAppUtils {
     /**
      * App下载APK包，下载完成后安装
      */
-    fun download(context: Context, updateConfig: UpdateConfig, onProgress: (Int) -> Unit = {}, onError: () -> Unit = {}) {
+    fun download(context: Context, updateInfo: UpdateInfo, onProgress: (Int) -> Unit = {}, onError: () -> Unit = {}) {
 
         val packageName = context.packageName
         var filePath: String? = null
@@ -46,13 +47,13 @@ internal object DownloadAppUtils {
             return
         }
 
-        val apkLocalPath = filePath + File.separator + packageName + "_" + updateConfig.serverVersionName + ".apk"
+        val apkLocalPath = filePath + File.separator + packageName + "_" + updateInfo.config.serverVersionName + ".apk"
 
         downloadUpdateApkFilePath = apkLocalPath
 
         FileDownloader.setup(context)
 
-        FileDownloader.getImpl().create(updateConfig.apkUrl)
+        FileDownloader.getImpl().create(updateInfo.apkUrl)
             .setPath(apkLocalPath)
             .setListener(object : FileDownloadLargeFileListener() {
 
