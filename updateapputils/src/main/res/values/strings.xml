@@ -2,4 +2,6 @@
     <string name="app_name">Library</string>
     <string name="cancel">取消</string>
     <string name="sure">确认</string>
+
+    <string name="downloading">下载中</string>
 </resources>

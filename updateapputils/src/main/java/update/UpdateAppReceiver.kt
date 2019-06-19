@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import com.teprinciple.updateapputils.R
+import extension.no
 import extension.yes
 import util.Utils
 
@@ -26,15 +27,12 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         // 进度
         val progress = intent.getIntExtra(KEY_OF_INTENT_PROGRESS, 0)
 
-        // 通知栏标题
-        val title = intent.getStringExtra(KEY_OF_INTENT_TITLE)
-
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // 显示通知栏
         val notifyId = 1
         updateConfig.isShowNotification.yes {
-            showNotification(context, notifyId, progress, title, notificationChannel, nm)
+            showNotification(context, notifyId, progress, notificationChannel, nm)
         }
 
         // 下载完成
@@ -64,7 +62,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
     /**
      * 通知栏显示
      */
-    private fun showNotification(context: Context, notifyId: Int, progress: Int, title: String, notificationChannel: String, nm: NotificationManager) {
+    private fun showNotification(context: Context, notifyId: Int, progress: Int, notificationChannel: String, nm: NotificationManager) {
 
         val notificationName = "notification"
 
@@ -87,14 +85,20 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
             builder.setChannelId(notificationChannel)
         }
 
-        // TODO 设置
-        builder.setContentTitle("正在下载 $title")
+        // 通知栏标题
+        builder.setContentTitle(context.getString(R.string.downloading))
 
-        // 设置通知图标
-        builder.setSmallIcon(R.drawable.ic_logo)
-        builder.setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.ic_logo))
+        // 设置通知图标 // TODO
+        (updateConfig.notifyImgRes > 0).yes {
+            builder.setSmallIcon(R.drawable.ic_logo)
+            builder.setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.ic_logo))
+        }.no {
+            builder.setSmallIcon(android.R.mipmap.sym_def_app_icon)
+        }
 
+        // 设置进度
         builder.setProgress(100, progress, false)
+
         // 设置只响一次
         builder.setOnlyAlertOnce(true)
         val notification = builder.build()
@@ -102,10 +106,6 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        /**
-         * 标题key
-         */
-        private const val KEY_OF_INTENT_TITLE = "KEY_OF_INTENT_TITLE"
         /**
          * 进度key
          */
@@ -119,10 +119,9 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         /**
          * 发送进度通知
          */
-        fun send(context: Context, progress: Int, serverVersionName: String = "") {
+        fun send(context: Context, progress: Int) {
             val intent = Intent(ACTION_UPDATE)
             intent.putExtra(KEY_OF_INTENT_PROGRESS, progress)
-            intent.putExtra(KEY_OF_INTENT_TITLE, serverVersionName)
             context.sendBroadcast(intent)
         }
     }

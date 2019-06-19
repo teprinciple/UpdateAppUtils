@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import model.DownLoadBy;
+import model.UpdateConfig;
 import update.UpdateAppUtils;
 
 
@@ -66,12 +68,18 @@ public class MainActivity extends AppCompatActivity {
 
     //基本更新
     private void updat1() {
+        UpdateConfig config = new UpdateConfig();
+        config.setDownloadBy(DownLoadBy.APP);
+        config.setCheckWifi(true);
+        config.setForce(true);
 
-//        UpdateAppUtils
-//                .getInstance()
-//                .apkPath(apkPath)
-//                .updateInfo("1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧")
-//                .update(this);
+        UpdateAppUtils
+                .getInstance()
+                .apkUrl(apkPath)
+                .updateTitle("发现新版本V2.2.3")
+                .updateContent("1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧")
+                .changeConfig(config)
+                .update(this);
     }
 
     //通过浏览器下载

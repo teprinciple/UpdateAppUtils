@@ -1,6 +1,7 @@
 package extension
 
 import android.util.Log
+import update.UpdateAppUtils
 
 /**
  * desc: Any 扩展
@@ -10,5 +11,7 @@ val Any.TAG: String
     get() = this::class.java.simpleName
 
 fun Any.log(content: String) {
-    Log.i("UpdateAppUtils", content)
+    UpdateAppUtils.updateInfo.config.isDebug.yes {
+        Log.e("[UpdateAppUtils]", content)
+    }
 }

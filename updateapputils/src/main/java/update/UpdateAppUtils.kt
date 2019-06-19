@@ -1,6 +1,7 @@
 package update
 
 import android.content.Context
+import listener.UpdateDownloadListener
 import model.UpdateConfig
 import model.UpdateInfo
 import ui.UpdateAppActivity
@@ -13,6 +14,9 @@ object UpdateAppUtils {
 
     // 更新信息对象
     internal val updateInfo = UpdateInfo()
+
+    // 下载监听
+    internal var listener: UpdateDownloadListener? = null
 
     /**
      * 设置apk下载地址
@@ -47,17 +51,20 @@ object UpdateAppUtils {
     }
 
     /**
+     * 设置下载监听
+     */
+    fun setUpdateDownloadListener(listener: UpdateDownloadListener) {
+        this.listener = listener
+    }
+
+    /**
      * 检查更新
      */
-    fun update(context: Context) {
-        UpdateAppActivity.launch(context.applicationContext)
-    }
+    fun update(context: Context) = UpdateAppActivity.launch(context.applicationContext)
 
     /**
      * 获取单例对象
      */
     @JvmStatic
-    fun getInstance(): UpdateAppUtils {
-        return this
-    }
+    fun getInstance() = this
 }

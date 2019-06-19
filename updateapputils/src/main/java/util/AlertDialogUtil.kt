@@ -2,6 +2,7 @@ package util
 
 import android.app.Activity
 import android.app.AlertDialog
+import com.teprinciple.updateapputils.R
 
 /**
  * desc: AlertDialogUtil
@@ -20,7 +21,7 @@ object AlertDialogUtil {
         cancelText: String = "取消",
         sureText: String = "确认"
     ) {
-        AlertDialog.Builder(activity)
+        AlertDialog.Builder(activity, R.style.AlertDialog)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(sureText) { _, _ ->
