@@ -80,7 +80,6 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         }
 
         val builder = Notification.Builder(context)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId(notificationChannel)
         }
@@ -88,7 +87,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         // 通知栏标题
         builder.setContentTitle(context.getString(R.string.downloading))
 
-        // 设置通知图标 // TODO
+        // 设置通知图标
         (updateConfig.notifyImgRes > 0).yes {
             builder.setSmallIcon(R.drawable.ic_logo)
             builder.setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.ic_logo))

@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         UpdateConfig config = new UpdateConfig();
         config.setDownloadBy(DownLoadBy.APP);
         config.setCheckWifi(true);
-        config.setForce(true);
+        config.setForce(false);
 
         UpdateAppUtils
                 .getInstance()

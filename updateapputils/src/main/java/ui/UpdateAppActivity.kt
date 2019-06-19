@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import android.widget.Toast
 import com.teprinciple.updateapputils.R
 import extension.no
 import extension.yes
@@ -124,10 +125,15 @@ internal class UpdateAppActivity : AppCompatActivity() {
      */
     private fun realDownload() {
         DownloadAppUtils.download(this, updateInfo, onProgress = {
-            // TODO 在这里设置进度
+            // TODO 在这里设置进度 强制更新
         }, onError = {
 
         })
+
+        (updateConfig.force).no {
+            Toast.makeText(this, "更新下载中...", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 
     /**

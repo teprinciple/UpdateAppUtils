@@ -1,83 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="280dp"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_confirm"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="280dp"
+    <TextView
+        android:id="@+id/tv_update_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_dialog_confirm"
-        android:orientation="vertical">
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center_horizontal"
+        android:text="版本更新啦!"
+        android:textColor="@color/text_black"
+        android:textSize="18sp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:overScrollMode="never">
 
         <TextView
-            android:id="@+id/tv_update_title"
+            android:id="@+id/tv_update_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center_horizontal"
-            android:text="版本更新啦!"
-            android:textColor="@color/text_black"
-            android:textSize="18sp"/>
+            android:layout_gravity="center"
+            android:gravity="left"
+            android:lineSpacingExtra="5dp"
+            android:padding="12dp"
+            android:textColor="@color/text_black2"
+            android:textSize="14sp"/>
+    </ScrollView>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:overScrollMode="never">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="13dp"
+        android:background="#DFDFDF"/>
 
-            <TextView
-                android:id="@+id/tv_update_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="left"
-                android:lineSpacingExtra="5dp"
-                android:padding="12dp"
-                android:textColor="@color/text_black2"
-                android:textSize="14sp"/>
-        </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_update_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/text_blue"
+            android:textSize="16sp"/>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="13dp"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
             android:background="#DFDFDF"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_update_cancel"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/cancel"
-                android:textColor="@color/text_blue"
-                android:textSize="16sp"/>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="#DFDFDF"/>
-
-            <TextView
-                android:id="@+id/tv_update_sure"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/sure"
-                android:textColor="@color/text_blue"
-                android:textSize="16sp"/>
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/tv_update_sure"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/update_now"
+            android:textColor="@color/text_blue"
+            android:textSize="16sp"/>
     </LinearLayout>
+
 </LinearLayout>

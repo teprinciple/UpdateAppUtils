@@ -10,6 +10,9 @@ data class UpdateConfig(
 
     var isDebug: Boolean = false, // 是否是调试模式，调试模式会输出日志
 
+    var alwaysShowTips: Boolean = false, // 非强制更新时，是否每次都显示弹窗，用VersionName来判断？
+    var thisTimeShowTips: Boolean = false, // 非强制更新时，指定本次显示弹窗
+
     var force: Boolean? = false, // 是否强制更新
     var apkSavePath: String = "", // apk下载存放位置
     var downloadBy: Int = DownLoadBy.APP, // 下载方式：默认app下载
