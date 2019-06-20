@@ -2,9 +2,14 @@ package com.example.teprinciple.updateappdemo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
+import org.jetbrains.annotations.NotNull;
+
+import listener.UpdateDownloadListener;
 import model.DownLoadBy;
 import model.UpdateConfig;
 import update.UpdateAppUtils;
@@ -72,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         config.setDownloadBy(DownLoadBy.APP);
         config.setCheckWifi(true);
         config.setForce(false);
+        config.setApkSavePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/teprinciple");
 
         UpdateAppUtils
                 .getInstance()
@@ -79,6 +85,27 @@ public class MainActivity extends AppCompatActivity {
                 .updateTitle("发现新版本V2.2.3")
                 .updateContent("1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧")
                 .changeConfig(config)
+                .setUpdateDownloadListener(new UpdateDownloadListener() {
+                    @Override
+                    public void onStart() {
+                        Log.e("this", "开始下载");
+                    }
+
+                    @Override
+                    public void onDownload(int progress) {
+                        Log.e("this", "下载中" + progress);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        Log.e("this", "下载完成");
+                    }
+
+                    @Override
+                    public void onError(@NotNull Throwable e) {
+                        Log.e("this", "下载出错" + e.getMessage());
+                    }
+                })
                 .update(this);
     }
 

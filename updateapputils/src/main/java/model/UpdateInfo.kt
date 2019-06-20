@@ -1,7 +1,7 @@
 package model
 
 /**
- * desc:
+ * desc: UpdateInfo
  * time: 2019/6/18
  * @author yk
  */

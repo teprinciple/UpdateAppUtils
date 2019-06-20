@@ -10,8 +10,10 @@ import com.liulishuo.filedownloader.FileDownloadLargeFileListener
 import com.liulishuo.filedownloader.FileDownloader
 import extension.TAG
 import extension.log
+import extension.no
+import extension.yes
 import model.UpdateInfo
-import java.io.File
+import util.Utils
 
 
 /**
@@ -19,7 +21,10 @@ import java.io.File
  */
 internal object DownloadAppUtils {
 
-    var downloadUpdateApkFilePath: String = "" //下载更新Apk 文件路径
+    /**
+     * apk 下载后本地文件路径
+     */
+    var downloadUpdateApkFilePath: String = ""
 
     /**
      * 通过浏览器下载APK包
@@ -36,18 +41,29 @@ internal object DownloadAppUtils {
      */
     fun download(context: Context, updateInfo: UpdateInfo, onProgress: (Int) -> Unit = {}, onError: () -> Unit = {}) {
 
-        val packageName = context.packageName
-        log("packageName:$packageName")
-
-        // TODO 这里设置 下载存储位置
-        var filePath: String? = null
-        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) { //外部存储卡
-            filePath = Environment.getExternalStorageDirectory().absolutePath
-        } else {
-            Log.i(TAG, "没有SD卡")
+        (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED).no {
+            log("没有SD卡")
+            onError.invoke()
             return
         }
-        val apkLocalPath = filePath + File.separator + packageName + "_" + System.currentTimeMillis() + ".apk"
+
+        var filePath = ""
+        (updateInfo.config.apkSavePath.isNotEmpty()).yes {
+            filePath = updateInfo.config.apkSavePath
+        }.no {
+            val packageName = context.packageName
+            filePath = Environment.getExternalStorageDirectory().absolutePath + "/" + packageName
+        }
+
+        // apk 保存名称
+        val apkName = if (updateInfo.config.apkSaveName.isNotEmpty()) {
+            updateInfo.config.apkSaveName
+        } else {
+            Utils.getAppName(context)
+        }
+
+        val apkLocalPath = "$filePath/$apkName.apk"
+
         downloadUpdateApkFilePath = apkLocalPath
 
         FileDownloader.setup(context)
@@ -59,6 +75,7 @@ internal object DownloadAppUtils {
                 override fun pending(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
                     log("pending:soFarBytes($soFarBytes),totalBytes($totalBytes)")
                     UpdateAppUtils.listener?.onStart()
+                    UpdateAppReceiver.send(context, 0)
                 }
 
                 override fun progress(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {

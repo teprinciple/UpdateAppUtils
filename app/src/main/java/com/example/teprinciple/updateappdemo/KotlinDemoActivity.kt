@@ -2,13 +2,14 @@ package com.example.teprinciple.updateappdemo
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 
 class KotlinDemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlin_demo)
-        findViewById(R.id.kotlin_btn).setOnClickListener {
+        findViewById<View>(R.id.kotlin_btn).setOnClickListener {
             update()
         }
     }

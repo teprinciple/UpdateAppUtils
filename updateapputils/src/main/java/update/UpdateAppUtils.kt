@@ -53,8 +53,9 @@ object UpdateAppUtils {
     /**
      * 设置下载监听
      */
-    fun setUpdateDownloadListener(listener: UpdateDownloadListener) {
+    fun setUpdateDownloadListener(listener: UpdateDownloadListener): UpdateAppUtils {
         this.listener = listener
+        return this
     }
 
     /**

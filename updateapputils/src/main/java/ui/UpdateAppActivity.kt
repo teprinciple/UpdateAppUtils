@@ -43,10 +43,10 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
     private fun initView() {
 
-        tvTitle = findViewById(R.id.tv_update_title) as TextView
-        tvContent = findViewById(R.id.tv_update_content) as TextView
-        tvCancelBtn = findViewById(R.id.tv_update_cancel) as TextView
-        tvSureBtn = findViewById(R.id.tv_update_sure) as TextView
+        tvTitle = findViewById(R.id.tv_update_title)
+        tvContent = findViewById(R.id.tv_update_content)
+        tvCancelBtn = findViewById(R.id.tv_update_cancel)
+        tvSureBtn = findViewById(R.id.tv_update_sure)
 
         // 更新标题
         tvTitle.text = updateInfo.updateTitle

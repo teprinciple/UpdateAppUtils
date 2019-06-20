@@ -113,13 +113,13 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         /**
          * ACTION_UPDATE
          */
-        const val ACTION_UPDATE = "teprinciple.update" // TODO 研究一下这里
+        const val ACTION_UPDATE = "teprinciple.update"
 
         /**
          * 发送进度通知
          */
         fun send(context: Context, progress: Int) {
-            val intent = Intent(ACTION_UPDATE)
+            val intent = Intent(context.packageName + ACTION_UPDATE)
             intent.putExtra(KEY_OF_INTENT_PROGRESS, progress)
             context.sendBroadcast(intent)
         }

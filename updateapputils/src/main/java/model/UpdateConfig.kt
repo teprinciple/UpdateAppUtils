@@ -15,6 +15,7 @@ data class UpdateConfig(
 
     var force: Boolean? = false, // 是否强制更新
     var apkSavePath: String = "", // apk下载存放位置
+    var apkSaveName: String = "", // apk 保存名（默认是app的名字）
     var downloadBy: Int = DownLoadBy.APP, // 下载方式：默认app下载
     var justDownload: Boolean = false, // 是否只下载apk，不进行安装
 
