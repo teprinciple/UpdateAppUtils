@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -16,6 +17,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // 忽略错误信息
     lintOptions {
         abortOnError false
     }
@@ -28,90 +31,20 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
-
     implementation 'com.liulishuo.filedownloader:library:1.7.6'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+
 repositories {
     mavenCentral()
 }
 
-
-//apply plugin: 'com.github.dcendents.android-maven'
-//apply plugin: 'com.jfrog.bintray'
-//// This is the library version used when deploying the artifact
-//version = "1.5.1"
-//
-//def siteUrl = 'https://github.com/teprinciple/UpdateAppDemo'      // 项目的主页
-//def gitUrl = 'https://github.com/teprinciple/UpdateAppDemo.git'   // Git仓库的url
-//group = "com.teprinciple"          // Maven Group ID for the artifact，一般填你唯一的包名
-//install {
-//    repositories.mavenInstaller {
-//        // This generates POM.update_file_paths with proper parameters
-//        pom {
-//            project {
-//                packaging 'aar'
-//                // Add your description here
-//                name 'A Simple library for Android update app'
-//                url siteUrl
-//                // Set your license
-//                licenses {
-//                    license {
-//                        name 'The Apache Software License, Version 2.0'
-//                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//                    }
-//                }
-//                developers {
-//                    developer {
-//                        id 'teprinciple'        //填写的一些基本信息
-//                        name 'teprinciple'
-//                        email 'teprinciple@foxmail.com'
-//                    }
-//                }
-//                scm {
-//                    connection gitUrl
-//                    developerConnection gitUrl
-//                    url siteUrl
-//                }
-//            }
-//        }
-//    }
-//}
-//task sourcesJar(type: Jar) {
-//    from android.sourceSets.main.java.srcDirs
-//    classifier = 'sources'
-//}
-//task javadoc(type: Javadoc) {
-//    source = android.sourceSets.main.java.srcDirs
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//}
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    classifier = 'javadoc'
-//    from javadoc.destinationDir
-//}
-//artifacts {
-//    archives javadocJar
-//    archives sourcesJar
-//}
-//Properties properties = new Properties()
-//properties.load(project.rootProject.file('local.properties').newDataInputStream())
-//bintray {
-//    user = properties.getProperty("bintray.user")
-//    key = properties.getProperty("bintray.apikey")
-//    configurations = ['archives']
-//    pkg {
-//        repo = "maven" ////跟上面创建的Maven仓库名字保持一致
-//        name = "update.UpdateAppUtils"    //发布到JCenter上的项目名字
-//        websiteUrl = siteUrl
-//        vcsUrl = gitUrl
-//        licenses = ["Apache-2.0"]
-//        publish = true
-//    }
-//}
-//javadoc { //jav doc采用utf-8编码否则会报“GBK的不可映射字符”错误
-//    options{
-//        encoding "UTF-8"
-//        charSet 'UTF-8'
-//    }
-//}
+publish {
+    userOrg = 'teprinciple'
+    groupId = 'com.teprinciple'
+    artifactId = 'updateapputils'
+    publishVersion = '1.5.5'
+    desc = 'A Simple library for Android update app'
+    website = 'https://github.com/teprinciple/UpdateAppDemo'
+}
 
