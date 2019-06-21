@@ -6,9 +6,11 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import listener.Md5CheckResultListener;
 import listener.UpdateDownloadListener;
 import model.DownLoadBy;
 import model.UpdateConfig;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     //服务器apk path,这里放了百度云盘的apk 作为测试
     String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_9.6.63.apk";
+    //    String apkPath = "http://118.24.148.250:8080/yk/app-release.apk";
     private int code = 0;
 
     @Override
@@ -73,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
     //基本更新
     private void updat1() {
+
+        // 当前应用签名md5  F5:65:3A:FC:71:C6:AD:EE:BB:B2:D0:D4:67:73:8D:67
+
         UpdateConfig config = new UpdateConfig();
         config.setDownloadBy(DownLoadBy.APP);
         config.setCheckWifi(true);
@@ -85,6 +91,15 @@ public class MainActivity extends AppCompatActivity {
                 .updateTitle("发现新版本V2.2.3")
                 .updateContent("1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧")
                 .changeConfig(config)
+                .setMd5CheckResultListener(new Md5CheckResultListener() {
+                    @Override
+                    public void onResult(boolean result) {
+                        if (!result) {
+                            Toast.makeText(MainActivity.this, "下载应用签名Md5校验失败", Toast.LENGTH_LONG).show();
+//                            AlertDialogUtil.INSTANCE.show(MainActivity.this,"下载应用签名Md5校验失败");
+                        }
+                    }
+                })
                 .setUpdateDownloadListener(new UpdateDownloadListener() {
                     @Override
                     public void onStart() {
@@ -106,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("this", "下载出错" + e.getMessage());
                     }
                 })
-                .update(this);
+                .update();
     }
 
     //通过浏览器下载

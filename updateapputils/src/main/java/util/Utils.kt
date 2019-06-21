@@ -59,7 +59,7 @@ internal object Utils {
         val manager = ctx.packageManager
         return try {
             manager.getPackageInfo(ctx.packageName, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (e: Exception) {
             null
         }
     }

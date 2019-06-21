@@ -1,6 +1,6 @@
 package update
 
-import android.content.Context
+import listener.Md5CheckResultListener
 import listener.UpdateDownloadListener
 import model.UpdateConfig
 import model.UpdateInfo
@@ -22,6 +22,9 @@ object UpdateAppUtils {
 
     // 下载监听
     internal var listener: UpdateDownloadListener? = null
+
+    // md5校验结果回调
+    internal var md5CheckResultListener: Md5CheckResultListener? = null
 
     /**
      * 设置apk下载地址
@@ -64,9 +67,17 @@ object UpdateAppUtils {
     }
 
     /**
+     * 设置md5校验结果回调
+     */
+    fun setMd5CheckResultListener(listener: Md5CheckResultListener): UpdateAppUtils {
+        this.md5CheckResultListener = listener
+        return this
+    }
+
+    /**
      * 检查更新
      */
-    fun update(context: Context) = UpdateAppActivity.launch(context.applicationContext)
+    fun update() = UpdateAppActivity.launch()
 
     /**
      * 获取单例对象

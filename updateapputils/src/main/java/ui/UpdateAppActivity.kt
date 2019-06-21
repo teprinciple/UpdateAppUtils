@@ -1,7 +1,6 @@
 package ui
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -21,6 +20,7 @@ import update.DownloadAppUtils
 import update.UpdateAppService
 import update.UpdateAppUtils
 import util.AlertDialogUtil
+import util.GlobalContextProvider
 import util.Utils
 
 internal class UpdateAppActivity : AppCompatActivity() {
@@ -160,7 +160,8 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
     companion object {
 
-        fun launch(context: Context) {
+        fun launch() {
+            val context = GlobalContextProvider.getGlobalContext().applicationContext
             val intent = Intent(context, UpdateAppActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
