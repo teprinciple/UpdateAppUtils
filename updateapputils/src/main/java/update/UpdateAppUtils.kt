@@ -5,12 +5,17 @@ import listener.UpdateDownloadListener
 import model.UpdateConfig
 import model.UpdateInfo
 import ui.UpdateAppActivity
+import util.GlobalContextProvider
 
 
 /**
  * Created by Teprinciple on 2016/11/15.
  */
 object UpdateAppUtils {
+
+    init {
+        GlobalContextProvider.getGlobalContext()
+    }
 
     // 更新信息对象
     internal val updateInfo = UpdateInfo()

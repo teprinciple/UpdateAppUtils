@@ -78,4 +78,9 @@ internal object Utils {
         }
         return null
     }
+
+    @JvmStatic
+    fun getApp(): Context {
+        return GlobalContextProvider.getGlobalContext()
+    }
 }

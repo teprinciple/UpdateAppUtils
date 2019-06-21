@@ -11,7 +11,10 @@ import extension.log
 import extension.no
 import extension.yes
 import model.UpdateInfo
+import util.ApkUtils
+import util.SignCheckUtil
 import util.Utils
+import java.io.File
 
 
 /**
@@ -88,6 +91,21 @@ internal object DownloadAppUtils {
 
                 override fun completed(task: BaseDownloadTask) {
                     log("completed")
+                    // TODO 进行 签名证书的MD5校验
+                    // 先获取本应用的MD5值，获取未安装应用的MD5.进行对比
+                    // https://blog.csdn.net/chenliguan/article/details/51333447
+                    // https://www.cnblogs.com/caoxinyu/p/6647783.html
+
+                    // https://blog.csdn.net/wulianghuan/article/details/18400581
+
+                    // https://github.com/Blankj/AndroidUtilCode
+
+                    // F5:65:3A:FC:71:C6:AD:EE:BB:B2:D0:D4:67:73:8D:67
+
+                    log(SignCheckUtil.getAppSignatureMD5())
+
+                    log(ApkUtils.getSignaturesFromApk(File("../"))[0])
+
                     UpdateAppReceiver.send(context, 100)
                     UpdateAppUtils.listener?.onFinish()
                 }
