@@ -1,7 +1,7 @@
 # UpdateAppUtils1.5.2
 
-
-#####  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 全新2.0 kotlin重构进行中, 欢迎issues...
+ [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
+##### 全新2.0 kotlin重构进行中, 欢迎issues...
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 ### 适配Android6.0、7.0、8.0
 ![](update.gif)
