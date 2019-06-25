@@ -90,26 +90,9 @@ internal object DownloadAppUtils {
                 override fun completed(task: BaseDownloadTask) {
                     log("completed")
                     UpdateAppUtils.listener?.onFinish()
-
                     // 校验md5
-                    // 先获取本应用的MD5值，获取未安装应用的MD5.进行对比
                     (updateInfo.config.needCheckMd5).yes {
-                        // 当前应用签名md5
-                        val localMd5 = SignMd5Util.getAppSignatureMD5()
-                        // 下载的apk 签名md5
-                        val apkMd5 = SignMd5Util.getSignMD5FromApk(File(downloadUpdateApkFilePath))
-                        log("当前应用签名md5：$localMd5")
-                        log("下载apk签名md5：$apkMd5")
-
-                        // 校验结果回调
-                        UpdateAppUtils.md5CheckResultListener?.onResult(localMd5.equals(apkMd5, true))
-
-                        (localMd5.equals(apkMd5, true)).yes {
-                            log("md5校验成功")
-                            UpdateAppReceiver.send(context, 100)
-                        }.no {
-                            log("md5校验失败")
-                        }
+                        checkMd5(context)
                     }.no {
                         UpdateAppReceiver.send(context, 100)
                     }
@@ -124,5 +107,29 @@ internal object DownloadAppUtils {
                 override fun warn(task: BaseDownloadTask) {
                 }
             }).start()
+    }
+
+    /**
+     * 校验Md5
+     *  先获取本应用的MD5值，获取未安装应用的MD5.进行对比
+     */
+    private fun checkMd5(context: Context) {
+        // 当前应用md5
+        val localMd5 = SignMd5Util.getAppSignatureMD5()
+
+        // 下载的apk 签名md5
+        val apkMd5 = SignMd5Util.getSignMD5FromApk(File(downloadUpdateApkFilePath))
+        log("当前应用签名md5：$localMd5")
+        log("下载apk签名md5：$apkMd5")
+
+        // 校验结果回调
+        UpdateAppUtils.md5CheckResultListener?.onResult(localMd5.equals(apkMd5, true))
+
+        (localMd5.equals(apkMd5, true)).yes {
+            log("md5校验成功")
+            UpdateAppReceiver.send(context, 100)
+        }.no {
+            log("md5校验失败")
+        }
     }
 }

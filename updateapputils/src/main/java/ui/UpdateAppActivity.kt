@@ -57,7 +57,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
         // 取消
         tvCancelBtn.setOnClickListener {
             updateConfig.force.yes {
-                System.exit(0)
+                Utils.exitApp()
             }.no {
                 finish()
             }
@@ -125,13 +125,14 @@ internal class UpdateAppActivity : AppCompatActivity() {
      */
     private fun realDownload() {
         DownloadAppUtils.download(this, updateInfo, onProgress = {
-            // TODO 在这里设置进度 强制更新
+            // TODO 在这里设置进度 UI 需要有进度条
         }, onError = {
 
         })
 
+        Toast.makeText(this, "更新下载中...", Toast.LENGTH_SHORT).show()
+
         (updateConfig.force).no {
-            Toast.makeText(this, "更新下载中...", Toast.LENGTH_SHORT).show()
             finish()
         }
     }

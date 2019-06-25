@@ -73,16 +73,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     //基本更新
     private void updat1() {
-
         // 当前应用签名md5  F5:65:3A:FC:71:C6:AD:EE:BB:B2:D0:D4:67:73:8D:67
-
         UpdateConfig config = new UpdateConfig();
         config.setDownloadBy(DownLoadBy.APP);
         config.setCheckWifi(true);
-        config.setForce(false);
+        config.setForce(true);
         config.setApkSavePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/teprinciple");
 
         UpdateAppUtils

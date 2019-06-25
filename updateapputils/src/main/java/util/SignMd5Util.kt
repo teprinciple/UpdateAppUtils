@@ -13,7 +13,6 @@ import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import kotlin.experimental.and
 
-
 /**
  * desc: 获取签名 md5
  * time: 2019/6/21
@@ -60,7 +59,6 @@ object SignMd5Util {
         return signatures.getOrNull(0) ?: ""
     }
 
-
     private fun getAppSignature(packageName: String): Array<Signature>? {
         if (packageName.isEmpty()) return null
         return try {
@@ -86,7 +84,7 @@ object SignMd5Util {
         }
     }
 
-    fun bytes2HexString(bytes: ByteArray?): String {
+    private fun bytes2HexString(bytes: ByteArray?): String {
         if (bytes == null) return ""
         val len = bytes.size
         if (len <= 0) return ""

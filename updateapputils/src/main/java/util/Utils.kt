@@ -1,14 +1,15 @@
 package util
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.support.v4.content.FileProvider
 import java.io.File
+
 
 /**
  * desc: Utils
@@ -36,6 +37,22 @@ internal object Utils {
 
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(i)
+    }
+
+    /**
+     * 退出app
+     */
+    fun exitApp() {
+        val manager = getApp().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            manager.appTasks.forEach {
+                it.finishAndRemoveTask()
+            }
+//            System.exit(0)
+        } else {
+            // TODO 5.0 以下值能结束当前 进程
+            System.exit(0)
+        }
     }
 
     /**
