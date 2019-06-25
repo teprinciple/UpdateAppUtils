@@ -1,15 +1,17 @@
-# UpdateAppUtils1.5.1
+# UpdateAppUtils1.5.2
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 ### 适配Android6.0、7.0、8.0
 ![](update.gif)
 
-
+[ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html)
+##### kotlin 全新2.0 重构进行中...
+##### 欢迎issues
 
 ## 集成
 compile引入
 ```
 dependencies {
-    compile 'com.teprinciple:updateapputils:1.5.1'
+    compile 'com.teprinciple:updateapputils:1.5.2'
 }
 ```
 
@@ -82,6 +84,8 @@ UpdateAppUtils.from(this)
 
 
 #### 更新日志
+1.5.2<br>
+修复部分bug
 1.5.1<br>
 库内部适配至Android8.0
 <br>1.4<br>
@@ -95,3 +99,4 @@ UpdateAppUtils.from(this)
 适配Android7.0，并在demo中加入适配6.0和7.0的代码<br>
 <br>1.1<br>
 适配更多SdkVersion
+
