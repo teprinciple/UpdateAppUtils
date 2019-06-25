@@ -28,5 +28,5 @@ data class UpdateConfig(
     var localVersionName: String? = "", // 当前本地版本名
     var localVersionCode: Int = 0,// 当前本地版本号
 
-    var needCheckMd5: Boolean = true // 是否需要进行md5校验，仅app下载方式有效
+    var needCheckMd5: Boolean = false // 是否需要进行md5校验，仅app下载方式有效
 ) : Parcelable
