@@ -1,13 +1,5 @@
 package model
-
-import android.annotation.SuppressLint
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@SuppressLint("ParcelCreator")
-@Parcelize
 data class UpdateConfig(
-
     var isDebug: Boolean = true, // 是否是调试模式，调试模式会输出日志
 
     var alwaysShowTips: Boolean = false, // 非强制更新时，是否每次都显示弹窗，用VersionName来判断？
@@ -29,4 +21,4 @@ data class UpdateConfig(
     var localVersionCode: Int = 0,// 当前本地版本号
 
     var needCheckMd5: Boolean = false // 是否需要进行md5校验，仅app下载方式有效
-) : Parcelable
+)

@@ -11,7 +11,7 @@
 compile引入
 ```
 dependencies {
-    compile 'com.teprinciple:updateapputils:1.5.2'
+    implementation 'com.teprinciple:updateapputils:1.5.2'
 }
 ```
 
