@@ -16,7 +16,7 @@ buildscript {
 }
 
 allprojects {
-    tasks.withType(Javadoc).all { enabled = false }
+
     repositories {
         jcenter()
         google()
