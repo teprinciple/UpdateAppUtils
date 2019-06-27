@@ -11,13 +11,15 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.teprinciple.updateapputils.R
+import constacne.DownLoadBy
+import constacne.UiType
 import extension.no
 import extension.visibleOrGone
 import extension.yes
-import model.DownLoadBy
 import update.DownloadAppUtils
 import update.UpdateAppService
 import update.UpdateAppUtils
@@ -30,22 +32,35 @@ internal class UpdateAppActivity : AppCompatActivity() {
     private var tvTitle: TextView? = null
     private var tvContent: TextView? = null
     private var tvSureBtn: TextView? = null
-    private var tvCancelBtn: TextView? = null
+    private var tvCancelBtn: View? = null
+    private var ivLogo: ImageView? = null
 
+    /**
+     * 更新信息
+     */
     private val updateInfo by lazy { UpdateAppUtils.updateInfo }
 
+    /**
+     * 更新配置
+     */
     private val updateConfig by lazy { updateInfo.config }
+
+    /**
+     * ui 配置
+     */
+    private val uiConfig by lazy { updateInfo.uiConfig }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (updateConfig.customLayoutId > 0).yes {
-            // 使用自定义布局
-            setContentView(updateConfig.customLayoutId)
-        }.no {
-            // 使用内置默认布局
-            setContentView(R.layout.view_version_tips_dialog)
-        }
+        setContentView(
+            when (uiConfig.uiType) {
+                UiType.SIMPLE -> R.layout.view_update_dialog_simple
+                UiType.PLENTIFUL -> R.layout.view_update_dialog_plentiful
+                UiType.CUSTOM -> uiConfig.customLayoutId ?: R.layout.view_update_dialog_simple
+                else -> R.layout.view_update_dialog_simple
+            }
+        )
         initView()
     }
 
@@ -55,6 +70,9 @@ internal class UpdateAppActivity : AppCompatActivity() {
         tvContent = findViewById(R.id.tv_update_content)
         tvCancelBtn = findViewById(R.id.tv_update_cancel)
         tvSureBtn = findViewById(R.id.tv_update_sure)
+        ivLogo = findViewById(R.id.iv_update_logo)
+
+        initUi()
 
         // 更新标题
         tvTitle?.text = updateInfo.updateTitle
@@ -80,6 +98,38 @@ internal class UpdateAppActivity : AppCompatActivity() {
         tvCancelBtn?.visibleOrGone(!updateConfig.force)
         // 取消按钮与确定按钮中的间隔线
         findViewById<View>(R.id.view_line)?.visibleOrGone(!updateConfig.force)
+    }
+
+    /**
+     * 初始化UI
+     */
+    private fun initUi() {
+
+        uiConfig.apply {
+            // 设置更新logo
+            updateLogoImgRes?.let { ivLogo?.setImageResource(it) }
+            // 设置标题字体颜色、大小
+            titleTextColor?.let { tvTitle?.setTextColor(it) }
+            titleTextSize?.let { tvTitle?.setTextSize(it) }
+            // 设置标题字体颜色、大小
+            contentTextColor?.let { tvContent?.setTextColor(it) }
+            contentTextSize?.let { tvContent?.setTextSize(it) }
+            // 更新按钮相关设置
+            updateBtnTextColor?.let { tvSureBtn?.setTextColor(it) }
+            updateBtnTextSize?.let { tvSureBtn?.setTextSize(it) }
+            updateBtnBgColor?.let { tvSureBtn?.setBackgroundColor(it) }
+            updateBtnBgRes?.let { tvSureBtn?.setBackgroundResource(it) }
+            tvSureBtn?.text = updateBtnText
+
+            // 取消按钮相关设置
+            if (tvCancelBtn is TextView) {
+                cancelBtnTextColor?.let { (tvCancelBtn as? TextView)?.setTextColor(it) }
+                cancelBtnTextSize?.let { (tvCancelBtn as? TextView)?.setTextSize(it) }
+                (tvCancelBtn as? TextView)?.text = cancelBtnText
+            }
+            cancelBtnBgColor?.let { tvCancelBtn?.setBackgroundColor(it) }
+            cancelBtnBgRes?.let { tvCancelBtn?.setBackgroundResource(it) }
+        }
     }
 
     override fun onBackPressed() {
@@ -159,6 +209,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }.no {
                 ActivityCompat.shouldShowRequestPermissionRationale(this, permission).no {
                     // 显示无权限弹窗
+                    // TODO 中英文
                     AlertDialogUtil.show(this, "暂无储存权限，是否前往打开", onSureClick = {
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         intent.data = Uri.parse("package:$packageName") // 根据包名打开对应的设置界面
@@ -167,6 +218,11 @@ internal class UpdateAppActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.dialog_enter, R.anim.dialog_out)
     }
 
     companion object {

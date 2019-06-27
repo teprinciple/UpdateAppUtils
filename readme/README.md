@@ -41,21 +41,25 @@ UpdateAppUtils.from(this)
                 .update();
 ```
 
-#### 说明
-```
-    1、UpdateAppUtils提供两种更新判断方式
+#### UI配置
 
-    CHECK_BY_VERSION_CODE:通过versionCode判断，服务器上versionCode > 本地versionCode则执行更新
+#### 自定义UI
 
-    CHECK_BY_VERSION_NAME：通过versionName判断，服务器上versionName 与 本地versionName不同则更新
+## Api说明
 
-    2、UpdateAppUtils提供两种下载apk方式
+#### UpdateAppUtils全部Api
 
-    DOWNLOAD_BY_APP：通过App下载
+| api             | 说明                               | 默认值                   | 必须设置 |
+|:-------------- |:------------------------------------ |:--------------------- |:------ |
+| fun apkUrl(apkUrl: String)| 更新包服务器url         | null                  | true   |
+| fun update() | UpdateAppUtils入口      | -     | true   |
+| fun updateTitle(title: String)         | 更新标题     | 版本更新啦！     | false   |
+| fun updateContent(content: String)        | 更新内容   | 发现新版本，立即更新  | false   |
+| fun updateConfig(config: UpdateConfig)   | 更新配置  | 查看源码 | false  |
+| fun uiConfig(uiConfig: UiConfig) | 更新弹窗UI配置  | 查看源码                 | false  |
+| fun setUpdateDownloadListener(listener: UpdateDownloadListener) | 下载过程监听  | null | false   |
+| fun setMd5CheckResultListener(listener: Md5CheckResultListener) | md5校验结果回调 | null  | false  |
 
-    DOWNLOAD_BY_BROWSER：通过手机浏览器下载
-
-```
 
 #### UpdateConfig：更新配置说明
 

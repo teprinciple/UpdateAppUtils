@@ -1,9 +1,12 @@
 package com.example.teprinciple.updateappdemo
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import constacne.DownLoadBy
+import constacne.UiType
 import kotlinx.android.synthetic.main.activity_main.*
-import model.DownLoadBy
+import model.UiConfig
 import model.UpdateConfig
 import update.UpdateAppUtils
 
@@ -17,6 +20,14 @@ class MainActivity : AppCompatActivity() {
 
     private val updateContent = "1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧"
 
+    private val uiConfig by lazy {
+        UiConfig().apply {
+            uiType = UiType.PLENTIFUL
+            cancelBtnText = "下次再说"
+            cancelBtnTextColor = Color.RED
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,8 +38,8 @@ class MainActivity : AppCompatActivity() {
                 .getInstance()
                 .apkUrl(apkPath)
                 .updateTitle(updateTitle)
-                .changeConfig(UpdateConfig(customLayoutId = R.layout.view_custom_update_dialog))
                 .updateContent(updateContent)
+                .uiConfig(uiConfig)
                 .update()
         }
 
@@ -39,10 +50,9 @@ class MainActivity : AppCompatActivity() {
                 .apkUrl(apkPath)
                 .updateTitle(updateTitle)
                 .updateContent(updateContent)
-                .changeConfig(UpdateConfig(downloadBy = DownLoadBy.BROWSER))
+                .updateConfig(UpdateConfig(downloadBy = DownLoadBy.BROWSER))
+                .uiConfig(UiConfig(uiType = UiType.SIMPLE,cancelBtnTextColor = Color.GREEN))
                 .update()
         }
-
-
     }
 }

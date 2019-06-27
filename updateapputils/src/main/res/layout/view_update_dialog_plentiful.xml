@@ -5,31 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="280dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_dialog_update"
+    android:background="@drawable/bg_update_dialog"
     android:paddingBottom="10dp">
 
     <ImageView
-        android:id="@+id/iv_logo"
+        android:id="@+id/iv_update_logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_update"/>
+        app:srcCompat="@drawable/ic_update_logo"/>
 
     <TextView
         android:id="@+id/tv_update_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="#000000"
+        android:textColor="@color/text_title"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
+        app:layout_constraintTop_toBottomOf="@+id/iv_update_logo"
         tools:text="版本更新啦!"/>
-
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -49,7 +48,7 @@
             android:lineSpacingExtra="5dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:textColor="@color/text_black2"
+            android:textColor="@color/text_content"
             android:textSize="14sp"
             tools:text="1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧"/>
     </ScrollView>
@@ -62,10 +61,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_btn"
+        android:background="@drawable/bg_update_btn"
         android:gravity="center"
-        android:text="立即更新"
-        android:textColor="#ffffff"
+        android:text="@string/update_now"
+        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,12 +74,12 @@
         android:id="@+id/tv_update_cancel"
         android:layout_width="0dp"
         android:layout_height="35dp"
-        android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
-        android:text="下次再说"
-        android:textColor="#666666"
+        android:text="@string/update_cancel"
+        android:textColor="@color/text_content"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="280dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_dialog_confirm"
+    android:background="@drawable/bg_update_dialog"
     android:orientation="vertical">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
         android:gravity="center_horizontal"
-        android:textColor="@color/text_black"
+        android:textColor="@color/text_title"
         android:textSize="18sp"
         tools:text="版本更新啦!"/>
 
@@ -32,7 +32,7 @@
             android:gravity="left"
             android:lineSpacingExtra="5dp"
             android:padding="12dp"
-            android:textColor="@color/text_black2"
+            android:textColor="@color/text_content"
             android:textSize="14sp"/>
     </ScrollView>
 
@@ -53,8 +53,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/cancel"
-            android:textColor="@color/text_blue"
+            android:text="@string/update_cancel"
+            android:textColor="@color/text_content"
             android:textSize="16sp"/>
 
         <View

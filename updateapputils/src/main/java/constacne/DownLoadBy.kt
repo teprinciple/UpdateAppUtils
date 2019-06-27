@@ -1,4 +1,4 @@
-package model
+package constacne
 
 /**
  * desc: 下载方式

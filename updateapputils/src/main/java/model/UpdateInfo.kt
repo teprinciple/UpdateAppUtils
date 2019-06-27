@@ -1,5 +1,8 @@
 package model
 
+import com.teprinciple.updateapputils.R
+import util.GlobalContextProvider
+
 /**
  * desc: UpdateInfo
  * time: 2019/6/18
@@ -7,11 +10,13 @@ package model
  */
 internal data class UpdateInfo(
     // 更新标题
-    var updateTitle: String = "版本更新啦",
+    var updateTitle: String = GlobalContextProvider.getGlobalContext().getString(R.string.update_title),
     // 更新内容
-    var updateContent: String? = "发现新版本，立即更新",
+    var updateContent: String = GlobalContextProvider.getGlobalContext().getString(R.string.update_content),
     // apk 下载地址
     var apkUrl: String = "",
     // 更新配置
-    var config: UpdateConfig = UpdateConfig()
+    var config: UpdateConfig = UpdateConfig(),
+    // ui配置
+    var uiConfig: UiConfig = UiConfig()
 )

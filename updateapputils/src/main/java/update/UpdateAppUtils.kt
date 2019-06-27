@@ -2,6 +2,7 @@ package update
 
 import listener.Md5CheckResultListener
 import listener.UpdateDownloadListener
+import model.UiConfig
 import model.UpdateConfig
 import model.UpdateInfo
 import ui.UpdateAppActivity
@@ -51,10 +52,18 @@ object UpdateAppUtils {
     }
 
     /**
-     * 更改更新配置
+     * 设置更新配置
      */
-    fun changeConfig(config: UpdateConfig): UpdateAppUtils {
+    fun updateConfig(config: UpdateConfig): UpdateAppUtils {
         updateInfo.config = config
+        return this
+    }
+
+    /**
+     * 设置UI配置
+     */
+    fun uiConfig(uiConfig: UiConfig): UpdateAppUtils{
+        updateInfo.uiConfig = uiConfig
         return this
     }
 

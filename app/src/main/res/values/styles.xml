@@ -13,7 +13,7 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@drawable/bg_dialog_confirm</item>
+        <item name="android:windowBackground">@drawable/bg_update_dialog</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 

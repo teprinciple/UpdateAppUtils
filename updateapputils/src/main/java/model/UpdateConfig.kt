@@ -1,5 +1,7 @@
 package model
 
+import constacne.DownLoadBy
+
 data class UpdateConfig(
     var isDebug: Boolean = true, // 是否是调试模式，调试模式会输出日志
 
@@ -19,7 +21,5 @@ data class UpdateConfig(
     var needCheckMd5: Boolean = false, // 是否需要进行md5校验，仅app下载方式有效
 
     var serverVersionName: String = "", // 服务器上版本名
-    var serverVersionCode: Int = 0, // 服务器上版本号
-
-    var customLayoutId: Int = -1 // 自定义弹窗view id
+    var serverVersionCode: Int = 0 // 服务器上版本号
 )
