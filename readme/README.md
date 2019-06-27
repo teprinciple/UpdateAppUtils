@@ -4,10 +4,9 @@
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 
 ## 集成
-compile引入
 ```
 repositories {
-	jcenter()    
+   jcenter()    
 }
 
 dependencies {
@@ -28,21 +27,7 @@ dependencies {
                 .update();
 ```
 
-#### Kotlin代码调用完全一样
-```
-   private fun update() {
-        val apkPath:String = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk"
-
-        UpdateAppUtils.from(this)
-                .serverVersionCode(2)
-                .serverVersionName("2.0")
-                .apkPath(apkPath)
-                .update()
-    }
-
-```
-
-#### 更多配置使用
+#### 多配置使用
 ```
 UpdateAppUtils.from(this)
                 .checkBy(UpdateAppUtils.CHECK_BY_VERSION_NAME) //更新检测方式，默认为VersionCode
@@ -72,12 +57,12 @@ UpdateAppUtils.from(this)
 
 ```
 
-#### UpdateConfig：更新配置
+#### UpdateConfig：更新配置说明
 
-| 属性                  | 描述                               | 默认值 |
+| 属性                  | 说明                               | 默认值 |
 |:--------------------- |:------------------------------------ |:------ |
 | isDebug               | 是否输出【UpdateAppUtils】为Tag的日志|  true |
-| force                 | 是否强制更新                         | false  |
+| force                 | 是否强制更新，强制时无取消按钮       | false  |
 | apkSavePath           | apk下载存放位置               | 包名目录    |
 | apkSaveName           | apk保存文件名                 | 项目名        |
 | downloadBy            | 下载方式              | DownLoadBy.APP   |
@@ -87,6 +72,7 @@ UpdateAppUtils.from(this)
 | notifyImgRes          | 通知栏图标              | 项目icon  |
 | serverVersionName     | 服务器上apk版本名 | 无   |
 | serverVersionCode     | 服务器上apk版本号 | 无   |
+| customLayoutId        | 自定义更新弹窗布局id | 无   |
 
 #### 更新日志
 ##### 2.0.0

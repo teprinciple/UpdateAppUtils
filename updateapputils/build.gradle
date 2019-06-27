@@ -47,4 +47,3 @@ publish {
     desc = 'A Simple library for Android update app'
     website = 'https://github.com/teprinciple/UpdateAppDemo'
 }
-

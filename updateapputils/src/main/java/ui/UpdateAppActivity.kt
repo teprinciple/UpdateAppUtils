@@ -10,10 +10,12 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.teprinciple.updateapputils.R
 import extension.no
+import extension.visibleOrGone
 import extension.yes
 import model.DownLoadBy
 import update.DownloadAppUtils
@@ -25,10 +27,10 @@ import util.Utils
 
 internal class UpdateAppActivity : AppCompatActivity() {
 
-    private lateinit var tvTitle: TextView
-    private lateinit var tvContent: TextView
-    private lateinit var tvSureBtn: TextView
-    private lateinit var tvCancelBtn: TextView
+    private var tvTitle: TextView? = null
+    private var tvContent: TextView? = null
+    private var tvSureBtn: TextView? = null
+    private var tvCancelBtn: TextView? = null
 
     private val updateInfo by lazy { UpdateAppUtils.updateInfo }
 
@@ -36,8 +38,14 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TODO 可以从这里设置不同的UI
-        setContentView(R.layout.view_version_tips_dialog)
+
+        (updateConfig.customLayoutId > 0).yes {
+            // 使用自定义布局
+            setContentView(updateConfig.customLayoutId)
+        }.no {
+            // 使用内置默认布局
+            setContentView(R.layout.view_version_tips_dialog)
+        }
         initView()
     }
 
@@ -49,13 +57,13 @@ internal class UpdateAppActivity : AppCompatActivity() {
         tvSureBtn = findViewById(R.id.tv_update_sure)
 
         // 更新标题
-        tvTitle.text = updateInfo.updateTitle
+        tvTitle?.text = updateInfo.updateTitle
 
         // 更新内容
-        tvContent.text = updateInfo.updateContent
+        tvContent?.text = updateInfo.updateContent
 
         // 取消
-        tvCancelBtn.setOnClickListener {
+        tvCancelBtn?.setOnClickListener {
             updateConfig.force.yes {
                 Utils.exitApp()
             }.no {
@@ -64,13 +72,18 @@ internal class UpdateAppActivity : AppCompatActivity() {
         }
 
         // 确定
-        tvSureBtn.setOnClickListener {
+        tvSureBtn?.setOnClickListener {
             preDownLoad()
         }
+
+        // 强制更新 不显示取消按钮
+        tvCancelBtn?.visibleOrGone(!updateConfig.force)
+        // 取消按钮与确定按钮中的间隔线
+        findViewById<View>(R.id.view_line)?.visibleOrGone(!updateConfig.force)
     }
 
     override fun onBackPressed() {
-        // do noting
+        // do noting 禁用返回键
     }
 
     /**
@@ -124,14 +137,11 @@ internal class UpdateAppActivity : AppCompatActivity() {
      * 实际下载
      */
     private fun realDownload() {
-        DownloadAppUtils.download(this, updateInfo, onProgress = {
-            // TODO 在这里设置进度 UI 需要有进度条
-        }, onError = {
-
-        })
+        DownloadAppUtils.download(this, updateInfo)
 
         Toast.makeText(this, "更新下载中...", Toast.LENGTH_SHORT).show()
 
+        // 非强制安装时，开始下载后取消弹窗
         (updateConfig.force).no {
             finish()
         }

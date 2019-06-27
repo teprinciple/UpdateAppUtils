@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
                 .getInstance()
                 .apkUrl(apkPath)
                 .updateTitle(updateTitle)
+                .changeConfig(UpdateConfig(customLayoutId = R.layout.view_custom_update_dialog))
                 .updateContent(updateContent)
                 .update()
         }
@@ -41,5 +42,7 @@ class MainActivity : AppCompatActivity() {
                 .changeConfig(UpdateConfig(downloadBy = DownLoadBy.BROWSER))
                 .update()
         }
+
+
     }
 }

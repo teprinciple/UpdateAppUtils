@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="280dp"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog_confirm"
@@ -14,9 +15,9 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
         android:gravity="center_horizontal"
-        android:text="版本更新啦!"
         android:textColor="@color/text_black"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        tools:text="版本更新啦!"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,13 +52,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
             android:text="@string/cancel"
             android:textColor="@color/text_blue"
             android:textSize="16sp"/>
 
         <View
+            android:id="@+id/view_line"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#DFDFDF"/>
@@ -67,7 +68,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
             android:text="@string/update_now"
             android:textColor="@color/text_blue"

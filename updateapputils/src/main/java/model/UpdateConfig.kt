@@ -6,7 +6,7 @@ data class UpdateConfig(
     var alwaysShowTips: Boolean = false, // 非强制更新时，是否每次都显示弹窗，用VersionName来判断？
     var thisTimeShowTips: Boolean = false, // 非强制更新时，指定本次显示弹窗
 
-    var force: Boolean? = false, // 是否强制更新
+    var force: Boolean = false, // 是否强制更新
     var apkSavePath: String = "", // apk下载存放位置
     var apkSaveName: String = "", // apk 保存名（默认是app的名字）
     var downloadBy: Int = DownLoadBy.APP, // 下载方式：默认app下载
@@ -20,6 +20,6 @@ data class UpdateConfig(
 
     var serverVersionName: String = "", // 服务器上版本名
     var serverVersionCode: Int = 0, // 服务器上版本号
-    var localVersionName: String? = "", // 当前本地版本名
-    var localVersionCode: Int = 0 // 当前本地版本号
+
+    var customLayoutId: Int = -1 // 自定义弹窗view id
 )
