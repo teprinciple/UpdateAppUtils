@@ -20,25 +20,64 @@ dependencies {
 
 #### 快速使用
 ```
- UpdateAppUtils.from(this)
-                .serverVersionCode(2)  //服务器versionCode
-                .serverVersionName("2.0") //服务器versionName
-                .apkPath(apkPath) //最新apk下载地址
-                .update();
+ UpdateAppUtils
+        .getInstance()
+        .apkUrl(apkUrl)
+        .updateTitle(updateTitle)
+        .updateContent(updateContent)
+        .update()
 ```
 
 #### 多配置使用
 ```
-UpdateAppUtils.from(this)
-                .checkBy(UpdateAppUtils.CHECK_BY_VERSION_NAME) //更新检测方式，默认为VersionCode
-                .serverVersionCode(2)
-                .serverVersionName("2.0")
-                .apkPath(apkPath)
-                .showNotification(false) //是否显示下载进度到通知栏，默认为true
-                .updateInfo(info)  //更新日志信息 String
-                .downloadBy(UpdateAppUtils.DOWNLOAD_BY_BROWSER) //下载方式：app下载、手机浏览器下载。默认app下载
-                .isForce(true) //是否强制更新，默认false 强制更新情况下用户不同意更新则不能使用app
-                .update();
+    // ui配置
+    val uiConfig = UiConfig().apply {
+        uiType = UiType.PLENTIFUL
+        cancelBtnText = "下次再说"
+        updateLogoImgRes = R.drawable.ic_update
+        updateBtnBgRes = R.drawable.bg_btn
+        titleTextColor = Color.BLACK
+        titleTextSize = 18f
+        contentTextColor = Color.parseColor("#88e16531")
+    }
+
+    // 更新配置
+    val updateConfig = UpdateConfig().apply {
+        force = true
+        checkWifi = true
+        needCheckMd5 = true
+        isShowNotification = true
+        notifyImgRes = R.drawable.ic_logo
+        apkSavePath = Environment.getExternalStorageDirectory().absolutePath +"/teprinciple"
+        apkSaveName = "teprinciple"
+    }
+
+    UpdateAppUtils
+        .getInstance()
+        .apkUrl(apkUrl)
+        .updateTitle(updateTitle)
+        .updateContent(updateContent)
+        .updateConfig(updateConfig)
+        .uiConfig(uiConfig)
+        .setMd5CheckResultListener(object : Md5CheckResultListener{
+            override fun onResult(result: Boolean) {
+                // do something
+            }
+        })
+        .setUpdateDownloadListener(object : UpdateDownloadListener{
+            override fun onStart() {
+            }
+
+            override fun onDownload(progress: Int) {
+            }
+
+            override fun onFinish() {
+            }
+
+            override fun onError(e: Throwable) {
+            }
+        })
+        .update()
 ```
 #### md5校验说明
 

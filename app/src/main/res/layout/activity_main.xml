@@ -27,11 +27,19 @@
         android:text="浏览器下载"/>
 
     <Button
-        android:id="@+id/higher_level_use"
+        android:id="@+id/btn_higher_level_use"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="高级使用"/>
+
+    <Button
+        android:id="@+id/btn_custom_ui"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="自定义UI"/>
+
 
     <Button
         android:id="@+id/btn_java_sample"

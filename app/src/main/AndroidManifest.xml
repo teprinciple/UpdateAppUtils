@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".KotlinDemoActivity"/>
+        <activity android:name=".JavaDemoActivity"/>
 
     </application>
 

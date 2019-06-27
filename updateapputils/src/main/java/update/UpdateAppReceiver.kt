@@ -89,8 +89,8 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
         // 设置通知图标
         (updateConfig.notifyImgRes > 0).yes {
-            builder.setSmallIcon(R.drawable.ic_logo)
-            builder.setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.ic_logo))
+            builder.setSmallIcon(updateConfig.notifyImgRes)
+            builder.setLargeIcon(BitmapFactory.decodeResource(context.resources, updateConfig.notifyImgRes))
         }.no {
             builder.setSmallIcon(android.R.mipmap.sym_def_app_icon)
         }

@@ -14,7 +14,7 @@ data class UpdateConfig(
     var downloadBy: Int = DownLoadBy.APP, // 下载方式：默认app下载
     var justDownload: Boolean = false, // 是否只下载apk，不进行安装
 
-    var checkWifi: Boolean = true, // 是否检查是否wifi
+    var checkWifi: Boolean = false, // 是否检查是否wifi
     var isShowNotification: Boolean = true, // 是否在通知栏显示
     var notifyImgRes: Int = 0, // 通知栏图标
 
