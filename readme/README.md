@@ -40,13 +40,13 @@ UpdateAppUtils.from(this)
                 .isForce(true) //是否强制更新，默认false 强制更新情况下用户不同意更新则不能使用app
                 .update();
 ```
+#### md5校验说明
 
 #### UI配置
 
 #### 自定义UI
 
 ## Api说明
-
 #### UpdateAppUtils全部Api
 
 | api             | 说明                               | 默认值                   | 必须设置 |
@@ -78,8 +78,30 @@ UpdateAppUtils.from(this)
 | serverVersionCode     | 服务器上apk版本号 | 无   |
 | customLayoutId        | 自定义更新弹窗布局id | 无   |
 
-#### 更新日志
-##### 2.0.0
+#### UiConfig：更新弹窗Ui配置说明
+
+| 属性                  | 说明                               | 默认值 |
+|:--------------------- |:------------------------------------ |:------ |
+| uiType                | ui模板                        | UiType.SIMPLE |
+| customLayoutId        | 自定义布局id    | false  |
+| updateLogoImgRes      | 更新弹窗logo图片资源id               | -    |
+| titleTextSize         | 标题字体大小                 | 16sp        |
+| titleTextColor        | 标题字体颜色              | -   |
+| contentTextSize         | 内容字体大小                 | 14sp       |
+| contentTextColor        | 内容字体颜色              | -  |
+| updateBtnBgColor      | 更新按钮背景颜色              | -   |
+| updateBtnBgRes        | 更新按钮背景资源id        | -   |
+| updateBtnTextColor    | 更新按钮字体颜色    | -   |
+| updateBtnTextSize     | 更新按钮文字大小 | 14sp   |
+| updateBtnText         | 更新按钮文案              | 立即更新  |
+| cancelBtnBgColor      | 取消按钮背景颜色 | -   |
+| cancelBtnBgRes        | 取消按钮背景资源id | -   |
+| cancelBtnTextColor    | 取消按钮文字颜色 | -   |
+| cancelBtnTextSize     | 取消按钮文字大小 | 14sp   |
+| cancelBtnText    | 取消按钮文案 | 暂不更新   |
+
+## 更新日志
+#### 2.0.0
 * Kotlin重构
 * 支持AndroidX
 * 安装包签名文件md5校验

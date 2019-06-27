@@ -20,18 +20,21 @@
         tools:text="版本更新啦!"/>
 
     <ScrollView
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="90dp"
         android:overScrollMode="never">
 
         <TextView
             android:id="@+id/tv_update_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="left"
+            android:layout_gravity="top"
+            android:gravity="start"
             android:lineSpacingExtra="5dp"
-            android:padding="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:textColor="@color/text_content"
             android:textSize="14sp"/>
     </ScrollView>
@@ -39,7 +42,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="13dp"
         android:background="#DFDFDF"/>
 
     <LinearLayout

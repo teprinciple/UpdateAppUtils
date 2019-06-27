@@ -228,6 +228,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
     companion object {
 
         fun launch() {
+            // TODO 非强制更新 设置只显示一次
             val context = GlobalContextProvider.getGlobalContext().applicationContext
             val intent = Intent(context, UpdateAppActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

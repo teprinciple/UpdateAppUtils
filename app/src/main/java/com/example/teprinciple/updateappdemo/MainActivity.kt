@@ -1,6 +1,5 @@
 package com.example.teprinciple.updateappdemo
 
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import constacne.DownLoadBy
@@ -16,15 +15,19 @@ class MainActivity : AppCompatActivity() {
     private val apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_9.6.63.apk"
     // private val apkPath = "http://118.24.148.250:8080/yk/app-release.apk";
 
-    private val updateTitle = "发现新版本V2.2.3"
+    private val updateTitle = "发现新版本V2.0.0"
 
-    private val updateContent = "1、快来升级最新版本\n2、这次更漂亮了\n3、快点来吧"
+    private val updateContent = "1、Kotlin重构版\n2、支持自定义UI\n3、增加md5校验\n4、更多功能等你探索"
 
     private val uiConfig by lazy {
         UiConfig().apply {
             uiType = UiType.PLENTIFUL
-            cancelBtnText = "下次再说"
-            cancelBtnTextColor = Color.RED
+//            cancelBtnText = "下次再说"
+//            updateLogoImgRes = R.drawable.ic_update
+//            updateBtnBgRes = R.drawable.bg_btn
+//            titleTextColor = Color.BLACK
+//            titleTextSize = 18f
+//            contentTextColor = Color.parseColor("#88e16531")
         }
     }
 
@@ -51,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 .updateTitle(updateTitle)
                 .updateContent(updateContent)
                 .updateConfig(UpdateConfig(downloadBy = DownLoadBy.BROWSER))
-                .uiConfig(UiConfig(uiType = UiType.SIMPLE,cancelBtnTextColor = Color.GREEN))
+                .uiConfig(UiConfig(uiType = UiType.SIMPLE))
                 .update()
         }
     }
