@@ -1,14 +1,15 @@
-# UpdateAppUtils1.5.2
+# UpdateAppUtils
 
  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
-##### 全新2.0 kotlin重构进行中, 欢迎issues...
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
-### 适配Android6.0、7.0、8.0
-![](update.gif)
 
 ## 集成
 compile引入
 ```
+repositories {
+	jcenter()    
+}
+
 dependencies {
     implementation 'com.teprinciple:updateapputils:1.5.2'
 }
@@ -71,26 +72,29 @@ UpdateAppUtils.from(this)
 
 ```
 
-#### 关于适配Android6.0、7.0、8.0
+#### UpdateConfig：更新配置
 
-库内部已经完全适配至8.0,你可以不用再对该库进行适配
-
-#### 文章地址：[《UpdateAppUtils一行代码实现app在线更新》](http://www.jianshu.com/p/9c91bb984c85)
+| 属性                  | 描述                               | 默认值 |
+|:--------------------- |:------------------------------------ |:------ |
+| isDebug               | 是否输出【UpdateAppUtils】为Tag的日志|  true |
+| force                 | 是否强制更新                         | false  |
+| apkSavePath           | apk下载存放位置               | 包名目录    |
+| apkSaveName           | apk保存文件名                 | 项目名        |
+| downloadBy            | 下载方式              | DownLoadBy.APP   |
+| needCheckMd5          | 是否需要校验apk签名md5              | false   |
+| checkWifi             | 检查是否wifi        | false   |
+| isShowNotification    | 是否显示通知栏进度    | true   |
+| notifyImgRes          | 通知栏图标              | 项目icon  |
+| serverVersionName     | 服务器上apk版本名 | 无   |
+| serverVersionCode     | 服务器上apk版本号 | 无   |
 
 #### 更新日志
-1.5.2<br>
-修复部分bug
-<br>1.5.1<br>
-库内部适配至Android8.0
-<br>1.4<br>
-使用[filedownloader](https://github.com/lingochamp/FileDownloader)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题，且提高了下载速度
-增加接口UpdateAppUtils.needFitAndroidN(false)，避免不需要适配7.0，也要设置FileProvider
-<br>1.3.1<br>
-修复部分bug，在demo中加入kotlin调用代码
-<br>1.3<br>
-增加接口方法 showNotification(false)//是否显示下载进度到通知栏；<br>updateInfo(info)//更新日志信息；下载前WiFi判断。
-<br>1.2<br>
-适配Android7.0，并在demo中加入适配6.0和7.0的代码
-<br>1.1<br>
-适配更多SdkVersion
-
+##### 2.0.0
+* Kotlin重构
+* 支持AndroidX
+* 安装包签名文件md5校验
+* 通知栏自定义图标
+* 支持自定义UI
+* 适配中英文
+* 增加下载回调等api
+* 修复部分bug

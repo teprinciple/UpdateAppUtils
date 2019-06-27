@@ -1,25 +1,20 @@
-# UpdateAppUtils1.5.2
+# updateapputils
+
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 ### 适配Android6.0、7.0、8.0
-![](../update.gif)
-
-[ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html)
-##### kotlin 全新2.0 重构进行中...
-##### 欢迎issues
+![](update.gif)
 
 ## 集成
 compile引入
 ```
 dependencies {
-    compile 'com.teprinciple:updateapputils:1.5.2'
+    implementation 'com.teprinciple:updateapputils:1.5.2'
 }
 ```
 
 ## 使用
 更新检测一般放在MainActivity或者启动页上，
 在请求服务器版本检测接口获取到versionCode、versionName、最新apkPath后调用。
-
-
 
 #### 快速使用
 ```
@@ -29,7 +24,6 @@ dependencies {
                 .apkPath(apkPath) //最新apk下载地址
                 .update();
 ```
-
 #### Kotlin代码调用完全一样
 ```
    private fun update() {
@@ -43,8 +37,6 @@ dependencies {
     }
 
 ```
-
-
 
 #### 更多配置使用
 ```
@@ -82,21 +74,19 @@ UpdateAppUtils.from(this)
 
 #### 文章地址：[《UpdateAppUtils一行代码实现app在线更新》](http://www.jianshu.com/p/9c91bb984c85)
 
-
 #### 更新日志
 1.5.2<br>
 修复部分bug
-1.5.1<br>
+<br>1.5.1<br>
 库内部适配至Android8.0
 <br>1.4<br>
-使用[filedownloader](https://github.com/lingochamp/FileDownloader)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题，且提高了下载速度<br>
-增加接口UpdateAppUtils.needFitAndroidN(false)，避免不需要适配7.0，也要设置FileProvider<br>
+使用[filedownloader](https://github.com/lingochamp/FileDownloader)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题，且提高了下载速度
+增加接口UpdateAppUtils.needFitAndroidN(false)，避免不需要适配7.0，也要设置FileProvider
 <br>1.3.1<br>
-修复部分bug，在demo中加入kotlin调用代码<br>
+修复部分bug，在demo中加入kotlin调用代码
 <br>1.3<br>
-增加接口方法 showNotification(false)//是否显示下载进度到通知栏；<br>updateInfo(info)//更新日志信息；下载前WiFi判断。<br>
+增加接口方法 showNotification(false)//是否显示下载进度到通知栏；<br>updateInfo(info)//更新日志信息；下载前WiFi判断。
 <br>1.2<br>
-适配Android7.0，并在demo中加入适配6.0和7.0的代码<br>
+适配Android7.0，并在demo中加入适配6.0和7.0的代码
 <br>1.1<br>
 适配更多SdkVersion
-
