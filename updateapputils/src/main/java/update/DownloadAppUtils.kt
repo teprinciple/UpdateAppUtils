@@ -26,13 +26,35 @@ internal object DownloadAppUtils {
      */
     var downloadUpdateApkFilePath: String = ""
 
+    /**
+     * 更新信息
+     */
     private val updateInfo by lazy { UpdateAppUtils.updateInfo }
 
+    /**
+     * context
+     */
     private val context by lazy { GlobalContextProvider.getGlobalContext() }
 
-    private var onProgress: (Int) -> Unit = {}
+    /**
+     * 是否在下载中
+     */
+    var isDownloading = false
 
-    private var onError: () -> Unit = {}
+    /**
+     *下载进度回调
+     */
+    var onProgress: (Int) -> Unit = {}
+
+    /**
+     * 下载出错回调
+     */
+    var onError: () -> Unit = {}
+
+    /**
+     * 出错，点击重试回调
+     */
+    var onReDownload: () -> Unit = {}
 
     /**
      * 通过浏览器下载APK包
@@ -45,12 +67,17 @@ internal object DownloadAppUtils {
     }
 
     /**
+     * 出错后，点击重试
+     */
+    fun reDownload() {
+        onReDownload.invoke()
+        download()
+    }
+
+    /**
      * App下载APK包，下载完成后安装
      */
-    fun download(onProgress: (Int) -> Unit = {}, onError: () -> Unit = {}) {
-
-        this.onProgress = onProgress
-        this.onError = onError
+    fun download() {
 
         (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED).no {
             log("没有SD卡")
@@ -85,11 +112,13 @@ internal object DownloadAppUtils {
 
                 override fun pending(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
                     log("pending:soFarBytes($soFarBytes),totalBytes($totalBytes)")
+                    isDownloading = true
                     UpdateAppUtils.downloadListener?.onStart()
                     UpdateAppReceiver.send(context, 0)
                 }
 
                 override fun progress(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
+                    isDownloading = true
                     val progress = (soFarBytes * 100.0 / totalBytes).toInt()
                     log("progress:$progress")
                     UpdateAppReceiver.send(context, progress)
@@ -97,9 +126,12 @@ internal object DownloadAppUtils {
                     UpdateAppUtils.downloadListener?.onDownload(progress)
                 }
 
-                override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {}
+                override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
+                    isDownloading = false
+                }
 
                 override fun completed(task: BaseDownloadTask) {
+                    isDownloading = false
                     log("completed")
                     UpdateAppUtils.downloadListener?.onFinish()
                     // 校验md5
@@ -111,10 +143,13 @@ internal object DownloadAppUtils {
                 }
 
                 override fun error(task: BaseDownloadTask, e: Throwable) {
+                    isDownloading = false
                     log("error:${e.message}")
                     Utils.deleteFile(downloadUpdateApkFilePath)
                     this@DownloadAppUtils.onError.invoke()
                     UpdateAppUtils.downloadListener?.onError(e)
+
+                    UpdateAppReceiver.send(context, -1000)
                 }
 
                 override fun warn(task: BaseDownloadTask) {

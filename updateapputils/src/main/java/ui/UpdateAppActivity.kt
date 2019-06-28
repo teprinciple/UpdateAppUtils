@@ -1,6 +1,7 @@
 package ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -96,10 +97,15 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
         // 确定
         sureBtn?.setOnClickListener {
-            if (sureBtn is TextView) {
-                (sureBtn as? TextView)?.text = uiConfig.updateBtnText
+
+            DownloadAppUtils.isDownloading.no {
+
+                if (sureBtn is TextView) {
+                    (sureBtn as? TextView)?.text = uiConfig.updateBtnText
+                }
+
+                preDownLoad()
             }
-            preDownLoad()
         }
 
         // 强制更新 不显示取消按钮
@@ -196,12 +202,25 @@ internal class UpdateAppActivity : AppCompatActivity() {
     /**
      * 实际下载
      */
+    @SuppressLint("SetTextI18n")
     private fun realDownload() {
-        DownloadAppUtils.download( onError = {
-            if (updateConfig.force && sureBtn is TextView) {
+
+        if (updateConfig.force && sureBtn is TextView) {
+            DownloadAppUtils.onError = {
                 (sureBtn as? TextView)?.text = getString(R.string.download_fail)
             }
-        })
+
+            DownloadAppUtils.onReDownload = {
+                (sureBtn as? TextView)?.text = uiConfig.updateBtnText
+            }
+
+            DownloadAppUtils.onProgress = {
+                (sureBtn as? TextView)?.text = "${getString(R.string.downloading)}$it%"
+            }
+        }
+
+        DownloadAppUtils.download()
+
 
         Toast.makeText(this, getString(R.string.download_apk), Toast.LENGTH_SHORT).show()
 

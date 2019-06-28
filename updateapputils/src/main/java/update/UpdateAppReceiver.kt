@@ -3,6 +3,7 @@ package update
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -23,21 +24,39 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
     private val updateConfig by lazy { UpdateAppUtils.updateInfo.config }
 
+    private var lastProgress = 0
+
     override fun onReceive(context: Context, intent: Intent) {
-        // 进度
-        val progress = intent.getIntExtra(KEY_OF_INTENT_PROGRESS, 0)
 
-        val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        when (intent.action) {
 
-        // 显示通知栏
-        val notifyId = 1
-        updateConfig.isShowNotification.yes {
-            showNotification(context, notifyId, progress, notificationChannel, nm)
-        }
+            // 下载中
+            context.packageName + ACTION_UPDATE -> {
+                // 进度
+                val progress = intent.getIntExtra(KEY_OF_INTENT_PROGRESS, 0)
 
-        // 下载完成
-        if (progress == 100) {
-            handleDownloadComplete(context, notifyId, nm)
+                val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+                // 显示通知栏
+                val notifyId = 1
+                updateConfig.isShowNotification.yes {
+                    showNotification(context, notifyId, progress, notificationChannel, nm)
+                }
+
+                // 下载完成
+                if (progress == 100) {
+                    handleDownloadComplete(context, notifyId, nm)
+                }
+
+                (progress != -1000).yes {
+                    lastProgress = progress
+                }
+            }
+
+            // 重新下载
+            context.packageName + ACTION_RE_DOWNLOAD -> {
+                DownloadAppUtils.reDownload()
+            }
         }
     }
 
@@ -84,8 +103,6 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
             builder.setChannelId(notificationChannel)
         }
 
-        // 通知栏标题
-        builder.setContentTitle("${context.getString(R.string.downloading)}$progress%")
 
         // 设置通知图标
         (updateConfig.notifyImgRes > 0).yes {
@@ -97,6 +114,19 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
         // 设置进度
         builder.setProgress(100, progress, false)
+
+        if (progress == -1000) {
+            val intent = Intent(context.packageName + ACTION_RE_DOWNLOAD)
+            intent.setPackage(context.packageName)
+            val pendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+            builder.setContentIntent(pendingIntent)
+            // 通知栏标题
+            builder.setContentTitle(context.getString(R.string.download_fail))
+        } else {
+            // 通知栏标题
+            builder.setContentTitle("${context.getString(R.string.downloading)}$progress%")
+        }
+
 
         // 设置只响一次
         builder.setOnlyAlertOnce(true)
@@ -114,6 +144,15 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
          * ACTION_UPDATE
          */
         const val ACTION_UPDATE = "teprinciple.update"
+
+        /**
+         * ACTION_RE_DOWNLOAD
+         */
+        const val ACTION_RE_DOWNLOAD = "action_re_download"
+
+
+        const val REQUEST_CODE = 1001
+
 
         /**
          * 发送进度通知
