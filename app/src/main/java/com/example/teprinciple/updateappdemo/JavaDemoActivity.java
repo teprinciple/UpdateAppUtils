@@ -37,6 +37,7 @@ public class JavaDemoActivity extends AppCompatActivity {
                 UpdateConfig updateConfig = new UpdateConfig();
                 updateConfig.setCheckWifi(true);
                 updateConfig.setNeedCheckMd5(true);
+                updateConfig.setForce(true);
                 updateConfig.setNotifyImgRes(R.drawable.ic_logo);
 
                 UiConfig uiConfig = new UiConfig();
