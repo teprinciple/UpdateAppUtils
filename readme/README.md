@@ -14,8 +14,8 @@
 
 #### 效果图
 
-<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="280"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="280"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_force.png" width="280">
-<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="280"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="280">
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="300"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="300"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_force.png" width="300">
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="300"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="300">
 
 ### 集成
 ```
