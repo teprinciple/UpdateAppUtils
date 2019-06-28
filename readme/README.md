@@ -3,20 +3,36 @@
  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 
-## 集成
+#### UpdateAppUtils2.0 特点
+* Kotlin First，Kotlin开发
+* 支持AndroidX
+* 支持Md5签名验证
+* 支持自定义UI
+* 适配中英文
+* 适配至Android9.0
+* 通知栏图片自定义
+
+#### 效果图
+
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="300"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="300">
+
+
+### 集成
 ```
 repositories {
    jcenter()    
 }
 
-dependencies {
-    implementation 'com.teprinciple:updateapputils:1.5.2'
-}
+// Support
+implementation 'com.teprinciple:updateapputils:2.0.0'
+
+// AndroidX
+implementation 'com.teprinciple:updateapputilsX:2.0.0'
 ```
 
 ### 使用
-
-#### 快速使用
+下面为kotlin使用示例，Java示例请参考[JavaDemo](https://github.com/teprinciple/UpdateAppUtils/blob/master/app/src/main/java/com/example/teprinciple/updateappdemo/JavaDemoActivity.java)
+#### 1、快速使用
 ```
  UpdateAppUtils
         .getInstance()
@@ -26,7 +42,7 @@ dependencies {
         .update()
 ```
 
-#### 多配置使用
+#### 2、多配置使用
 ```
     // ui配置
     val uiConfig = UiConfig().apply {
@@ -77,15 +93,16 @@ dependencies {
         })
         .update()
 ```
-#### md5校验说明
-#### 自定义UI
+#### 3、md5校验说明
 
-##### 1、UpdateAppUtils内置了两套UI，你可以通过修改[UiConfig](#UiConfig)达到部分自定义
+#### 4、自定义UI
+
+##### 1、UpdateAppUtils内置了两套UI，你可以通过修改[UiConfig](#UiConfig)进行
 
 
 
 ### Api说明
-#### UpdateAppUtils全部Api
+#### 1、UpdateAppUtils Api
 
 | api             | 说明                               | 默认值                   | 必须设置 |
 |:-------------- |:------------------------------------ |:--------------------- |:------ |
@@ -98,8 +115,7 @@ dependencies {
 | fun setUpdateDownloadListener(listener: UpdateDownloadListener) | 下载过程监听  | null | false   |
 | fun setMd5CheckResultListener(listener: Md5CheckResultListener) | md5校验结果回调 | null  | false  |
 
-
-#### UpdateConfig：更新配置说明
+#### 2、UpdateConfig：更新配置说明
 
 | 属性                  | 说明                               | 默认值 |
 |:--------------------- |:------------------------------------ |:------ |
@@ -116,7 +132,7 @@ dependencies {
 | serverVersionCode     | 服务器上apk版本号 | 无   |
 | customLayoutId        | 自定义更新弹窗布局id | 无   |
 
-#### UiConfig：更新弹窗Ui配置说明 <div id = "UiConfig"/>
+#### 3、UiConfig：更新弹窗Ui配置说明 <div id = "UiConfig"/>
 
 | 属性                  | 说明                               | 默认值 |
 |:--------------------- |:------------------------------------ |:------ |
