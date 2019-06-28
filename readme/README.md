@@ -164,3 +164,5 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
 * 适配中英文
 * 增加下载回调等api
 * 修复部分bug
+<br>
+[更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)
