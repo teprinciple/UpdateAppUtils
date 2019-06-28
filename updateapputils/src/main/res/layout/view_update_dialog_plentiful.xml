@@ -55,7 +55,7 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/tv_update_sure"
+        android:id="@+id/btn_update_sure"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_marginStart="20dp"
@@ -66,14 +66,14 @@
         android:text="@string/update_now"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_update_cancel"
+        app:layout_constraintBottom_toTopOf="@+id/btn_update_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
         app:layout_goneMarginBottom="10dp"/>
 
     <TextView
-        android:id="@+id/tv_update_cancel"
+        android:id="@+id/btn_update_cancel"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_marginStart="20dp"
@@ -86,7 +86,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_update_sure"
+        app:layout_constraintTop_toBottomOf="@+id/btn_update_sure"
         app:layout_goneMarginTop="10dp"/>
 
 </android.support.constraint.ConstraintLayout>

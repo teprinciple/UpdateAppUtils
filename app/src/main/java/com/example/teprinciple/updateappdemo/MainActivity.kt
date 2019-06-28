@@ -51,7 +51,14 @@ class MainActivity : AppCompatActivity() {
 
         // 自定义UI
         btn_custom_ui.setOnClickListener {
-
+            UpdateAppUtils
+                .getInstance()
+                .apkUrl(apkUrl)
+                .updateTitle(updateTitle)
+                .updateContent(updateContent)
+               // .updateConfig(UpdateConfig(force = true))
+                .uiConfig(UiConfig(uiType = UiType.CUSTOM,customLayoutId = R.layout.view_update_dialog_custom))
+                .update()
         }
 
         // java使用示例

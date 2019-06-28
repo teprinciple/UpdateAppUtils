@@ -31,8 +31,8 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
     private var tvTitle: TextView? = null
     private var tvContent: TextView? = null
-    private var tvSureBtn: TextView? = null
-    private var tvCancelBtn: View? = null
+    private var sureBtn: View? = null
+    private var cancelBtn: View? = null
     private var ivLogo: ImageView? = null
 
     /**
@@ -68,8 +68,8 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
         tvTitle = findViewById(R.id.tv_update_title)
         tvContent = findViewById(R.id.tv_update_content)
-        tvCancelBtn = findViewById(R.id.tv_update_cancel)
-        tvSureBtn = findViewById(R.id.tv_update_sure)
+        cancelBtn = findViewById(R.id.btn_update_cancel)
+        sureBtn = findViewById(R.id.btn_update_sure)
         ivLogo = findViewById(R.id.iv_update_logo)
 
         initUi()
@@ -81,7 +81,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
         tvContent?.text = updateInfo.updateContent
 
         // 取消
-        tvCancelBtn?.setOnClickListener {
+        cancelBtn?.setOnClickListener {
             updateConfig.force.yes {
                 Utils.exitApp()
             }.no {
@@ -90,12 +90,12 @@ internal class UpdateAppActivity : AppCompatActivity() {
         }
 
         // 确定
-        tvSureBtn?.setOnClickListener {
+        sureBtn?.setOnClickListener {
             preDownLoad()
         }
 
         // 强制更新 不显示取消按钮
-        tvCancelBtn?.visibleOrGone(!updateConfig.force)
+        cancelBtn?.visibleOrGone(!updateConfig.force)
         // 取消按钮与确定按钮中的间隔线
         findViewById<View>(R.id.view_line)?.visibleOrGone(!updateConfig.force)
     }
@@ -115,20 +115,22 @@ internal class UpdateAppActivity : AppCompatActivity() {
             contentTextColor?.let { tvContent?.setTextColor(it) }
             contentTextSize?.let { tvContent?.setTextSize(it) }
             // 更新按钮相关设置
-            updateBtnTextColor?.let { tvSureBtn?.setTextColor(it) }
-            updateBtnTextSize?.let { tvSureBtn?.setTextSize(it) }
-            updateBtnBgColor?.let { tvSureBtn?.setBackgroundColor(it) }
-            updateBtnBgRes?.let { tvSureBtn?.setBackgroundResource(it) }
-            tvSureBtn?.text = updateBtnText
+            updateBtnBgColor?.let { sureBtn?.setBackgroundColor(it) }
+            updateBtnBgRes?.let { sureBtn?.setBackgroundResource(it) }
+            if (sureBtn is TextView) {
+                updateBtnTextColor?.let { (sureBtn as? TextView)?.setTextColor(it) }
+                updateBtnTextSize?.let { (sureBtn as? TextView)?.setTextSize(it) }
+                (sureBtn as? TextView)?.text = updateBtnText
+            }
 
             // 取消按钮相关设置
-            if (tvCancelBtn is TextView) {
-                cancelBtnTextColor?.let { (tvCancelBtn as? TextView)?.setTextColor(it) }
-                cancelBtnTextSize?.let { (tvCancelBtn as? TextView)?.setTextSize(it) }
-                (tvCancelBtn as? TextView)?.text = cancelBtnText
+            cancelBtnBgColor?.let { cancelBtn?.setBackgroundColor(it) }
+            cancelBtnBgRes?.let { cancelBtn?.setBackgroundResource(it) }
+            if (cancelBtn is TextView) {
+                cancelBtnTextColor?.let { (cancelBtn as? TextView)?.setTextColor(it) }
+                cancelBtnTextSize?.let { (cancelBtn as? TextView)?.setTextSize(it) }
+                (cancelBtn as? TextView)?.text = cancelBtnText
             }
-            cancelBtnBgColor?.let { tvCancelBtn?.setBackgroundColor(it) }
-            cancelBtnBgRes?.let { tvCancelBtn?.setBackgroundResource(it) }
         }
     }
 

@@ -50,7 +50,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_update_cancel"
+            android:id="@+id/btn_update_cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -66,7 +66,7 @@
             android:background="#DFDFDF"/>
 
         <TextView
-            android:id="@+id/tv_update_sure"
+            android:id="@+id/btn_update_sure"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
