@@ -1,7 +1,7 @@
 # UpdateAppUtils
 
  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
-### 一行代码，快速实现app在线下载更新  A simple library for Android update app
+### 一行代码，快速实现app在线下载更新  A simple library for Android app update
 
 #### UpdateAppUtils2.0 特点
 * Kotlin First，Kotlin开发
@@ -14,8 +14,8 @@
 
 #### 效果图
 
-<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="300"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="300"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_force.png" width="300">
-<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="300"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="300">
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_force.png" width="285">
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285">
 
 ### 集成
 ```
