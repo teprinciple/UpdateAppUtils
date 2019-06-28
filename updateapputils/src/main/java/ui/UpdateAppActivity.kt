@@ -96,6 +96,9 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
         // 确定
         sureBtn?.setOnClickListener {
+            if (sureBtn is TextView) {
+                (sureBtn as? TextView)?.text = uiConfig.updateBtnText
+            }
             preDownLoad()
         }
 
@@ -174,7 +177,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
             DownLoadBy.APP -> {
                 (updateConfig.checkWifi && !Utils.isWifiConnected(applicationContext)).yes {
                     // 需要进行WiFi判断
-                    AlertDialogUtil.show(this, "当前没有连接Wifi，是否继续下载", onSureClick = {
+                    AlertDialogUtil.show(this, getString(R.string.check_wifi_notice), onSureClick = {
                         realDownload()
                     })
                 }.no {
@@ -185,7 +188,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
             // 浏览器下载
             DownLoadBy.BROWSER -> {
-                DownloadAppUtils.downloadForWebView(this, updateInfo.apkUrl)
+                DownloadAppUtils.downloadForWebView(updateInfo.apkUrl)
             }
         }
     }
@@ -194,9 +197,13 @@ internal class UpdateAppActivity : AppCompatActivity() {
      * 实际下载
      */
     private fun realDownload() {
-        DownloadAppUtils.download(this, updateInfo)
+        DownloadAppUtils.download( onError = {
+            if (updateConfig.force && sureBtn is TextView) {
+                (sureBtn as? TextView)?.text = getString(R.string.download_fail)
+            }
+        })
 
-        Toast.makeText(this, "更新下载中...", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.download_apk), Toast.LENGTH_SHORT).show()
 
         // 非强制安装时，开始下载后取消弹窗
         (updateConfig.force).no {
@@ -216,8 +223,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }.no {
                 ActivityCompat.shouldShowRequestPermissionRationale(this, permission).no {
                     // 显示无权限弹窗
-                    // TODO 中英文
-                    AlertDialogUtil.show(this, "暂无储存权限，是否前往打开", onSureClick = {
+                    AlertDialogUtil.show(this, getString(R.string.no_storage_permission), onSureClick = {
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         intent.data = Uri.parse("package:$packageName") // 根据包名打开对应的设置界面
                         startActivity(intent)
@@ -235,7 +241,6 @@ internal class UpdateAppActivity : AppCompatActivity() {
     companion object {
 
         fun launch() {
-            // TODO 非强制更新 设置只显示一次
             val context = GlobalContextProvider.getGlobalContext().applicationContext
             val intent = Intent(context, UpdateAppActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

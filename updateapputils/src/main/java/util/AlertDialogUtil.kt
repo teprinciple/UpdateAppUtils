@@ -9,7 +9,7 @@ import com.teprinciple.updateapputils.R
  * time: 2018/8/20
  * @author yk
  */
-object AlertDialogUtil {
+internal object AlertDialogUtil {
 
     fun show(
         activity: Activity,
@@ -17,9 +17,9 @@ object AlertDialogUtil {
         onCancelClick: () -> Unit = {},
         onSureClick: () -> Unit = {},
         cancelable: Boolean = false,
-        title: String = "提示",
-        cancelText: String = "取消",
-        sureText: String = "确认"
+        title: String = GlobalContextProvider.getGlobalContext().getString(R.string.notice),
+        cancelText: String = GlobalContextProvider.getGlobalContext().getString(R.string.cancel),
+        sureText: String = GlobalContextProvider.getGlobalContext().getString(R.string.sure)
     ) {
         AlertDialog.Builder(activity, R.style.AlertDialog)
             .setTitle(title)

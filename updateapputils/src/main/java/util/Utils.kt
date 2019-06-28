@@ -8,6 +8,8 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.support.v4.content.FileProvider
+import extension.log
+import extension.yes
 import java.io.File
 
 
@@ -94,6 +96,23 @@ internal object Utils {
             e.printStackTrace()
         }
         return null
+    }
+
+    /**
+     * 删除文件
+     */
+    fun deleteFile(filePath: String?){
+        if (filePath == null){
+            return
+        }
+        val file = File(filePath)
+        try {
+            (file.isFile).yes {
+                file.delete()
+            }
+        }catch (e: Exception){
+            log(e.message)
+        }
     }
 
     @JvmStatic

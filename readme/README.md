@@ -11,6 +11,7 @@
 * 适配中英文
 * 适配至Android9.0
 * 通知栏图片自定义
+* 支持修改是否每次显示弹窗（非强更）
 
 #### 效果图
 
@@ -131,7 +132,8 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
 | notifyImgRes          | 通知栏图标              | 项目icon  |
 | serverVersionName     | 服务器上apk版本名 | 无   |
 | serverVersionCode     | 服务器上apk版本号 | 无   |
-| customLayoutId        | 自定义更新弹窗布局id | 无   |
+| alwaysShow            | 是否每次显示更新弹窗（非强更） | true   |
+| thisTimeShow          | 本次是否显示更新弹窗（非强更） | false  |
 
 #### 3、UiConfig：更新弹窗Ui配置说明 <div id = "UiConfig"/>
 

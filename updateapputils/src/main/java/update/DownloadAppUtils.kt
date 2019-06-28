@@ -11,6 +11,7 @@ import extension.log
 import extension.no
 import extension.yes
 import model.UpdateInfo
+import util.GlobalContextProvider
 import util.SignMd5Util
 import util.Utils
 import java.io.File
@@ -25,10 +26,18 @@ internal object DownloadAppUtils {
      */
     var downloadUpdateApkFilePath: String = ""
 
+    private val updateInfo by lazy { UpdateAppUtils.updateInfo }
+
+    private val context by lazy { GlobalContextProvider.getGlobalContext() }
+
+    private var onProgress: (Int) -> Unit = {}
+
+    private var onError: () -> Unit = {}
+
     /**
      * 通过浏览器下载APK包
      */
-    fun downloadForWebView(context: Context, url: String) {
+    fun downloadForWebView(url: String) {
         val uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -38,7 +47,10 @@ internal object DownloadAppUtils {
     /**
      * App下载APK包，下载完成后安装
      */
-    fun download(context: Context, updateInfo: UpdateInfo, onProgress: (Int) -> Unit = {}, onError: () -> Unit = {}) {
+    fun download(onProgress: (Int) -> Unit = {}, onError: () -> Unit = {}) {
+
+        this.onProgress = onProgress
+        this.onError = onError
 
         (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED).no {
             log("没有SD卡")
@@ -81,7 +93,7 @@ internal object DownloadAppUtils {
                     val progress = (soFarBytes * 100.0 / totalBytes).toInt()
                     log("progress:$progress")
                     UpdateAppReceiver.send(context, progress)
-                    onProgress.invoke(progress)
+                    this@DownloadAppUtils.onProgress.invoke(progress)
                     UpdateAppUtils.downloadListener?.onDownload(progress)
                 }
 
@@ -100,7 +112,8 @@ internal object DownloadAppUtils {
 
                 override fun error(task: BaseDownloadTask, e: Throwable) {
                     log("error:${e.message}")
-                    onError.invoke()
+                    Utils.deleteFile(downloadUpdateApkFilePath)
+                    this@DownloadAppUtils.onError.invoke()
                     UpdateAppUtils.downloadListener?.onError(e)
                 }
 

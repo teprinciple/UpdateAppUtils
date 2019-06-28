@@ -1,5 +1,7 @@
 package update
 
+import extension.no
+import extension.yes
 import listener.Md5CheckResultListener
 import listener.OnInitUiListener
 import listener.UpdateDownloadListener
@@ -8,6 +10,7 @@ import model.UpdateConfig
 import model.UpdateInfo
 import ui.UpdateAppActivity
 import util.GlobalContextProvider
+import util.SPUtil
 
 
 /**
@@ -98,7 +101,17 @@ object UpdateAppUtils {
     /**
      * 检查更新
      */
-    fun update() = UpdateAppActivity.launch()
+    fun update() {
+        val keyName = GlobalContextProvider.getGlobalContext().packageName + updateInfo.config.serverVersionName
+        // 设置每次显示，设置本次显示及强制更新 每次都显示弹窗
+        (updateInfo.config.alwaysShow || updateInfo.config.thisTimeShow || updateInfo.config.force).yes {
+            UpdateAppActivity.launch()
+        }.no {
+            val hasShow = SPUtil.getBoolean(keyName, false)
+            (hasShow).no { UpdateAppActivity.launch() }
+        }
+        SPUtil.putBase(keyName, true)
+    }
 
     /**
      * 获取单例对象

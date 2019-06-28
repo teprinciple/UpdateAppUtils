@@ -7,6 +7,7 @@ import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import constacne.DownLoadBy
 import constacne.UiType
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,7 +48,11 @@ class MainActivity : AppCompatActivity() {
                 .apkUrl(apkUrl)
                 .updateTitle(updateTitle)
                 .updateContent(updateContent)
-                .updateConfig(UpdateConfig(downloadBy = DownLoadBy.BROWSER))
+                .updateConfig(UpdateConfig().apply {
+                    downloadBy = DownLoadBy.BROWSER
+                    // alwaysShow = false
+                    serverVersionName = "2.0.0"
+                })
                 .uiConfig(UiConfig(uiType = UiType.PLENTIFUL))
                 .update()
         }
@@ -111,6 +116,9 @@ class MainActivity : AppCompatActivity() {
                 .setMd5CheckResultListener(object : Md5CheckResultListener {
                     override fun onResult(result: Boolean) {
                         // do something
+                        if (!result) {
+                            Toast.makeText(this@MainActivity, "签名校验失败", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 })
                 .setUpdateDownloadListener(object : UpdateDownloadListener {

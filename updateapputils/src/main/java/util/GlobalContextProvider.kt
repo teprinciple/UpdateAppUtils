@@ -11,7 +11,7 @@ import android.support.annotation.Nullable
  * desc: 通过ContentProvider提供context.
  * time: 2018/8/13
  */
-class GlobalContextProvider : ContentProvider() {
+internal class GlobalContextProvider : ContentProvider() {
 
     private var mContext: Context? = null
 

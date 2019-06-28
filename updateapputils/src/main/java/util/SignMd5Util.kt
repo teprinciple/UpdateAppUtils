@@ -18,7 +18,7 @@ import kotlin.experimental.and
  * time: 2019/6/21
  * @author yk
  */
-object SignMd5Util {
+internal object SignMd5Util {
 
     private val HEX_DIGITS = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F')
 

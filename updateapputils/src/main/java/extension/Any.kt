@@ -15,7 +15,7 @@ val Any.TAG: String
 /**
  * 打印日志
  */
-fun Any.log(content: String) {
+fun Any.log(content: String?) {
     UpdateAppUtils.updateInfo.config.isDebug.yes {
         Log.e("[UpdateAppUtils]", content)
     }

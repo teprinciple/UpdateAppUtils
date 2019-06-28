@@ -85,7 +85,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         }
 
         // 通知栏标题
-        builder.setContentTitle(context.getString(R.string.downloading))
+        builder.setContentTitle("${context.getString(R.string.downloading)}$progress%")
 
         // 设置通知图标
         (updateConfig.notifyImgRes > 0).yes {
