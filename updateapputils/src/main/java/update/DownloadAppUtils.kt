@@ -73,7 +73,7 @@ internal object DownloadAppUtils {
 
                 override fun pending(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
                     log("pending:soFarBytes($soFarBytes),totalBytes($totalBytes)")
-                    UpdateAppUtils.listener?.onStart()
+                    UpdateAppUtils.downloadListener?.onStart()
                     UpdateAppReceiver.send(context, 0)
                 }
 
@@ -82,14 +82,14 @@ internal object DownloadAppUtils {
                     log("progress:$progress")
                     UpdateAppReceiver.send(context, progress)
                     onProgress.invoke(progress)
-                    UpdateAppUtils.listener?.onDownload(progress)
+                    UpdateAppUtils.downloadListener?.onDownload(progress)
                 }
 
                 override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {}
 
                 override fun completed(task: BaseDownloadTask) {
                     log("completed")
-                    UpdateAppUtils.listener?.onFinish()
+                    UpdateAppUtils.downloadListener?.onFinish()
                     // 校验md5
                     (updateInfo.config.needCheckMd5).yes {
                         checkMd5(context)
@@ -101,7 +101,7 @@ internal object DownloadAppUtils {
                 override fun error(task: BaseDownloadTask, e: Throwable) {
                     log("error:${e.message}")
                     onError.invoke()
-                    UpdateAppUtils.listener?.onError(e)
+                    UpdateAppUtils.downloadListener?.onError(e)
                 }
 
                 override fun warn(task: BaseDownloadTask) {

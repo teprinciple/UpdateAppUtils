@@ -62,6 +62,13 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }
         )
         initView()
+        initUi()
+
+        // 初始化UI回调，用于进一步自定义UI
+        UpdateAppUtils.onInitUiListener?.onInitUpdateUi(
+            window.decorView.findViewById(android.R.id.content),
+            updateConfig,
+            uiConfig)
     }
 
     private fun initView() {
@@ -71,8 +78,6 @@ internal class UpdateAppActivity : AppCompatActivity() {
         cancelBtn = findViewById(R.id.btn_update_cancel)
         sureBtn = findViewById(R.id.btn_update_sure)
         ivLogo = findViewById(R.id.iv_update_logo)
-
-        initUi()
 
         // 更新标题
         tvTitle?.text = updateInfo.updateTitle

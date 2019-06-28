@@ -15,7 +15,7 @@
 #### 效果图
 
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_force.png" width="285">
-<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285">
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285">
 
 ### 集成
 ```
@@ -164,5 +164,4 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
 * 适配中英文
 * 增加下载回调等api
 * 修复部分bug
-<br>
-[更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)
+##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)

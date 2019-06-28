@@ -1,6 +1,7 @@
 package update
 
 import listener.Md5CheckResultListener
+import listener.OnInitUiListener
 import listener.UpdateDownloadListener
 import model.UiConfig
 import model.UpdateConfig
@@ -22,10 +23,13 @@ object UpdateAppUtils {
     internal val updateInfo = UpdateInfo()
 
     // 下载监听
-    internal var listener: UpdateDownloadListener? = null
+    internal var downloadListener: UpdateDownloadListener? = null
 
     // md5校验结果回调
     internal var md5CheckResultListener: Md5CheckResultListener? = null
+
+    // 初始化更新弹窗UI回调
+    internal var onInitUiListener: OnInitUiListener? = null
 
     /**
      * 设置apk下载地址
@@ -62,7 +66,7 @@ object UpdateAppUtils {
     /**
      * 设置UI配置
      */
-    fun uiConfig(uiConfig: UiConfig): UpdateAppUtils{
+    fun uiConfig(uiConfig: UiConfig): UpdateAppUtils {
         updateInfo.uiConfig = uiConfig
         return this
     }
@@ -71,15 +75,23 @@ object UpdateAppUtils {
      * 设置下载监听
      */
     fun setUpdateDownloadListener(listener: UpdateDownloadListener): UpdateAppUtils {
-        this.listener = listener
+        this.downloadListener = listener
         return this
     }
 
     /**
-     * 设置md5校验结果回调
+     * 设置md5校验结果监听
      */
     fun setMd5CheckResultListener(listener: Md5CheckResultListener): UpdateAppUtils {
         this.md5CheckResultListener = listener
+        return this
+    }
+
+    /**
+     * 设置初始化UI监听
+     */
+    fun setOnInitUiListener(listener: OnInitUiListener): UpdateAppUtils {
+        this.onInitUiListener = listener
         return this
     }
 

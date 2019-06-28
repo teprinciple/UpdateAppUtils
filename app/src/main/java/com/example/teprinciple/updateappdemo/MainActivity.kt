@@ -5,10 +5,13 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.TextView
 import constacne.DownLoadBy
 import constacne.UiType
 import kotlinx.android.synthetic.main.activity_main.*
 import listener.Md5CheckResultListener
+import listener.OnInitUiListener
 import listener.UpdateDownloadListener
 import model.UiConfig
 import model.UpdateConfig
@@ -56,8 +59,15 @@ class MainActivity : AppCompatActivity() {
                 .apkUrl(apkUrl)
                 .updateTitle(updateTitle)
                 .updateContent(updateContent)
-               // .updateConfig(UpdateConfig(force = true))
-                .uiConfig(UiConfig(uiType = UiType.CUSTOM,customLayoutId = R.layout.view_update_dialog_custom))
+                // .updateConfig(UpdateConfig(force = true))
+                .uiConfig(UiConfig(uiType = UiType.CUSTOM, customLayoutId = R.layout.view_update_dialog_custom))
+                .setOnInitUiListener(object : OnInitUiListener {
+                    override fun onInitUpdateUi(view: View?, updateConfig: UpdateConfig, uiConfig: UiConfig) {
+                        view?.findViewById<TextView>(R.id.tv_update_title)?.text = "版本更新啦"
+                        view?.findViewById<TextView>(R.id.tv_version_name)?.text = "V2.0.0"
+                        // do more...
+                    }
+                })
                 .update()
         }
 
