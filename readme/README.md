@@ -14,9 +14,7 @@ dependencies {
 }
 ```
 
-## 使用
-更新检测一般放在MainActivity或者启动页上，
-在请求服务器版本检测接口获取到versionCode、versionName、最新apkPath后调用。
+### 使用
 
 #### 快速使用
 ```
@@ -80,12 +78,13 @@ dependencies {
         .update()
 ```
 #### md5校验说明
-
-#### UI配置
-
 #### 自定义UI
 
-## Api说明
+##### 1、UpdateAppUtils内置了两套UI，你可以通过修改[UiConfig](#UiConfig)达到部分自定义
+
+
+
+### Api说明
 #### UpdateAppUtils全部Api
 
 | api             | 说明                               | 默认值                   | 必须设置 |
@@ -117,7 +116,7 @@ dependencies {
 | serverVersionCode     | 服务器上apk版本号 | 无   |
 | customLayoutId        | 自定义更新弹窗布局id | 无   |
 
-#### UiConfig：更新弹窗Ui配置说明
+#### UiConfig：更新弹窗Ui配置说明 <div id = "UiConfig"/>
 
 | 属性                  | 说明                               | 默认值 |
 |:--------------------- |:------------------------------------ |:------ |
@@ -139,7 +138,7 @@ dependencies {
 | cancelBtnTextSize     | 取消按钮文字大小 | 14sp   |
 | cancelBtnText    | 取消按钮文案 | 暂不更新   |
 
-## 更新日志
+### 更新日志
 #### 2.0.0
 * Kotlin重构
 * 支持AndroidX
