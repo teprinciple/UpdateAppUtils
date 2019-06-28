@@ -1,4 +1,4 @@
-# UpdateAppUtils
+# UpdateAppUtils2.0
 
  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
 ### 一行代码，快速实现app在线下载更新  A simple library for Android app update
