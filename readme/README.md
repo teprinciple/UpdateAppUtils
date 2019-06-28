@@ -1,7 +1,7 @@
 # UpdateAppUtils2.0
 
  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
-### 一行代码，快速实现app在线下载更新  A simple library for Android app update
+### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 
 #### UpdateAppUtils2.0 特点
 * Kotlin First，Kotlin开发
@@ -15,7 +15,7 @@
 #### 效果图
 
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_force.png" width="285">
-<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285">
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285">
 
 ### 集成
 ```
@@ -112,8 +112,9 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
 | fun updateContent(content: String)        | 更新内容   | 发现新版本，立即更新  | false   |
 | fun updateConfig(config: UpdateConfig)   | 更新配置  | 查看源码 | false  |
 | fun uiConfig(uiConfig: UiConfig) | 更新弹窗UI配置  | 查看源码                 | false  |
-| fun setUpdateDownloadListener(listener: UpdateDownloadListener) | 下载过程监听  | null | false   |
-| fun setMd5CheckResultListener(listener: Md5CheckResultListener) | md5校验结果回调 | null  | false  |
+| fun setUpdateDownloadListener() | 下载过程监听  | null | false   |
+| fun setMd5CheckResultListener() | md5校验结果回调 | null  | false  |
+| fun setOnInitUiListener() | 初始化更新弹窗UI回调 | null  | false  |
 
 #### 2、UpdateConfig：更新配置说明
 
