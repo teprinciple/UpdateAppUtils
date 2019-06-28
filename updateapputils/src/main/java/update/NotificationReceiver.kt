@@ -14,7 +14,7 @@ class NotificationReceiver : BroadcastReceiver(){
 
     override fun onReceive(context: Context, intent: Intent) {
         (intent.action == ACTION_RE_DOWNLOAD).yes {
-
+            DownloadAppUtils.download()
         }
     }
 
