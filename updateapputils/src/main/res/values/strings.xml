@@ -12,4 +12,5 @@
     <string name="downloading">下载中</string>
     <string name="no_storage_permission">"暂无储存权限，是否前往打开"</string>
     <string name="check_wifi_notice">"当前没有连接Wifi，是否继续下载"</string>
+    <string name="install">立即安装</string>
 </resources>

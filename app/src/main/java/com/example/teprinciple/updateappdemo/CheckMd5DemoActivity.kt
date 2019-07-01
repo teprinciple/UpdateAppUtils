@@ -19,12 +19,12 @@ class CheckMd5DemoActivity : AppCompatActivity() {
     /**
      * 已签名的apk
      */
-    private val signedApkUrl = "http://118.24.148.250:8080/yk/app-release.apk"
+    private val signedApkUrl = "http://118.24.148.250:8080/yk/update_signed.apk"
 
     /**
      * 非正规签名的apk
      */
-    private val notSignedApkUrl = ""
+    private val notSignedApkUrl = "http://118.24.148.250:8080/yk/update_not_signed.apk"
 
     private val updateTitle = "发现新版本V2.0.0"
     private val updateContent = "1、Kotlin重构版\n2、支持自定义UI\n3、增加md5校验\n4、更多功能等你探索"
@@ -37,7 +37,7 @@ class CheckMd5DemoActivity : AppCompatActivity() {
         // 更新配置
         val updateConfig = UpdateConfig().apply {
             force = true
-            checkWifi = true
+            needCheckMd5 = true
             isShowNotification = true
             notifyImgRes = R.drawable.ic_logo
             apkSavePath = Environment.getExternalStorageDirectory().absolutePath + "/teprinciple"

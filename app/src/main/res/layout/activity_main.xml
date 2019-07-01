@@ -42,6 +42,13 @@
 
 
     <Button
+        android:id="@+id/btn_check_md5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Md5校验"/>
+
+    <Button
         android:id="@+id/btn_java_sample"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

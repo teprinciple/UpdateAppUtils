@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Library</string>
+    <string name="notice">Notice</string>
+    <string name="cancel">Cancel</string>
+    <string name="sure">OK</string>
+    <string name="update_now">Update</string>
+    <string name="update_cancel">Cancel</string>
+    <string name="update_title">New version！</string>
+    <string name="update_content">New version get ready,update now</string>
+    <string name="download_fail">Download error,Click retry</string>
+    <string name="toast_download_apk">Start downloading...</string>
+    <string name="downloading">downloading</string>
+    <string name="no_storage_permission">Please allow access to storage permissions</string>
+    <string name="check_wifi_notice">Current net type is not Wifi, Whether to continue</string>
+    <string name="install">Install</string>
+</resources>

@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="当前应用签名：F5:65:3A:FC:71:C6:AD:EE:BB:B2:D0:D4:67:73:8D:67"
+        android:textSize="12sp"/>
+
     <Button
         android:id="@+id/btn_signed"
-        android:text="apk正确签名"
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:text="apk正确签名"/>
+
     <Button
         android:id="@+id/btn_not_signed"
-        android:text="apk错误签名"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:text="apk错误签名"/>
 </LinearLayout>

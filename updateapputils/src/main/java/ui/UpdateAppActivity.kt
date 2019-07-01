@@ -217,7 +217,11 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }
 
             DownloadAppUtils.onProgress = {
-                (sureBtn as? TextView)?.text = "${uiConfig.downloadingBtnText}$it%"
+                (it == 100).yes{
+                    (sureBtn as? TextView)?.text = getString(R.string.install)
+                }.no {
+                    (sureBtn as? TextView)?.text = "${uiConfig.downloadingBtnText}$it%"
+                }
             }
         }
 

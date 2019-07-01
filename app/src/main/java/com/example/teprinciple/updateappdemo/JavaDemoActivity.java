@@ -21,7 +21,7 @@ import update.UpdateAppUtils;
  */
 public class JavaDemoActivity extends AppCompatActivity {
 
-    private String apkUrl = "http://118.24.148.250:8080/yk/app-release.apk";
+    private String apkUrl = "http://118.24.148.250:8080/yk/update_signed.apk";
     private String updateTitle = "发现新版本V2.0.0";
     private String updateContent = "1、Kotlin重构版\n2、支持自定义UI\n3、增加md5校验\n4、更多功能等你探索";
 
