@@ -99,11 +99,9 @@ internal class UpdateAppActivity : AppCompatActivity() {
         sureBtn?.setOnClickListener {
 
             DownloadAppUtils.isDownloading.no {
-
                 if (sureBtn is TextView) {
                     (sureBtn as? TextView)?.text = uiConfig.updateBtnText
                 }
-
                 preDownLoad()
             }
         }
@@ -207,7 +205,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
         if (updateConfig.force && sureBtn is TextView) {
             DownloadAppUtils.onError = {
-                (sureBtn as? TextView)?.text = getString(R.string.download_fail)
+                (sureBtn as? TextView)?.text = uiConfig.downloadFailText
             }
 
             DownloadAppUtils.onReDownload = {
@@ -215,14 +213,15 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }
 
             DownloadAppUtils.onProgress = {
-                (sureBtn as? TextView)?.text = "${getString(R.string.downloading)}$it%"
+                (sureBtn as? TextView)?.text = "${uiConfig.downloadingBtnText}$it%"
             }
         }
 
         DownloadAppUtils.download()
 
-
-        Toast.makeText(this, getString(R.string.download_apk), Toast.LENGTH_SHORT).show()
+        (updateConfig.showDownloadingToast).yes {
+            Toast.makeText(this, uiConfig.downloadingToastText, Toast.LENGTH_SHORT).show()
+        }
 
         // 非强制安装时，开始下载后取消弹窗
         (updateConfig.force).no {

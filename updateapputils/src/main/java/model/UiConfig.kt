@@ -33,5 +33,12 @@ data class UiConfig(
     var cancelBtnBgRes: Int? = null,
     var cancelBtnTextColor: Int? = null,
     var cancelBtnTextSize: Float? = null,
-    var cancelBtnText: String = GlobalContextProvider.getGlobalContext().getString(R.string.update_cancel)
+    var cancelBtnText: String = GlobalContextProvider.getGlobalContext().getString(R.string.update_cancel),
+
+    // 开始下载时的Toast提示文字
+    var downloadingToastText: String = GlobalContextProvider.getGlobalContext().getString(R.string.toast_download_apk),
+    // 下载中 下载按钮以及通知栏标题前缀，进度自动拼接在后面
+    var downloadingBtnText: String = GlobalContextProvider.getGlobalContext().getString(R.string.downloading),
+    // 下载出错时，下载按钮及通知栏标题
+    var downloadFailText: String = GlobalContextProvider.getGlobalContext().getString(R.string.download_fail)
 )

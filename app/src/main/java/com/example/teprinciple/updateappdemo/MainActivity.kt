@@ -21,7 +21,6 @@ import update.UpdateAppUtils
 
 class MainActivity : AppCompatActivity() {
 
-    //private val apkUrl = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_9.6.63.apk"
     private val apkUrl = "http://118.24.148.250:8080/yk/app-release.apk"
     private val updateTitle = "发现新版本V2.0.0"
     private val updateContent = "1、Kotlin重构版\n2、支持自定义UI\n3、增加md5校验\n4、更多功能等你探索"
@@ -98,7 +97,6 @@ class MainActivity : AppCompatActivity() {
             val updateConfig = UpdateConfig().apply {
                 force = true
                 checkWifi = true
-                needCheckMd5 = true
                 isShowNotification = true
                 notifyImgRes = R.drawable.ic_logo
                 apkSavePath = Environment.getExternalStorageDirectory().absolutePath + "/teprinciple"
@@ -112,14 +110,6 @@ class MainActivity : AppCompatActivity() {
                 .updateContent(updateContent)
                 .updateConfig(updateConfig)
                 .uiConfig(uiConfig)
-                .setMd5CheckResultListener(object : Md5CheckResultListener {
-                    override fun onResult(result: Boolean) {
-                        // do something
-                        if (!result) {
-                            Toast.makeText(this@MainActivity, "签名校验失败", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                })
                 .setUpdateDownloadListener(object : UpdateDownloadListener {
                     override fun onStart() {
                     }

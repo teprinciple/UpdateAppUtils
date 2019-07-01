@@ -3,13 +3,13 @@
     <string name="notice">提示</string>
     <string name="cancel">取消</string>
     <string name="sure">确认</string>
-    <string name="downloading">下载中</string>
     <string name="update_now">立即更新</string>
     <string name="update_cancel">暂不更新</string>
     <string name="update_title">版本更新啦！</string>
     <string name="update_content">发现新版本，立即更新</string>
     <string name="download_fail">下载出错，点击重试</string>
-    <string name="download_apk">更新下载中...</string>
+    <string name="toast_download_apk">更新下载中...</string>
+    <string name="downloading">下载中</string>
     <string name="no_storage_permission">"暂无储存权限，是否前往打开"</string>
     <string name="check_wifi_notice">"当前没有连接Wifi，是否继续下载"</string>
 </resources>

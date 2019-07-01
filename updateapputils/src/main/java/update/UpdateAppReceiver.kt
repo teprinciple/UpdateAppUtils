@@ -24,6 +24,8 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
     private val updateConfig by lazy { UpdateAppUtils.updateInfo.config }
 
+    private val uiConfig by lazy { UpdateAppUtils.updateInfo.uiConfig }
+
     private var lastProgress = 0
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -121,10 +123,10 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
             val pendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE, intent, PendingIntent.FLAG_CANCEL_CURRENT)
             builder.setContentIntent(pendingIntent)
             // 通知栏标题
-            builder.setContentTitle(context.getString(R.string.download_fail))
+            builder.setContentTitle(uiConfig.downloadFailText)
         } else {
             // 通知栏标题
-            builder.setContentTitle("${context.getString(R.string.downloading)}$progress%")
+            builder.setContentTitle("${uiConfig.downloadingBtnText}$progress%")
         }
 
 
