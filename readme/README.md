@@ -16,7 +16,7 @@
 #### 效果图
 
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285">
-<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285">
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_downloading.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_fail.png" width="285">
 
 ### 集成
 ```
@@ -80,17 +80,7 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
             }
         })
         .setUpdateDownloadListener(object : UpdateDownloadListener{
-            override fun onStart() {
-            }
-
-            override fun onDownload(progress: Int) {
-            }
-
-            override fun onFinish() {
-            }
-
-            override fun onError(e: Throwable) {
-            }
+            // do something
         })
         .update()
 ```

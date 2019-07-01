@@ -37,6 +37,10 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
                 val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+                (progress != -1000).yes {
+                    lastProgress = progress
+                }
+
                 // 显示通知栏
                 val notifyId = 1
                 updateConfig.isShowNotification.yes {
@@ -46,10 +50,6 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
                 // 下载完成
                 if (progress == 100) {
                     handleDownloadComplete(context, notifyId, nm)
-                }
-
-                (progress != -1000).yes {
-                    lastProgress = progress
                 }
             }
 
@@ -113,7 +113,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         }
 
         // 设置进度
-        builder.setProgress(100, progress, false)
+        builder.setProgress(100, lastProgress, false)
 
         if (progress == -1000) {
             val intent = Intent(context.packageName + ACTION_RE_DOWNLOAD)

@@ -133,6 +133,7 @@ internal object DownloadAppUtils {
                 override fun completed(task: BaseDownloadTask) {
                     isDownloading = false
                     log("completed")
+                    this@DownloadAppUtils.onProgress.invoke(100)
                     UpdateAppUtils.downloadListener?.onFinish()
                     // 校验md5
                     (updateInfo.config.needCheckMd5).yes {

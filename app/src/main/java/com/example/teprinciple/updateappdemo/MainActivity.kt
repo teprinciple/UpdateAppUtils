@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 .getInstance()
                 .apkUrl(apkUrl)
                 .updateTitle(updateTitle)
+                .updateConfig(UpdateConfig(force = true))
                 .uiConfig(UiConfig(uiType = UiType.SIMPLE))
                 .updateContent(updateContent)
                 .update()
@@ -49,7 +50,8 @@ class MainActivity : AppCompatActivity() {
                 .updateTitle(updateTitle)
                 .updateContent(updateContent)
                 .updateConfig(UpdateConfig().apply {
-                    downloadBy = DownLoadBy.BROWSER
+                    downloadBy = DownLoadBy.APP
+                    force = true
                     // alwaysShow = false
                     serverVersionName = "2.0.0"
                 })
@@ -64,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 .apkUrl(apkUrl)
                 .updateTitle(updateTitle)
                 .updateContent(updateContent)
-                // .updateConfig(UpdateConfig(force = true))
+                .updateConfig(UpdateConfig(force = true))
                 .uiConfig(UiConfig(uiType = UiType.CUSTOM, customLayoutId = R.layout.view_update_dialog_custom))
                 .setOnInitUiListener(object : OnInitUiListener {
                     override fun onInitUpdateUi(view: View?, updateConfig: UpdateConfig, uiConfig: UiConfig) {
