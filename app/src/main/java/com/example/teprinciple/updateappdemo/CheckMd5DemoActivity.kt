@@ -38,9 +38,6 @@ class CheckMd5DemoActivity : AppCompatActivity() {
         val updateConfig = UpdateConfig().apply {
             force = true
             needCheckMd5 = true
-            isShowNotification = true
-            notifyImgRes = R.drawable.ic_logo
-            apkSavePath = Environment.getExternalStorageDirectory().absolutePath + "/teprinciple"
         }
 
         // 正确签名

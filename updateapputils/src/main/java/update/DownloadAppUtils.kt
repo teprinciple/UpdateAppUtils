@@ -12,6 +12,7 @@ import extension.no
 import extension.yes
 import model.UpdateInfo
 import util.GlobalContextProvider
+import util.SPUtil
 import util.SignMd5Util
 import util.Utils
 import java.io.File
@@ -20,6 +21,8 @@ import java.io.File
  * Created by Teprinciple on 2016/12/13.
  */
 internal object DownloadAppUtils {
+
+    const val KEY_OF_SP_APK_PATH = "KEY_OF_SP_APK_PATH"
 
     /**
      * apk 下载后本地文件路径
@@ -103,6 +106,8 @@ internal object DownloadAppUtils {
         val apkLocalPath = "$filePath/$apkName.apk"
 
         downloadUpdateApkFilePath = apkLocalPath
+
+        SPUtil.putBase(KEY_OF_SP_APK_PATH, downloadUpdateApkFilePath)
 
         FileDownloader.setup(context)
 
