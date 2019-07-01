@@ -7,7 +7,7 @@ import model.UpdateConfig
 /**
  * desc: 初始化UI 回调 用于进一步自定义UI
  * time: 2019/6/28
- * @author yk
+ * @author teprinciple
  */
 interface OnInitUiListener {
 

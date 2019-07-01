@@ -7,7 +7,7 @@ import util.GlobalContextProvider
 /**
  * desc: UiConfig UI 配置
  * time: 2019/6/27
- * @author yk
+ * @author teprinciple
  */
 data class UiConfig(
     // ui类型，默认简洁版

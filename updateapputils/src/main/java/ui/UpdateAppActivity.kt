@@ -28,6 +28,10 @@ import util.AlertDialogUtil
 import util.GlobalContextProvider
 import util.Utils
 
+/**
+ * desc: 更新弹窗
+ * author: teprinciple on 2019/06/3.
+ */
 internal class UpdateAppActivity : AppCompatActivity() {
 
     private var tvTitle: TextView? = null

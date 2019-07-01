@@ -13,7 +13,7 @@
 * 通知栏图片自定义
 * 支持修改是否每次显示弹窗（非强更）
 
-UpdateAppUtils2.0功能结构变化巨大，建议使用2.0以上版本；2.0以前版本，可参考[老文档](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/README_1.5.2.md)
+UpdateAppUtils2.0功能结构变化巨大，建议使用2.0以上版本；[2.0以前版本文档](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/README_1.5.2.md)
 
 #### 效果图
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285">

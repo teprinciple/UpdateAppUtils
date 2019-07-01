@@ -6,7 +6,7 @@ import util.GlobalContextProvider
 /**
  * desc: UpdateInfo
  * time: 2019/6/18
- * @author yk
+ * @author teprinciple
  */
 internal data class UpdateInfo(
     // 更新标题

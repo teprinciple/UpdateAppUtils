@@ -5,7 +5,7 @@ import android.view.View
 /**
  * desc: View 相关扩展
  * time: 2019/6/27
- * @author yk
+ * @author teprinciple
  */
 fun View.visibleOrGone(show: Boolean){
     if (show){

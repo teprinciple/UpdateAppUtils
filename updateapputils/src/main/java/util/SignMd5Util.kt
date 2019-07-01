@@ -16,7 +16,7 @@ import kotlin.experimental.and
 /**
  * desc: 获取签名 md5
  * time: 2019/6/21
- * @author yk
+ * @author teprinciple
  */
 internal object SignMd5Util {
 

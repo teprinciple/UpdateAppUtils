@@ -3,7 +3,7 @@ package listener
 /**
  * desc: 下载监听
  * time: 2019/6/19
- * @author yk
+ * @author teprinciple
  */
 interface UpdateDownloadListener {
 

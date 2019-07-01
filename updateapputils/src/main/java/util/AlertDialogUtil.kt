@@ -7,7 +7,7 @@ import com.teprinciple.updateapputils.R
 /**
  * desc: AlertDialogUtil
  * time: 2018/8/20
- * @author yk
+ * @author teprinciple
  */
 internal object AlertDialogUtil {
 

@@ -10,7 +10,7 @@ import model.UpdateConfig
 import update.UpdateAppUtils
 
 /**
- * desc:
+ * desc: md5校验示例
  * time: 2019/7/1
  * @author yk
  */
