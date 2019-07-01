@@ -13,7 +13,7 @@
 * 通知栏图片自定义
 * 支持修改是否每次显示弹窗（非强更）
 
-UpdateAppUtils2.0在代码结构上发生了很大的变化，和优化，建议你使用2.0以上版本；如果你还在使用2.0以前版本，可参考[文档](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/README_1.5.2.md)
+UpdateAppUtils2.0功能结构变化巨大，建议使用2.0以上版本；2.0以前版本，可参考[老文档](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/README_1.5.2.md)
 
 #### 效果图
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285">
@@ -75,11 +75,6 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
         .updateContent(updateContent)
         .updateConfig(updateConfig)
         .uiConfig(uiConfig)
-        .setMd5CheckResultListener(object : Md5CheckResultListener{
-            override fun onResult(result: Boolean) {
-                // do something
-            }
-        })
         .setUpdateDownloadListener(object : UpdateDownloadListener{
             // do something
         })
@@ -89,6 +84,7 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
  为了保证app的安全性，避免apk被二次打包的风险。UpdateAppUtils内部提供了对签名文件md5值校验的接口；
  首先你需要保证当前应用和服务器apk使用同一个签名文件进行了签名（一定要保管好自己的签名文件，否则检验就失去了意义），
  然后你需要将UpdateConfig 的 needCheckMd5 设置为true，并在Md5CheckResultListener监听中，监听校验返回结果。具体使用可参考
+ [CheckMd5DemoActivity](https://github.com/teprinciple/UpdateAppUtils/blob/master/app/src/main/java/com/example/teprinciple/updateappdemo/CheckMd5DemoActivity.kt)
  ```
  UpdateAppUtils
         .getInstance()
