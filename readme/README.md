@@ -7,14 +7,13 @@
 * Kotlin First，Kotlin开发
 * 支持AndroidX
 * 支持Md5签名验证
-* 支持自定义UI
+* 支持自定义任意UI
 * 适配中英文
 * 适配至Android9.0
 * 通知栏图片自定义
 * 支持修改是否每次显示弹窗（非强更）
 
 #### 效果图
-
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285">
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_downloading.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_fail.png" width="285">
 
@@ -86,11 +85,10 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
 ```
 #### 3、md5校验说明
 
+
 #### 4、自定义UI
-
-##### 1、UpdateAppUtils内置了两套UI，你可以通过修改[UiConfig](#UiConfig)进行
-
-
+##### UpdateAppUtils内置了两套UI，你可以通过修改[UiConfig](#UiConfig)进行UI内容的自定义；当然当内部UI模板与你期望UI差别很大时，你可以
+采用[完全自定义UI]()
 
 ### Api说明
 #### 1、UpdateAppUtils Api
@@ -145,7 +143,11 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
 | cancelBtnBgRes        | 取消按钮背景资源id | -   |
 | cancelBtnTextColor    | 取消按钮文字颜色 | -   |
 | cancelBtnTextSize     | 取消按钮文字大小 | 14sp   |
-| cancelBtnText    | 取消按钮文案 | 暂不更新   |
+| cancelBtnText         | 取消按钮文案 | 暂不更新   |
+
+### Demo体验
+
+![]()
 
 ### 更新日志
 #### 2.0.0
