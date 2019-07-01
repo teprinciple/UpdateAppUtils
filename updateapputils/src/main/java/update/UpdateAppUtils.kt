@@ -11,6 +11,7 @@ import model.UpdateInfo
 import ui.UpdateAppActivity
 import util.GlobalContextProvider
 import util.SPUtil
+import util.Utils
 
 
 /**
@@ -111,6 +112,17 @@ object UpdateAppUtils {
             (hasShow).no { UpdateAppActivity.launch() }
         }
         SPUtil.putBase(keyName, true)
+    }
+
+    /**
+     * 删除已安装 apk
+     */
+    fun deleteInstalledApk(){
+        val apkPath = SPUtil.getString(DownloadAppUtils.KEY_OF_SP_APK_PATH)
+        (apkPath.isNotEmpty() && Utils.getAPPVersionCode() == Utils.getApkVersionCode(apkPath) &&
+            Utils.getApkVersionCode(apkPath) > 0).yes {
+            Utils.deleteFile(apkPath)
+        }
     }
 
     /**

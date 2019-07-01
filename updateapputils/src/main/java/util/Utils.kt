@@ -4,10 +4,12 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.support.v4.content.FileProvider
+import android.util.Log
 import extension.log
 import extension.yes
 import java.io.File
@@ -50,9 +52,7 @@ internal object Utils {
             manager.appTasks.forEach {
                 it.finishAndRemoveTask()
             }
-//            System.exit(0)
         } else {
-            // TODO 5.0 以下值能结束当前 进程
             System.exit(0)
         }
     }
@@ -74,12 +74,24 @@ internal object Utils {
     /**
      * 获取apk的版本号 currentVersionCode
      */
-    fun getAPPLocalVersion(ctx: Context): PackageInfo? {
-        val manager = ctx.packageManager
+    fun getAPPVersionCode(): Int {
+        val manager = getApp().applicationContext.packageManager
         return try {
-            manager.getPackageInfo(ctx.packageName, 0)
+            return manager.getPackageInfo(getApp().applicationContext.packageName, 0).versionCode
         } catch (e: Exception) {
-            null
+            -1
+        }
+    }
+
+    /**
+     * 获取apk versioncode
+     */
+    fun getApkVersionCode(apkPath: String): Int {
+        val pm = getApp().applicationContext.packageManager
+        return try {
+            pm.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES).versionCode
+        } catch (e: java.lang.Exception) {
+            -1
         }
     }
 
@@ -101,8 +113,8 @@ internal object Utils {
     /**
      * 删除文件
      */
-    fun deleteFile(filePath: String?){
-        if (filePath == null){
+    fun deleteFile(filePath: String?) {
+        if (filePath == null) {
             return
         }
         val file = File(filePath)
@@ -110,7 +122,7 @@ internal object Utils {
             (file.isFile).yes {
                 file.delete()
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             log(e.message)
         }
     }

@@ -26,6 +26,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // 启动应用后删除安装包
+        UpdateAppUtils.getInstance().deleteInstalledApk()
+
         // 基本使用
         btn_basic_use.setOnClickListener {
             UpdateAppUtils
