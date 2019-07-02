@@ -12,6 +12,7 @@
 * 适配至Android9.0
 * 通知栏图片自定义
 * 支持修改是否每次显示弹窗（非强更）
+* 支持安装完成后自动删除已安装apk
 
 UpdateAppUtils2.0功能结构变化巨大，建议使用2.0以上版本；[2.0以前版本文档](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/README_1.5.2.md)
 
@@ -174,7 +175,7 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 
 ### Demo体验
 
-![]()
+![](https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png)
 
 ### 更新日志
 #### 2.0.0
