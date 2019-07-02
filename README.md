@@ -1,96 +1,189 @@
-# UpdateAppUtils1.5.2
+# UpdateAppUtils2.0
 
  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
-##### 全新2.0 kotlin重构进行中, 欢迎issues...
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
-### 适配Android6.0、7.0、8.0
-![](update.gif)
 
-## 集成
-compile引入
+#### UpdateAppUtils2.0 特点
+* Kotlin First，Kotlin开发
+* 支持AndroidX
+* 支持Md5签名验证
+* 支持自定义任意UI
+* 适配中英文
+* 适配至Android9.0
+* 通知栏图片自定义
+* 支持修改是否每次显示弹窗（非强更）
+* 支持安装完成后自动删除安装包
+
+UpdateAppUtils2.0功能结构变化巨大，建议使用2.0以上版本；[2.0以前版本文档](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/README_1.5.2.md)
+
+#### 效果图
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_simple.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_plentiful.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_change.png" width="285">
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_downloading.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_fail.png" width="285">
+
+### 集成
 ```
-dependencies {
-    implementation 'com.teprinciple:updateapputils:1.5.2'
+repositories {
+   jcenter()    
 }
+
+// Support
+implementation 'com.teprinciple:updateapputils:2.0.0'
+
+// AndroidX
+implementation 'com.teprinciple:updateapputilsX:2.0.0'
 ```
 
-## 使用
-更新检测一般放在MainActivity或者启动页上，
-在请求服务器版本检测接口获取到versionCode、versionName、最新apkPath后调用。
-
-#### 快速使用
+### 使用
+下面为kotlin使用示例，Java示例请参考[JavaDemo](https://github.com/teprinciple/UpdateAppUtils/blob/master/app/src/main/java/com/example/teprinciple/updateappdemo/JavaDemoActivity.java)
+#### 1、快速使用
 ```
- UpdateAppUtils.from(this)
-                .serverVersionCode(2)  //服务器versionCode
-                .serverVersionName("2.0") //服务器versionName
-                .apkPath(apkPath) //最新apk下载地址
-                .update();
+ UpdateAppUtils
+        .getInstance()
+        .apkUrl(apkUrl)
+        .updateTitle(updateTitle)
+        .updateContent(updateContent)
+        .update()
 ```
 
-#### Kotlin代码调用完全一样
+#### 2、多配置使用
 ```
-   private fun update() {
-        val apkPath:String = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk"
-
-        UpdateAppUtils.from(this)
-                .serverVersionCode(2)
-                .serverVersionName("2.0")
-                .apkPath(apkPath)
-                .update()
+    // ui配置
+    val uiConfig = UiConfig().apply {
+        uiType = UiType.PLENTIFUL
+        cancelBtnText = "下次再说"
+        updateLogoImgRes = R.drawable.ic_update
+        updateBtnBgRes = R.drawable.bg_btn
+        titleTextColor = Color.BLACK
+        titleTextSize = 18f
+        contentTextColor = Color.parseColor("#88e16531")
     }
 
+    // 更新配置
+    val updateConfig = UpdateConfig().apply {
+        force = true
+        checkWifi = true
+        needCheckMd5 = true
+        isShowNotification = true
+        notifyImgRes = R.drawable.ic_logo
+        apkSavePath = Environment.getExternalStorageDirectory().absolutePath +"/teprinciple"
+        apkSaveName = "teprinciple"
+    }
+
+    UpdateAppUtils
+        .getInstance()
+        .apkUrl(apkUrl)
+        .updateTitle(updateTitle)
+        .updateContent(updateContent)
+        .updateConfig(updateConfig)
+        .uiConfig(uiConfig)
+        .setUpdateDownloadListener(object : UpdateDownloadListener{
+            // do something
+        })
+        .update()
+```
+#### 3、md5校验说明
+ 为了保证app的安全性，避免apk被二次打包的风险。UpdateAppUtils内部提供了对签名文件md5值校验的接口；
+ 首先你需要保证当前应用和服务器apk使用同一个签名文件进行了签名（一定要保管好自己的签名文件，否则检验就失去了意义），
+ 然后你需要将UpdateConfig 的 needCheckMd5 设置为true，并在Md5CheckResultListener监听中，监听校验返回结果。具体使用可参考
+ [CheckMd5DemoActivity](https://github.com/teprinciple/UpdateAppUtils/blob/master/app/src/main/java/com/example/teprinciple/updateappdemo/CheckMd5DemoActivity.kt)
+ ```
+ UpdateAppUtils
+        .getInstance()
+        .apkUrl(apkUrl)
+        .updateTitle(updateTitle)
+        .updateContent(updateContent)
+        .updateConfig(updateConfig) // needCheckMd5设置为true
+        .setMd5CheckResultListener(object : Md5CheckResultListener{
+            override fun onResult(result: Boolean) {
+                // true：检验通过，false：检验失败
+            }
+        })
+ ```
+
+#### 4、自定义UI
+ UpdateAppUtils内置了两套UI，你可以通过修改[UiConfig](#UiConfig)进行UI内容的自定义；
+ 当然当内部UI模板与你期望UI差别很大时，你可以采用[完全自定义UI](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/%E8%87%AA%E5%AE%9A%E4%B9%89UI.md)
+
+#### 5、删除已安装APK
+UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的VersionCode是否相同来判断已下载apk是否已安装；
+如果两者VersionCode相同则认为apk已经安装，应被删除。
+
+```
+// 在Application或者MainActivity中调用，以达到安装成功启动后删除已安装apk
+ UpdateAppUtils.getInstance().deleteInstalledApk()
 ```
 
-#### 更多配置使用
-```
-UpdateAppUtils.from(this)
-                .checkBy(UpdateAppUtils.CHECK_BY_VERSION_NAME) //更新检测方式，默认为VersionCode
-                .serverVersionCode(2)
-                .serverVersionName("2.0")
-                .apkPath(apkPath)
-                .showNotification(false) //是否显示下载进度到通知栏，默认为true
-                .updateInfo(info)  //更新日志信息 String
-                .downloadBy(UpdateAppUtils.DOWNLOAD_BY_BROWSER) //下载方式：app下载、手机浏览器下载。默认app下载
-                .isForce(true) //是否强制更新，默认false 强制更新情况下用户不同意更新则不能使用app
-                .update();
-```
+### Api说明
+#### 1、UpdateAppUtils Api
 
-#### 说明
-```
-    1、UpdateAppUtils提供两种更新判断方式
+| api             | 说明                               | 默认值                   | 必须设置 |
+|:-------------- |:------------------------------------ |:--------------------- |:------ |
+| fun apkUrl(apkUrl: String)| 更新包服务器url         | null                  | true   |
+| fun update() | UpdateAppUtils入口      | -     | true   |
+| fun updateTitle(title: String)         | 更新标题     | 版本更新啦！     | false   |
+| fun updateContent(content: String)        | 更新内容   | 发现新版本，立即更新  | false   |
+| fun updateConfig(config: UpdateConfig)   | 更新配置  | 查看源码 | false  |
+| fun uiConfig(uiConfig: UiConfig) | 更新弹窗UI配置  | 查看源码                 | false  |
+| fun setUpdateDownloadListener() | 下载过程监听  | null | false   |
+| fun setMd5CheckResultListener() | md5校验结果回调 | null  | false  |
+| fun setOnInitUiListener() | 初始化更新弹窗UI回调 | null  | false  |
+| fun deleteInstalledApk() | 删除已安装的apk | -  | false  |
 
-    CHECK_BY_VERSION_CODE:通过versionCode判断，服务器上versionCode > 本地versionCode则执行更新
+#### 2、UpdateConfig：更新配置说明
 
-    CHECK_BY_VERSION_NAME：通过versionName判断，服务器上versionName 与 本地versionName不同则更新
+| 属性                  | 说明                               | 默认值 |
+|:--------------------- |:------------------------------------ |:------ |
+| isDebug               | 是否输出【UpdateAppUtils】为Tag的日志|  true |
+| force                 | 是否强制更新，强制时无取消按钮       | false  |
+| apkSavePath           | apk下载存放位置               | 包名目录    |
+| apkSaveName           | apk保存文件名                 | 项目名        |
+| downloadBy            | 下载方式              | DownLoadBy.APP   |
+| needCheckMd5          | 是否需要校验apk签名md5              | false   |
+| checkWifi             | 检查是否wifi        | false   |
+| isShowNotification    | 是否显示通知栏进度    | true   |
+| notifyImgRes          | 通知栏图标              | 项目icon  |
+| serverVersionName     | 服务器上apk版本名 | 无   |
+| serverVersionCode     | 服务器上apk版本号 | 无   |
+| alwaysShow            | 是否每次显示更新弹窗（非强更） | true   |
+| thisTimeShow          | 本次是否显示更新弹窗（非强更） | false  |
+| showDownloadingToast  | 开始下载时是否显示Toast | true  |
 
-    2、UpdateAppUtils提供两种下载apk方式
+#### 3、UiConfig：更新弹窗Ui配置说明 <div id = "UiConfig"/>
 
-    DOWNLOAD_BY_APP：通过App下载
+| 属性                  | 说明                               | 默认值 |
+|:--------------------- |:------------------------------------ |:------ |
+| uiType                | ui模板                        | UiType.SIMPLE |
+| customLayoutId        | 自定义布局id    | false  |
+| updateLogoImgRes      | 更新弹窗logo图片资源id               | -    |
+| titleTextSize         | 标题字体大小                 | 16sp        |
+| titleTextColor        | 标题字体颜色              | -   |
+| contentTextSize         | 内容字体大小                 | 14sp       |
+| contentTextColor        | 内容字体颜色              | -  |
+| updateBtnBgColor      | 更新按钮背景颜色              | -   |
+| updateBtnBgRes        | 更新按钮背景资源id        | -   |
+| updateBtnTextColor    | 更新按钮字体颜色    | -   |
+| updateBtnTextSize     | 更新按钮文字大小 | 14sp   |
+| updateBtnText         | 更新按钮文案              | 立即更新  |
+| cancelBtnBgColor      | 取消按钮背景颜色 | -   |
+| cancelBtnBgRes        | 取消按钮背景资源id | -   |
+| cancelBtnTextColor    | 取消按钮文字颜色 | -   |
+| cancelBtnTextSize     | 取消按钮文字大小 | 14sp   |
+| cancelBtnText         | 取消按钮文案 | 暂不更新   |
+| downloadingToastText  | 开始下载时的Toast提示文字 | 更新下载中...   |
+| downloadingBtnText    | 下载中 下载按钮以及通知栏标题前缀，进度自动拼接在后面 | 下载中   |
+| downloadFailText      | 下载出错时，下载按钮及通知栏标题 | 暂不更新   |
 
-    DOWNLOAD_BY_BROWSER：通过手机浏览器下载
+### Demo体验
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
-```
-
-#### 关于适配Android6.0、7.0、8.0
-
-库内部已经完全适配至8.0,你可以不用再对该库进行适配
-
-#### 文章地址：[《UpdateAppUtils一行代码实现app在线更新》](http://www.jianshu.com/p/9c91bb984c85)
-
-#### 更新日志
-1.5.2<br>
-修复部分bug
-<br>1.5.1<br>
-库内部适配至Android8.0
-<br>1.4<br>
-使用[filedownloader](https://github.com/lingochamp/FileDownloader)替换DownloadManager，避免部分手机DownLoadManager无效，同时解决了重复下载的问题，且提高了下载速度
-增加接口UpdateAppUtils.needFitAndroidN(false)，避免不需要适配7.0，也要设置FileProvider
-<br>1.3.1<br>
-修复部分bug，在demo中加入kotlin调用代码
-<br>1.3<br>
-增加接口方法 showNotification(false)//是否显示下载进度到通知栏；<br>updateInfo(info)//更新日志信息；下载前WiFi判断。
-<br>1.2<br>
-适配Android7.0，并在demo中加入适配6.0和7.0的代码
-<br>1.1<br>
-适配更多SdkVersion
-
+### 更新日志
+#### 2.0.0
+* Kotlin重构
+* 支持AndroidX
+* 安装包签名文件md5校验
+* 通知栏自定义图标
+* 支持自定义UI
+* 适配中英文
+* 增加下载回调等api
+* 修复部分bug
+##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)

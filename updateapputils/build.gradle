@@ -44,7 +44,7 @@ publish {
     userOrg = 'teprinciple'
     groupId = 'com.teprinciple'
     artifactId = 'updateapputils'
-    publishVersion = '1.5.6'
+    publishVersion = '2.0.0'
     desc = 'A Simple library for Android update app'
-    website = 'https://github.com/teprinciple/UpdateAppDemo'
+    website = 'https://github.com/teprinciple/UpdateAppUtils'
 }
