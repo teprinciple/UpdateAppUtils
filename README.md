@@ -1,6 +1,7 @@
 # UpdateAppUtils2.0
 
  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
+ [ ![Download](https://api.bintray.com/packages/teprinciple/maven/updateapputils/images/download.svg?version=2.0.0) ](https://bintray.com/teprinciple/maven/updateapputils/2.0.0/link)
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 
 #### UpdateAppUtils2.0 特点
