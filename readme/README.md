@@ -103,6 +103,15 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
  UpdateAppUtils内置了两套UI，你可以通过修改[UiConfig](#UiConfig)进行UI内容的自定义；
  当然当内部UI模板与你期望UI差别很大时，你可以采用[完全自定义UI](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/%E8%87%AA%E5%AE%9A%E4%B9%89UI.md)
 
+#### 5、删除已安装APK
+UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的VersionCode是否相同来判断已下载apk是否已安装；
+如果两者VersionCode相同则认为apk已经安装，应被删除。
+
+```
+// 在Application或者MainActivity中调用，以达到安装成功启动后删除已安装apk
+ UpdateAppUtils.getInstance().deleteInstalledApk()
+```
+
 ### Api说明
 #### 1、UpdateAppUtils Api
 
@@ -117,6 +126,7 @@ implementation 'com.teprinciple:updateapputilsX:2.0.0'
 | fun setUpdateDownloadListener() | 下载过程监听  | null | false   |
 | fun setMd5CheckResultListener() | md5校验结果回调 | null  | false  |
 | fun setOnInitUiListener() | 初始化更新弹窗UI回调 | null  | false  |
+| fun deleteInstalledApk() | 删除已安装的apk | -  | false  |
 
 #### 2、UpdateConfig：更新配置说明
 

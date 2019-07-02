@@ -1,5 +1,6 @@
 package update
 
+import extension.log
 import extension.no
 import extension.yes
 import listener.Md5CheckResultListener
@@ -117,10 +118,13 @@ object UpdateAppUtils {
     /**
      * 删除已安装 apk
      */
-    fun deleteInstalledApk(){
-        val apkPath = SPUtil.getString(DownloadAppUtils.KEY_OF_SP_APK_PATH)
-        (apkPath.isNotEmpty() && Utils.getAPPVersionCode() == Utils.getApkVersionCode(apkPath) &&
-            Utils.getApkVersionCode(apkPath) > 0).yes {
+    fun deleteInstalledApk() {
+        val apkPath = SPUtil.getString(DownloadAppUtils.KEY_OF_SP_APK_PATH, "")
+        val appVersionCode = Utils.getAPPVersionCode()
+        val apkVersionCode = Utils.getApkVersionCode(apkPath)
+        log("appVersionCode:$appVersionCode")
+        log("apkVersionCode:$apkVersionCode")
+        (apkPath.isNotEmpty() && appVersionCode == apkVersionCode && apkVersionCode > 0).yes {
             Utils.deleteFile(apkPath)
         }
     }
@@ -129,5 +133,5 @@ object UpdateAppUtils {
      * 获取单例对象
      */
     @JvmStatic
-    fun getInstance() = this
+    fun getInstance()= this
 }

@@ -121,6 +121,7 @@ internal object Utils {
         try {
             (file.isFile).yes {
                 file.delete()
+                log("删除成功")
             }
         } catch (e: Exception) {
             log(e.message)
