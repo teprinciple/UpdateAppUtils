@@ -175,7 +175,7 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 
 ### Demo体验
 
-![](https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png)
+![](https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png)
 
 ### 更新日志
 #### 2.0.0
