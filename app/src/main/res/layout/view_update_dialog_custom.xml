@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_custom_update"
@@ -78,7 +78,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="V1.0.0"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/btn_update_cancel"
