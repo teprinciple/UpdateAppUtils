@@ -174,8 +174,7 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 | downloadFailText      | 下载出错时，下载按钮及通知栏标题 | 暂不更新   |
 
 ### Demo体验
-
-![](https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png)
+<img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
 ### 更新日志
 #### 2.0.0
