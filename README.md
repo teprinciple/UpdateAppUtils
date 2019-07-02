@@ -172,7 +172,7 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 | cancelBtnText         | 取消按钮文案 | 暂不更新   |
 | downloadingToastText  | 开始下载时的Toast提示文字 | 更新下载中...   |
 | downloadingBtnText    | 下载中 下载按钮以及通知栏标题前缀，进度自动拼接在后面 | 下载中   |
-| downloadFailText      | 下载出错时，下载按钮及通知栏标题 | 暂不更新   |
+| downloadFailText      | 下载出错时，下载按钮及通知栏标题 | 下载出错，点击重试   |
 
 ### Demo体验
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
