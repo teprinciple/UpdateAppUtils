@@ -27,7 +27,7 @@
         <service android:name="update.UpdateAppService"/>
 
         <provider
-            android:name="androidx.core.content.FileProvider"
+            android:name="update.UpdateFileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">

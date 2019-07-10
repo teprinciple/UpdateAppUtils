@@ -1,7 +1,7 @@
 # UpdateAppUtils2.0
 
  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
- [ ![Download](https://api.bintray.com/packages/teprinciple/maven/updateapputils/images/download.svg?version=2.0.0) ](https://bintray.com/teprinciple/maven/updateapputils/2.0.0/link)
+[ ![Download](https://api.bintray.com/packages/teprinciple/maven/updateapputils/images/download.svg) ](https://bintray.com/teprinciple/maven/updateapputils/_latestVersion)
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 
 #### UpdateAppUtils2.0 特点
@@ -28,10 +28,10 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.0.0'
+implementation 'com.teprinciple:updateapputils:2.0.1'
 
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.0.0'
+implementation 'com.teprinciple:updateapputilsX:2.0.1'
 ```
 
 ### 使用
@@ -178,13 +178,6 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
 ### 更新日志
-#### 2.0.0
-* Kotlin重构
-* 支持AndroidX
-* 安装包签名文件md5校验
-* 通知栏自定义图标
-* 支持自定义UI
-* 适配中英文
-* 增加下载回调等api
-* 修复部分bug
+#### 2.0.1
+* 自定义FileProvide，防止provider冲突
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)
