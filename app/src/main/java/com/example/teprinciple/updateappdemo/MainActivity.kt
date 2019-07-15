@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
             // 更新配置
             val updateConfig = UpdateConfig().apply {
                 force = true
+                isDebug = true
                 checkWifi = true
                 isShowNotification = true
                 notifyImgRes = R.drawable.ic_logo

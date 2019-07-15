@@ -1,5 +1,8 @@
 #### 更新日志
-
+#### 2.0.2
+* 9.0Http适配
+#### 2.0.1
+* 自定义FileProvide，防止provider冲突
 ##### 2.0.0
 * Kotlin重构
 * 支持AndroidX
