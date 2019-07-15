@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.teprinciple.updateapputils">
 
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
@@ -12,7 +13,9 @@
 
     <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
 
-    <application>
+    <application
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:ignore="UnusedAttribute">
 
         <activity
             android:name="ui.UpdateAppActivity"
