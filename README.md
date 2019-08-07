@@ -28,10 +28,10 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.0.2'
+implementation 'com.teprinciple:updateapputils:2.0.3'
 
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.0.2'
+implementation 'com.teprinciple:updateapputilsX:2.0.3'
 ```
 
 ### 使用
