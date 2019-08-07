@@ -29,10 +29,10 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.0.2'
+implementation 'com.teprinciple:updateapputils:2.0.3'
 
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.0.2'
+implementation 'com.teprinciple:updateapputilsX:2.0.3'
 ```
 
 ### 使用
@@ -179,6 +179,6 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
 ### 更新日志
-#### 2.0.2
-* 9.0Http适配
+#### 2.0.3
+* 更新弹窗内容支持SpannableString
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)
