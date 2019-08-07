@@ -47,7 +47,7 @@ object UpdateAppUtils {
     /**
      * 设置更新标题
      */
-    fun updateTitle(title: String): UpdateAppUtils {
+    fun updateTitle(title: CharSequence): UpdateAppUtils {
         updateInfo.updateTitle = title
         return this
     }
@@ -55,7 +55,7 @@ object UpdateAppUtils {
     /**
      * 设置更新内容
      */
-    fun updateContent(content: String): UpdateAppUtils {
+    fun updateContent(content: CharSequence): UpdateAppUtils {
         updateInfo.updateContent = content
         return this
     }

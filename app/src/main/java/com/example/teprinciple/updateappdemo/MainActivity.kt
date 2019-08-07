@@ -42,11 +42,21 @@ class MainActivity : AppCompatActivity() {
 
         // 浏览器下载
         btn_download_by_browser.setOnClickListener {
+
+            // 使用SpannableString
+            val content = SpanUtils(this)
+                .appendLine("1、Kotlin重构版")
+                .appendLine("2、支持自定义UI").setForegroundColor(Color.RED)
+                .appendLine("3、增加md5校验").setForegroundColor(Color.parseColor("#88e16531")).setFontSize(20, true)
+                .appendLine("4、更多功能等你探索").setBoldItalic()
+                .appendLine().appendImage(R.mipmap.ic_launcher).setBoldItalic()
+                .create()
+
             UpdateAppUtils
                 .getInstance()
                 .apkUrl(apkUrl)
                 .updateTitle(updateTitle)
-                .updateContent(updateContent)
+                .updateContent(content)
                 .updateConfig(UpdateConfig().apply {
                     downloadBy = DownLoadBy.APP
                     // alwaysShow = false
@@ -79,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, JavaDemoActivity::class.java))
         }
 
-         // md5校验
+        // md5校验
         btn_check_md5.setOnClickListener {
             startActivity(Intent(this, CheckMd5DemoActivity::class.java))
         }
