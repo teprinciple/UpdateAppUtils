@@ -7,6 +7,7 @@ data class UpdateConfig(
 
     var alwaysShow: Boolean = true, // 非强制更新时，是否每次都显示弹窗，用VersionName来判断
     var thisTimeShow: Boolean = false, // 非强制更新时，指定本次显示弹窗
+    var alwaysShowDownLoadDialog: Boolean = false, // 非强制更新时，也显示下载进度dialog
 
     var force: Boolean = false, // 是否强制更新
     var apkSavePath: String = "", // apk下载存放位置

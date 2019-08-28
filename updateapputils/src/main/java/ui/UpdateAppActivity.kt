@@ -207,7 +207,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun realDownload() {
 
-        if (updateConfig.force && sureBtn is TextView) {
+        if ((updateConfig.force || updateConfig.alwaysShowDownLoadDialog) && sureBtn is TextView) {
             DownloadAppUtils.onError = {
                 (sureBtn as? TextView)?.text = uiConfig.downloadFailText
             }
@@ -217,7 +217,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }
 
             DownloadAppUtils.onProgress = {
-                (it == 100).yes{
+                (it == 100).yes {
                     (sureBtn as? TextView)?.text = getString(R.string.install)
                 }.no {
                     (sureBtn as? TextView)?.text = "${uiConfig.downloadingBtnText}$it%"
@@ -231,8 +231,8 @@ internal class UpdateAppActivity : AppCompatActivity() {
             Toast.makeText(this, uiConfig.downloadingToastText, Toast.LENGTH_SHORT).show()
         }
 
-        // 非强制安装时，开始下载后取消弹窗
-        (updateConfig.force).no {
+        // 非强制安装且alwaysShowDownLoadDialog为false时，开始下载后取消弹窗
+        (!updateConfig.force && !updateConfig.alwaysShowDownLoadDialog).yes {
             finish()
         }
     }

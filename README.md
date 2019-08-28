@@ -147,6 +147,7 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 | serverVersionCode     | 服务器上apk版本号 | 无   |
 | alwaysShow            | 是否每次显示更新弹窗（非强更） | true   |
 | thisTimeShow          | 本次是否显示更新弹窗（非强更） | false  |
+| alwaysShowDownLoadDialog| 是否需要显示更新下载进度弹窗（非强更） | false  |
 | showDownloadingToast  | 开始下载时是否显示Toast | true  |
 
 #### 3、UiConfig：更新弹窗Ui配置说明 <div id = "UiConfig"/>
