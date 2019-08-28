@@ -28,10 +28,10 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.0.3'
+implementation 'com.teprinciple:updateapputils:2.0.4'
 
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.0.3'
+implementation 'com.teprinciple:updateapputilsX:2.0.4'
 ```
 
 ### 使用
@@ -179,6 +179,7 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
 ### 更新日志
-#### 2.0.3
-* 更新弹窗内容支持SpannableString
+#### 2.0.4
+* 修复阿里云，码云平台上的apk FileDownloader下载失败
+* 增加UpdateConfig alwaysShowDownLoadDialog字段，让非强更也能显示下载进度弹窗
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)

@@ -1,4 +1,9 @@
 #### 更新日志
+#### 2.0.4
+* 修复阿里云，码云平台上的apk FileDownloader下载失败
+* 增加UpdateConfig alwaysShowDownLoadDialog字段，让非强更也能显示下载进度弹窗
+#### 2.0.3
+* 更新弹窗内容支持SpannableString
 #### 2.0.2
 * 9.0Http适配
 #### 2.0.1
