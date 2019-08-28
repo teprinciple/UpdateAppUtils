@@ -11,6 +11,8 @@ import extension.log
 import extension.no
 import extension.yes
 import model.UpdateInfo
+import util.*
+import util.FileDownloadUtil
 import util.GlobalContextProvider
 import util.SPUtil
 import util.SignMd5Util
@@ -116,19 +118,13 @@ internal object DownloadAppUtils {
             .setListener(object : FileDownloadLargeFileListener() {
 
                 override fun pending(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
+                    log("----使用FileDownloader下载-------")
                     log("pending:soFarBytes($soFarBytes),totalBytes($totalBytes)")
-                    isDownloading = true
-                    UpdateAppUtils.downloadListener?.onStart()
-                    UpdateAppReceiver.send(context, 0)
+                    downloadStart()
                 }
 
                 override fun progress(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
-                    isDownloading = true
-                    val progress = (soFarBytes * 100.0 / totalBytes).toInt()
-                    log("progress:$progress")
-                    UpdateAppReceiver.send(context, progress)
-                    this@DownloadAppUtils.onProgress.invoke(progress)
-                    UpdateAppUtils.downloadListener?.onDownload(progress)
+                    downloading(soFarBytes, totalBytes)
                 }
 
                 override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
@@ -136,31 +132,77 @@ internal object DownloadAppUtils {
                 }
 
                 override fun completed(task: BaseDownloadTask) {
-                    isDownloading = false
-                    log("completed")
-                    this@DownloadAppUtils.onProgress.invoke(100)
-                    UpdateAppUtils.downloadListener?.onFinish()
-                    // 校验md5
-                    (updateInfo.config.needCheckMd5).yes {
-                        checkMd5(context)
-                    }.no {
-                        UpdateAppReceiver.send(context, 100)
-                    }
+                    downloadComplete()
                 }
 
                 override fun error(task: BaseDownloadTask, e: Throwable) {
-                    isDownloading = false
-                    log("error:${e.message}")
+                    // FileDownloader 下载失败后，再调用 FileDownloadUtil 下载一次
+                    // FileDownloader 对码云或者阿里云上的apk文件会下载失败
+                    // downloadError(e)
                     Utils.deleteFile(downloadUpdateApkFilePath)
-                    this@DownloadAppUtils.onError.invoke()
-                    UpdateAppUtils.downloadListener?.onError(e)
-
-                    UpdateAppReceiver.send(context, -1000)
+                    FileDownloadUtil.download(
+                        updateInfo.apkUrl,
+                        filePath,
+                        "$apkName.apk",
+                        onStart = { downloadStart() },
+                        onProgress = { current, total -> downloading(current, total) },
+                        onComplete = { downloadComplete() },
+                        onError = { downloadError(it) }
+                    )
                 }
 
                 override fun warn(task: BaseDownloadTask) {
                 }
             }).start()
+    }
+
+    /**
+     * 开始下载逻辑
+     */
+    private fun downloadStart() {
+        isDownloading = true
+        UpdateAppUtils.downloadListener?.onStart()
+        UpdateAppReceiver.send(context, 0)
+    }
+
+    /**
+     * 下载中逻辑
+     */
+    private fun downloading(soFarBytes: Long, totalBytes: Long) {
+        isDownloading = true
+        val progress = (soFarBytes * 100.0 / totalBytes).toInt()
+        log("progress:$progress")
+        UpdateAppReceiver.send(context, progress)
+        this@DownloadAppUtils.onProgress.invoke(progress)
+        UpdateAppUtils.downloadListener?.onDownload(progress)
+    }
+
+    /**
+     * 下载完成处理逻辑
+     */
+    private fun downloadComplete() {
+        isDownloading = false
+        log("completed")
+        this@DownloadAppUtils.onProgress.invoke(100)
+        UpdateAppUtils.downloadListener?.onFinish()
+        // 校验md5
+        (updateInfo.config.needCheckMd5).yes {
+            checkMd5(context)
+        }.no {
+            UpdateAppReceiver.send(context, 100)
+        }
+    }
+
+    /**
+     * 下载失败处理逻辑
+     */
+    private fun downloadError(e: Throwable) {
+        isDownloading = false
+        log("error:${e.message}")
+        Utils.deleteFile(downloadUpdateApkFilePath)
+        this@DownloadAppUtils.onError.invoke()
+        UpdateAppUtils.downloadListener?.onError(e)
+        UpdateAppReceiver.send(context, -1000)
     }
 
     /**

@@ -13,13 +13,32 @@ import kotlin.concurrent.thread
 /**
  * desc: 文件下载 当 FileDownloader 对某些apk下载失败时（比如：放在阿里云，码云上apk） 使用该工具类下载
  * time: 2019/8/28
- * @author yk
+ * @author teprinciple
  */
-object FileDownloadUtil {
+internal object FileDownloadUtil {
 
-    fun download(url: String, fileSavePath: String, fileName: String?) {
+    /**
+     * 下载文件
+     * @param url 文件地址
+     * @param fileSavePath 文件存储地址
+     * @param fileName 文件存储名称
+     * @param onStart 开始下载回调
+     * @param onProgress 下载中回调
+     * @param onComplete 下载完成回调
+     * @param onError 下载失败回调
+     */
+    fun download(
+        url: String,
+        fileSavePath: String,
+        fileName: String?,
+        onStart: () -> Unit = {},
+        onProgress: (current: Long, total: Long) -> Unit = { _, _ -> },
+        onComplete: () -> Unit = {},
+        onError: (Throwable) -> Unit = {}
+    ) {
         thread {
-            log("HttpURLConnection下载开始")
+            log("----使用HttpURLConnection下载----")
+            onStart.invoke()
             var connection: HttpURLConnection? = null
             var outputStream: FileOutputStream? = null
 
@@ -38,10 +57,14 @@ object FileDownloadUtil {
 
                 val responseCode = connection!!.responseCode
                 if (responseCode == HTTP_OK) {
+
+                    val total = connection!!.contentLength
+
                     connection!!.inputStream.use { input ->
                         outputStream.use { output ->
                             input.copyToWithProgress(output!!) {
-                                log("已下载：$it/${connection!!.contentLength}")
+                                // log("已下载：$it/${connection!!.contentLength}")
+                                onProgress(it, total.toLong())
                             }
                         }
                     }
@@ -50,11 +73,12 @@ object FileDownloadUtil {
                 connection?.disconnect()
                 outputStream?.close()
                 log("HttpURLConnection下载完成")
-
+                onComplete.invoke()
             }.onFailure {
                 connection?.disconnect()
                 outputStream?.close()
                 log("HttpURLConnection下载失败：${it.message}")
+                onError.invoke(it)
             }
         }
     }

@@ -29,10 +29,10 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.0.3'
+implementation 'com.teprinciple:updateapputils:2.0.4'
 
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.0.3'
+implementation 'com.teprinciple:updateapputilsX:2.0.4'
 ```
 
 ### 使用
@@ -148,6 +148,7 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 | serverVersionCode     | 服务器上apk版本号 | 无   |
 | alwaysShow            | 是否每次显示更新弹窗（非强更） | true   |
 | thisTimeShow          | 本次是否显示更新弹窗（非强更） | false  |
+| alwaysShowDownLoadDialog| 是否需要显示更新下载进度弹窗（非强更） | false  |
 | showDownloadingToast  | 开始下载时是否显示Toast | true  |
 
 #### 3、UiConfig：更新弹窗Ui配置说明 <div id = "UiConfig"/>
@@ -179,6 +180,7 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
 ### 更新日志
-#### 2.0.3
-* 更新弹窗内容支持SpannableString
+#### 2.0.4
+* 修复阿里云，码云平台上的apk FileDownloader下载失败
+* 增加UpdateConfig alwaysShowDownLoadDialog字段，让非强更也能显示下载进度弹窗
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)
