@@ -3,6 +3,7 @@ package update
 import extension.log
 import extension.no
 import extension.yes
+import listener.OnBtnClickListener
 import listener.Md5CheckResultListener
 import listener.OnInitUiListener
 import listener.UpdateDownloadListener
@@ -35,6 +36,12 @@ object UpdateAppUtils {
 
     // 初始化更新弹窗UI回调
     internal var onInitUiListener: OnInitUiListener? = null
+
+    // "暂不更新"按钮点击事件
+    internal var onCancelBtnClickListener: OnBtnClickListener? = null
+
+    // "立即更新"按钮点击事件
+    internal var onUpdateBtnClickListener: OnBtnClickListener? = null
 
     /**
      * 设置apk下载地址
@@ -79,7 +86,7 @@ object UpdateAppUtils {
     /**
      * 设置下载监听
      */
-    fun setUpdateDownloadListener(listener: UpdateDownloadListener): UpdateAppUtils {
+    fun setUpdateDownloadListener(listener: UpdateDownloadListener?): UpdateAppUtils {
         this.downloadListener = listener
         return this
     }
@@ -87,7 +94,7 @@ object UpdateAppUtils {
     /**
      * 设置md5校验结果监听
      */
-    fun setMd5CheckResultListener(listener: Md5CheckResultListener): UpdateAppUtils {
+    fun setMd5CheckResultListener(listener: Md5CheckResultListener?): UpdateAppUtils {
         this.md5CheckResultListener = listener
         return this
     }
@@ -95,8 +102,24 @@ object UpdateAppUtils {
     /**
      * 设置初始化UI监听
      */
-    fun setOnInitUiListener(listener: OnInitUiListener): UpdateAppUtils {
+    fun setOnInitUiListener(listener: OnInitUiListener?): UpdateAppUtils {
         this.onInitUiListener = listener
+        return this
+    }
+
+    /**
+     * 设置 “暂不更新” 按钮点击事件
+     */
+    fun setCancelBtnClickListener(listener: OnBtnClickListener?): UpdateAppUtils {
+        this.onCancelBtnClickListener = listener
+        return this
+    }
+
+    /**
+     * 设置 “立即更新” 按钮点击事件
+     */
+    fun setUpdateBtnClickListener(listener: OnBtnClickListener?): UpdateAppUtils {
+        this.onUpdateBtnClickListener = listener
         return this
     }
 
@@ -133,5 +156,5 @@ object UpdateAppUtils {
      * 获取单例对象
      */
     @JvmStatic
-    fun getInstance()= this
+    fun getInstance() = this
 }
