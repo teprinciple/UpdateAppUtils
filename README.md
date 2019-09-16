@@ -133,8 +133,8 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 | fun setMd5CheckResultListener() | md5校验结果回调 | null  | false  |
 | fun setOnInitUiListener() | 初始化更新弹窗UI回调 | null  | false  |
 | fun deleteInstalledApk() | 删除已安装的apk | -  | false  |
-| fun setCancelBtnClickListener() | 暂不更新按钮点击监听 | -  | null  |
-| fun setUpdateBtnClickListener() | 立即更新按钮点击监听 | -  | null  |
+| fun setCancelBtnClickListener() | 暂不更新按钮点击监听 | -  | false  |
+| fun setUpdateBtnClickListener() | 立即更新按钮点击监听 | -  | false  |
 
 #### 2、UpdateConfig：更新配置说明
 
