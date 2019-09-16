@@ -7,9 +7,11 @@ import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import constacne.DownLoadBy
 import constacne.UiType
 import kotlinx.android.synthetic.main.activity_main.*
+import listener.OnBtnClickListener
 import listener.OnInitUiListener
 import listener.UpdateDownloadListener
 import model.UiConfig
@@ -19,7 +21,6 @@ import update.UpdateAppUtils
 
 class MainActivity : AppCompatActivity() {
     private val apkUrl = "http://118.24.148.250:8080/yk/update_signed.apk"
-    //private val apkUrl = "http://minshengyizu.gitee.io/msyz/testappfile/m_1.0.0.apk"
     private val updateTitle = "发现新版本V2.0.0"
     private val updateContent = "1、Kotlin重构版\n2、支持自定义UI\n3、增加md5校验\n4、更多功能等你探索"
 
@@ -64,6 +65,23 @@ class MainActivity : AppCompatActivity() {
                     serverVersionName = "2.0.0"
                 })
                 .uiConfig(UiConfig(uiType = UiType.PLENTIFUL))
+
+                // 设置 取消 按钮点击事件
+                .setCancelBtnClickListener(object : OnBtnClickListener {
+                    override fun onClick(): Boolean {
+                        Toast.makeText(this@MainActivity, "cancel btn click", Toast.LENGTH_SHORT).show()
+                        return false // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
+                    }
+                })
+
+                // 设置 立即更新 按钮点击事件
+                .setUpdateBtnClickListener(object : OnBtnClickListener {
+                    override fun onClick(): Boolean {
+                        Toast.makeText(this@MainActivity, "update btn click", Toast.LENGTH_SHORT).show()
+                        return false // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
+                    }
+                })
+
                 .update()
         }
 

@@ -29,10 +29,13 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.0.4'
+implementation 'com.teprinciple:updateapputils:2.1.0'
+```
 
+AndroidX项目
+```
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.0.4'
+implementation 'com.teprinciple:updateapputilsX:2.1.0'
 ```
 
 ### 使用
@@ -130,6 +133,8 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 | fun setMd5CheckResultListener() | md5校验结果回调 | null  | false  |
 | fun setOnInitUiListener() | 初始化更新弹窗UI回调 | null  | false  |
 | fun deleteInstalledApk() | 删除已安装的apk | -  | false  |
+| fun setCancelBtnClickListener() | 暂不更新按钮点击监听 | -  | null  |
+| fun setUpdateBtnClickListener() | 立即更新按钮点击监听 | -  | null  |
 
 #### 2、UpdateConfig：更新配置说明
 
@@ -180,7 +185,8 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
 ### 更新日志
-#### 2.0.4
-* 修复阿里云，码云平台上的apk FileDownloader下载失败
-* 增加UpdateConfig alwaysShowDownLoadDialog字段，让非强更也能显示下载进度弹窗
+#### 2.1.0
+* 增加'暂不更新'按钮点击监听 setCancelBtnClickListener()
+* 增加'立即更新'按钮点击监听 setUpdateBtnClickListener()
+* 修复部分bug
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)

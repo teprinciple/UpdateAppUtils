@@ -1,4 +1,8 @@
 #### 更新日志
+#### 2.1.0
+* 增加'暂不更新'按钮点击监听 setCancelBtnClickListener()
+* 增加'立即更新'按钮点击监听 setUpdateBtnClickListener()
+* 修复部分bug
 #### 2.0.4
 * 修复阿里云，码云平台上的apk FileDownloader下载失败
 * 增加UpdateConfig alwaysShowDownLoadDialog字段，让非强更也能显示下载进度弹窗

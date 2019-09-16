@@ -113,22 +113,35 @@ internal object DownloadAppUtils {
 
         FileDownloader.setup(context)
 
-        FileDownloader.getImpl().create(updateInfo.apkUrl)
+        val downloadTask = FileDownloader.getImpl().create(updateInfo.apkUrl)
             .setPath(apkLocalPath)
+
+        downloadTask
+            .addHeader("Accept-Encoding","identity")
+            .addHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36")
             .setListener(object : FileDownloadLargeFileListener() {
 
                 override fun pending(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
                     log("----使用FileDownloader下载-------")
                     log("pending:soFarBytes($soFarBytes),totalBytes($totalBytes)")
                     downloadStart()
+                    if(totalBytes < 0){
+                        downloadTask.pause()
+                    }
                 }
 
                 override fun progress(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
                     downloading(soFarBytes, totalBytes)
+                    if(totalBytes < 0){
+                        downloadTask.pause()
+                    }
                 }
 
                 override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
-                    isDownloading = false
+                    log("获取文件总长度失败出错，尝试HTTPURLConnection下载")
+                    Utils.deleteFile(downloadUpdateApkFilePath)
+                    Utils.deleteFile("$downloadUpdateApkFilePath.temp")
+                    downloadByHttpUrlConnection(filePath, apkName)
                 }
 
                 override fun completed(task: BaseDownloadTask) {
@@ -139,21 +152,30 @@ internal object DownloadAppUtils {
                     // FileDownloader 下载失败后，再调用 FileDownloadUtil 下载一次
                     // FileDownloader 对码云或者阿里云上的apk文件会下载失败
                     // downloadError(e)
+                    log("下载出错，尝试HTTPURLConnection下载")
                     Utils.deleteFile(downloadUpdateApkFilePath)
-                    FileDownloadUtil.download(
-                        updateInfo.apkUrl,
-                        filePath,
-                        "$apkName.apk",
-                        onStart = { downloadStart() },
-                        onProgress = { current, total -> downloading(current, total) },
-                        onComplete = { downloadComplete() },
-                        onError = { downloadError(it) }
-                    )
+                    Utils.deleteFile("$downloadUpdateApkFilePath.temp")
+                    downloadByHttpUrlConnection(filePath, apkName)
                 }
 
                 override fun warn(task: BaseDownloadTask) {
                 }
             }).start()
+    }
+
+    /**
+     * 使用 HttpUrlConnection 下载
+     */
+    private fun downloadByHttpUrlConnection(filePath: String, apkName: String?) {
+        FileDownloadUtil.download(
+            updateInfo.apkUrl,
+            filePath,
+            "$apkName.apk",
+            onStart = { downloadStart() },
+            onProgress = { current, total -> downloading(current, total) },
+            onComplete = { downloadComplete() },
+            onError = { downloadError(it) }
+        )
     }
 
     /**
@@ -169,8 +191,10 @@ internal object DownloadAppUtils {
      * 下载中逻辑
      */
     private fun downloading(soFarBytes: Long, totalBytes: Long) {
+//        log("soFarBytes:$soFarBytes--totalBytes:$totalBytes")
         isDownloading = true
-        val progress = (soFarBytes * 100.0 / totalBytes).toInt()
+        var progress = (soFarBytes * 100.0 / totalBytes).toInt()
+        if (progress < 0) progress = 0
         log("progress:$progress")
         UpdateAppReceiver.send(context, progress)
         this@DownloadAppUtils.onProgress.invoke(progress)

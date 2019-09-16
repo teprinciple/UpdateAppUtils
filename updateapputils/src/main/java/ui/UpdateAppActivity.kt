@@ -8,6 +8,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.MotionEvent
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
@@ -76,6 +78,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
             uiConfig)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initView() {
 
         tvTitle = findViewById(R.id.tv_update_title)
@@ -114,6 +117,26 @@ internal class UpdateAppActivity : AppCompatActivity() {
         cancelBtn?.visibleOrGone(!updateConfig.force)
         // 取消按钮与确定按钮中的间隔线
         findViewById<View>(R.id.view_line)?.visibleOrGone(!updateConfig.force)
+
+        // 外部额外设置 取消 按钮点击事件
+        cancelBtn?.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    UpdateAppUtils.onCancelBtnClickListener?.onClick() ?: false
+                }
+                else -> false
+            }
+        }
+
+        // 外部额外设置 立即更新 按钮点击事件
+        sureBtn?.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    UpdateAppUtils.onUpdateBtnClickListener?.onClick() ?: false
+                }
+                else -> false
+            }
+        }
     }
 
     /**

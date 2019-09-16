@@ -1,6 +1,10 @@
 package util
 
 import extension.log
+import extension.yes
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -8,7 +12,6 @@ import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.HttpURLConnection.HTTP_OK
 import java.net.URL
-import kotlin.concurrent.thread
 
 /**
  * desc: 文件下载 当 FileDownloader 对某些apk下载失败时（比如：放在阿里云，码云上apk） 使用该工具类下载
@@ -36,14 +39,13 @@ internal object FileDownloadUtil {
         onComplete: () -> Unit = {},
         onError: (Throwable) -> Unit = {}
     ) {
-        thread {
+        GlobalScope.launch(Dispatchers.IO) {
             log("----使用HttpURLConnection下载----")
             onStart.invoke()
             var connection: HttpURLConnection? = null
             var outputStream: FileOutputStream? = null
 
             kotlin.runCatching {
-
                 connection = URL(url).openConnection() as HttpURLConnection
                 outputStream = FileOutputStream(File(fileSavePath, fileName))
 
@@ -57,14 +59,18 @@ internal object FileDownloadUtil {
 
                 val responseCode = connection!!.responseCode
                 if (responseCode == HTTP_OK) {
-
                     val total = connection!!.contentLength
-
+                    var progress = -1
                     connection!!.inputStream.use { input ->
                         outputStream.use { output ->
                             input.copyToWithProgress(output!!) {
-                                // log("已下载：$it/${connection!!.contentLength}")
-                                onProgress(it, total.toLong())
+                                val pro = (it * 100.0 / total).toInt()
+                                (progress != pro).yes {
+                                    GlobalScope.launch(Dispatchers.Main) {
+                                        onProgress(it, total.toLong())
+                                    }
+                                }
+                                progress = pro
                             }
                         }
                     }
@@ -73,12 +79,16 @@ internal object FileDownloadUtil {
                 connection?.disconnect()
                 outputStream?.close()
                 log("HttpURLConnection下载完成")
-                onComplete.invoke()
+                GlobalScope.launch(Dispatchers.Main) {
+                    onComplete.invoke()
+                }
             }.onFailure {
                 connection?.disconnect()
                 outputStream?.close()
                 log("HttpURLConnection下载失败：${it.message}")
-                onError.invoke(it)
+                GlobalScope.launch(Dispatchers.Main) {
+                    onError.invoke(it)
+                }
             }
         }
     }
