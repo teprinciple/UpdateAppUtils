@@ -266,7 +266,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
-            PERMISSION_CODE -> (grantResults[0] == PackageManager.PERMISSION_GRANTED).yes {
+            PERMISSION_CODE -> (grantResults.getOrNull(0) == PackageManager.PERMISSION_GRANTED).yes {
                 download()
             }.no {
                 ActivityCompat.shouldShowRequestPermissionRationale(this, permission).no {
