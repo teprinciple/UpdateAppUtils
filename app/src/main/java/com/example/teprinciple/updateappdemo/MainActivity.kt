@@ -22,6 +22,7 @@ import update.UpdateAppUtils
 class MainActivity : AppCompatActivity() {
 
     private val apkUrl = "http://118.24.148.250:8080/yk/update_signed.apk"
+//    private val apkUrl = "https://github.com/AlexLiuSheng/CheckVersionLib/blob/master/library/src/main/java/com/allenliu/versionchecklib/utils/AppUtils.java"
     private val updateTitle = "发现新版本V2.0.0"
     private val updateContent = "1、Kotlin重构版\n2、支持自定义UI\n3、增加md5校验\n4、更多功能等你探索"
 
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 .getInstance()
                 .apkUrl(apkUrl)
                 .updateTitle(updateTitle)
+//                .updateConfig(UpdateConfig(alwaysShowDownLoadDialog = true))
                 .uiConfig(UiConfig(uiType = UiType.SIMPLE))
                 .updateContent(updateContent)
                 .update()
@@ -62,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 .updateContent(content)
                 .updateConfig(UpdateConfig().apply {
                     downloadBy = DownLoadBy.BROWSER
-                    // alwaysShow = false
+//                     alwaysShow = false
                     serverVersionName = "2.0.0"
                 })
                 .uiConfig(UiConfig(uiType = UiType.PLENTIFUL))

@@ -19,13 +19,8 @@
 
         <activity
             android:name="ui.UpdateAppActivity"
+            android:launchMode="singleTask"
             android:theme="@style/DialogActivityTheme"/>
-
-        <provider
-            android:name="util.GlobalContextProvider"
-            android:authorities="${applicationId}.cp"
-            android:exported="false"
-            android:multiprocess="true"/>
 
         <service android:name="update.UpdateAppService"/>
 

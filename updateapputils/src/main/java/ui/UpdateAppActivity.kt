@@ -112,10 +112,8 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }
         }
 
-        // 强制更新 不显示取消按钮
-        cancelBtn?.visibleOrGone(!updateConfig.force)
-        // 取消按钮与确定按钮中的间隔线
-        findViewById<View>(R.id.view_line)?.visibleOrGone(!updateConfig.force)
+        // 显示或隐藏取消按钮, 强更时默认不显示取消按钮
+        hideShowCancelBtn(!updateConfig.force)
 
         // 外部额外设置 取消 按钮点击事件
         cancelBtn?.setOnTouchListener { v, event ->
@@ -136,6 +134,16 @@ internal class UpdateAppActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    /**
+     * 取消按钮处理
+     */
+    private fun hideShowCancelBtn(show: Boolean) {
+        // 强制更新 不显示取消按钮
+        cancelBtn?.visibleOrGone(show)
+        // 取消按钮与确定按钮中的间隔线
+        findViewById<View>(R.id.view_line)?.visibleOrGone(show)
     }
 
     /**
@@ -232,17 +240,27 @@ internal class UpdateAppActivity : AppCompatActivity() {
         if ((updateConfig.force || updateConfig.alwaysShowDownLoadDialog) && sureBtn is TextView) {
             DownloadAppUtils.onError = {
                 (sureBtn as? TextView)?.text = uiConfig.downloadFailText
+                (updateConfig.alwaysShowDownLoadDialog).yes {
+                    hideShowCancelBtn(true)
+                }
             }
 
             DownloadAppUtils.onReDownload = {
                 (sureBtn as? TextView)?.text = uiConfig.updateBtnText
             }
 
+
             DownloadAppUtils.onProgress = {
                 (it == 100).yes {
                     (sureBtn as? TextView)?.text = getString(R.string.install)
+                    (updateConfig.alwaysShowDownLoadDialog).yes {
+                        hideShowCancelBtn(true)
+                    }
                 }.no {
                     (sureBtn as? TextView)?.text = "${uiConfig.downloadingBtnText}$it%"
+                    (updateConfig.alwaysShowDownLoadDialog).yes {
+                        hideShowCancelBtn(false)
+                    }
                 }
             }
         }
