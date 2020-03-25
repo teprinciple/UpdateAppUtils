@@ -10,7 +10,7 @@
 * 支持Md5签名验证
 * 支持自定义任意UI
 * 适配中英文
-* 适配至Android9.0
+* 适配至Android 10
 * 通知栏图片自定义
 * 支持修改是否每次显示弹窗（非强更）
 * 支持安装完成后自动删除安装包
@@ -28,13 +28,13 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.1.0'
+implementation 'com.teprinciple:updateapputils:2.2.0'
 ```
 
 AndroidX项目
 ```
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.1.0'
+implementation 'com.teprinciple:updateapputilsX:2.2.0'
 ```
 
 ### 使用
