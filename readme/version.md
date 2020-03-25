@@ -1,4 +1,7 @@
 #### 更新日志
+#### 2.2.0
+* 适配Android 10
+* 修复部分bug
 #### 2.1.0
 * 增加'暂不更新'按钮点击监听 setCancelBtnClickListener()
 * 增加'立即更新'按钮点击监听 setUpdateBtnClickListener()
