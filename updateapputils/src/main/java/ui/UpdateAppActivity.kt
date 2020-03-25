@@ -188,8 +188,8 @@ internal class UpdateAppActivity : AppCompatActivity() {
      * 预备下载 进行 6.0权限检查
      */
     private fun preDownLoad() {
-        // 6.0 以下不用动态权限申请
-        (Build.VERSION.SDK_INT < Build.VERSION_CODES.M).yes {
+        // 6.0 以下 和 10.0及以上不用动态权限申请
+        (Build.VERSION.SDK_INT < Build.VERSION_CODES.M ).yes {
             download()
         }.no {
             val writePermission = ContextCompat.checkSelfPermission(this, permission)
@@ -248,7 +248,6 @@ internal class UpdateAppActivity : AppCompatActivity() {
             DownloadAppUtils.onReDownload = {
                 (sureBtn as? TextView)?.text = uiConfig.updateBtnText
             }
-
 
             DownloadAppUtils.onProgress = {
                 (it == 100).yes {

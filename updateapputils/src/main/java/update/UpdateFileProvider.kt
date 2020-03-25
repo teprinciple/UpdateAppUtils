@@ -1,7 +1,6 @@
 package update
 
 import android.support.v4.content.FileProvider
-import android.util.Log
 import util.GlobalContextProvider
 
 /**
@@ -11,7 +10,7 @@ import util.GlobalContextProvider
  */
 class UpdateFileProvider : FileProvider(){
     override fun onCreate(): Boolean {
-        GlobalContextProvider.mContext = context
+        GlobalContextProvider.mContext = context!!
         return super.onCreate()
     }
 }

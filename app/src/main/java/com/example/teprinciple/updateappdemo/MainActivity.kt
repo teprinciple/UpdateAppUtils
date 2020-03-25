@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 .getInstance()
                 .apkUrl(apkUrl)
                 .updateTitle(updateTitle)
-//                .updateConfig(UpdateConfig(alwaysShowDownLoadDialog = true))
+                .updateConfig(UpdateConfig(apkSaveName = "up_1.1"))
                 .uiConfig(UiConfig(uiType = UiType.SIMPLE))
                 .updateContent(updateContent)
                 .update()
