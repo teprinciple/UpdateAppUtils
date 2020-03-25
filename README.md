@@ -184,8 +184,7 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
 ### 更新日志
-#### 2.1.0
-* 增加'暂不更新'按钮点击监听 setCancelBtnClickListener()
-* 增加'立即更新'按钮点击监听 setUpdateBtnClickListener()
+#### 2.2.0
+* 适配Android 10
 * 修复部分bug
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)
