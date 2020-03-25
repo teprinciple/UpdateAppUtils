@@ -8,8 +8,6 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
     }
     buildTypes {
         release {
@@ -45,7 +43,7 @@ publish {
     userOrg = 'teprinciple'
     groupId = 'com.teprinciple'
     artifactId = 'updateapputils'
-    publishVersion = '2.1.0'
+    publishVersion = '2.2.0'
     desc = 'A Simple library for Android update app'
     website = 'https://github.com/teprinciple/UpdateAppUtils'
 }

@@ -27,6 +27,7 @@ import update.UpdateAppService
 import update.UpdateAppUtils
 import util.AlertDialogUtil
 import util.GlobalContextProvider
+import util.SPUtil
 import util.Utils
 
 /**
@@ -75,6 +76,12 @@ internal class UpdateAppActivity : AppCompatActivity() {
             window.decorView.findViewById(android.R.id.content),
             updateConfig,
             uiConfig)
+
+        // 每次弹窗后，下载前均把本地之前缓存的apk删除，避免缓存老版本apk或者问题apk，并不重新下载新的apk
+        val apkPath = SPUtil.getString(DownloadAppUtils.KEY_OF_SP_APK_PATH, "")
+        apkPath.isNotEmpty().yes {
+            Utils.deleteFile(apkPath)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -188,7 +195,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
      * 预备下载 进行 6.0权限检查
      */
     private fun preDownLoad() {
-        // 6.0 以下 和 10.0及以上不用动态权限申请
+        // 6.0 以下不用动态权限申请
         (Build.VERSION.SDK_INT < Build.VERSION_CODES.M ).yes {
             download()
         }.no {
