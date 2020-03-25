@@ -76,7 +76,7 @@ internal object SPUtil {
 
     fun getString(keyName: String, defaultValue: String? = null): String {
         val sharedPreferences = getSp()
-        return sharedPreferences.getString(keyName, defaultValue)
+        return sharedPreferences.getString(keyName, defaultValue) ?: ""
     }
 
     fun getLong(keyName: String, defaultValue: Long = -1L): Long {

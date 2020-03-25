@@ -1,6 +1,7 @@
 package util
 
 import extension.log
+import extension.no
 import extension.yes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -74,13 +75,19 @@ internal object FileDownloadUtil {
                             }
                         }
                     }
+                }else{
+                    throw Throwable(message = "文件下载错误")
                 }
             }.onSuccess {
                 connection?.disconnect()
                 outputStream?.close()
                 log("HttpURLConnection下载完成")
                 GlobalScope.launch(Dispatchers.Main) {
-                    onComplete.invoke()
+                    (File(fileSavePath).length() > 0L).yes{
+                        onComplete.invoke()
+                    }.no {
+                        onError.invoke(Throwable(message = "文件下载错误"))
+                    }
                 }
             }.onFailure {
                 connection?.disconnect()
