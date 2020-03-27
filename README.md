@@ -29,13 +29,13 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.2.0'
+implementation 'com.teprinciple:updateapputils:2.2.1'
 ```
 
 AndroidX项目
 ```
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.2.0'
+implementation 'com.teprinciple:updateapputilsX:2.2.1'
 ```
 
 ### 使用
@@ -109,15 +109,6 @@ implementation 'com.teprinciple:updateapputilsX:2.2.0'
  UpdateAppUtils内置了两套UI，你可以通过修改[UiConfig](#UiConfig)进行UI内容的自定义；
  当然当内部UI模板与你期望UI差别很大时，你可以采用[完全自定义UI](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/%E8%87%AA%E5%AE%9A%E4%B9%89UI.md)
 
-#### 5、删除已安装APK
-UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的VersionCode是否相同来判断已下载apk是否已安装；
-如果两者VersionCode相同则认为apk已经安装，应被删除。
-
-```
-// 在Application或者MainActivity中调用，以达到安装成功启动后删除已安装apk
- UpdateAppUtils.getInstance().deleteInstalledApk()
-```
-
 ### Api说明
 #### 1、UpdateAppUtils Api
 
@@ -185,7 +176,8 @@ UpdateAppUtils在应用启动时，通过对比当前应用和已下载apk的Ver
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
 ### 更新日志
-#### 2.2.0
-* 适配Android 10
+
+#### 2.2.1
+* 优化代码
 * 修复部分bug
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)

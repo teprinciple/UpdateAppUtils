@@ -1,6 +1,6 @@
 package model
 
-import constacne.DownLoadBy
+import constant.DownLoadBy
 
 data class UpdateConfig(
     var isDebug: Boolean = true, // 是否是调试模式，调试模式会输出日志

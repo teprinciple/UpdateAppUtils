@@ -1,6 +1,6 @@
 package update
-
 import androidx.core.content.FileProvider
+import extension.log
 import util.GlobalContextProvider
 
 /**
@@ -10,7 +10,9 @@ import util.GlobalContextProvider
  */
 class UpdateFileProvider : FileProvider(){
     override fun onCreate(): Boolean {
-        GlobalContextProvider.mContext = context!!
-        return super.onCreate()
+        val result = super.onCreate()
+        GlobalContextProvider.mContext = context
+        log("初始化context："+GlobalContextProvider.mContext)
+        return result
     }
 }

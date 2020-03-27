@@ -1,7 +1,7 @@
 package model
 
 import com.teprinciple.updateapputils.R
-import util.GlobalContextProvider
+import extension.string
 
 /**
  * desc: UpdateInfo
@@ -10,9 +10,9 @@ import util.GlobalContextProvider
  */
 internal data class UpdateInfo(
     // 更新标题
-    var updateTitle: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.update_title),
+    var updateTitle: CharSequence = string(R.string.update_title),
     // 更新内容
-    var updateContent: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.update_content),
+    var updateContent: CharSequence = string(R.string.update_content),
     // apk 下载地址
     var apkUrl: String = "",
     // 更新配置

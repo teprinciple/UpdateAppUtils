@@ -18,18 +18,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.teprinciple.updateapputils.R
-import constacne.DownLoadBy
-import constacne.UiType
-import extension.no
-import extension.visibleOrGone
-import extension.yes
+import constant.DownLoadBy
+import constant.UiType
+import extension.*
 import update.DownloadAppUtils
 import update.UpdateAppService
 import update.UpdateAppUtils
 import util.AlertDialogUtil
 import util.GlobalContextProvider
 import util.SPUtil
-import util.Utils
 
 /**
  * desc: 更新弹窗
@@ -61,6 +58,10 @@ internal class UpdateAppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (GlobalContextProvider.mContext == null){
+            GlobalContextProvider.mContext = this.applicationContext
+        }
+
         setContentView(
             when (uiConfig.uiType) {
                 UiType.SIMPLE -> R.layout.view_update_dialog_simple
@@ -79,10 +80,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
             uiConfig)
 
         // 每次弹窗后，下载前均把本地之前缓存的apk删除，避免缓存老版本apk或者问题apk，并不重新下载新的apk
-        val apkPath = SPUtil.getString(DownloadAppUtils.KEY_OF_SP_APK_PATH, "")
-        apkPath.isNotEmpty().yes {
-            Utils.deleteFile(apkPath)
-        }
+        SPUtil.getString(DownloadAppUtils.KEY_OF_SP_APK_PATH, "").deleteFile()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -103,7 +101,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
         // 取消
         cancelBtn?.setOnClickListener {
             updateConfig.force.yes {
-                Utils.exitApp()
+                exitApp()
             }.no {
                 finish()
             }
@@ -221,7 +219,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
         when (updateConfig.downloadBy) {
             // App下载
             DownLoadBy.APP -> {
-                (updateConfig.checkWifi && !Utils.isWifiConnected(applicationContext)).yes {
+                (updateConfig.checkWifi && !isWifiConnected()).yes {
                     // 需要进行WiFi判断
                     AlertDialogUtil.show(this, getString(R.string.check_wifi_notice), onSureClick = {
                         realDownload()
@@ -307,17 +305,16 @@ internal class UpdateAppActivity : AppCompatActivity() {
     }
 
     override fun finish() {
-        super.finish()
         overridePendingTransition(R.anim.dialog_enter, R.anim.dialog_out)
+        super.finish()
     }
 
     companion object {
 
-        fun launch() {
-            val context = GlobalContextProvider.getGlobalContext().applicationContext
-            val intent = Intent(context, UpdateAppActivity::class.java)
+        fun launch() = globalContext.let {
+            val intent = Intent(it, UpdateAppActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            context.startActivity(intent)
+            it?.startActivity(intent)
         }
 
         private const val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
