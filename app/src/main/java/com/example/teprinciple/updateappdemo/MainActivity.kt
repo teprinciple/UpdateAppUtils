@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import constacne.DownLoadBy
-import constacne.UiType
+import constant.DownLoadBy
+import constant.UiType
 import kotlinx.android.synthetic.main.activity_main.*
 import listener.OnBtnClickListener
 import listener.OnInitUiListener
@@ -29,9 +29,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // 启动应用后删除安装包
-        UpdateAppUtils.getInstance().deleteInstalledApk()
 
         // 基本使用
         btn_basic_use.setOnClickListener {

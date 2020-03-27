@@ -1,6 +1,6 @@
 package update
 
-import extension.log
+import extension.globalContext
 import extension.no
 import extension.yes
 import listener.OnBtnClickListener
@@ -11,19 +11,13 @@ import model.UiConfig
 import model.UpdateConfig
 import model.UpdateInfo
 import ui.UpdateAppActivity
-import util.GlobalContextProvider
 import util.SPUtil
-import util.Utils
 
 
 /**
  * Created by Teprinciple on 2016/11/15.
  */
 object UpdateAppUtils {
-
-    init {
-        GlobalContextProvider.getGlobalContext()
-    }
 
     // 更新信息对象
     internal val updateInfo = UpdateInfo()
@@ -127,7 +121,7 @@ object UpdateAppUtils {
      * 检查更新
      */
     fun update() {
-        val keyName = GlobalContextProvider.getGlobalContext().packageName + updateInfo.config.serverVersionName
+        val keyName = (globalContext?.packageName ?: "") + updateInfo.config.serverVersionName
         // 设置每次显示，设置本次显示及强制更新 每次都显示弹窗
         (updateInfo.config.alwaysShow || updateInfo.config.thisTimeShow || updateInfo.config.force).yes {
             UpdateAppActivity.launch()
@@ -138,6 +132,7 @@ object UpdateAppUtils {
         SPUtil.putBase(keyName, true)
     }
 
+    /* 未缓存apk
     /**
      * 删除已安装 apk
      */
@@ -151,6 +146,7 @@ object UpdateAppUtils {
             Utils.deleteFile(apkPath)
         }
     }
+     */
 
     /**
      * 获取单例对象

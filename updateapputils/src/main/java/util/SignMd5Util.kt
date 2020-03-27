@@ -1,8 +1,8 @@
 package util
 
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.pm.Signature
+import extension.globalContext
 import java.io.File
 import java.io.IOException
 import java.security.MessageDigest
@@ -26,7 +26,7 @@ internal object SignMd5Util {
      * 获取当前应用签名文件md5
      */
     fun getAppSignatureMD5(): String {
-        val packageName = Utils.getApp().packageName
+        val packageName = globalContext?.packageName ?: ""
         if (packageName.isEmpty()) return ""
         val signature = getAppSignature(packageName)
         return if (signature == null || signature.isEmpty()) {
@@ -62,17 +62,16 @@ internal object SignMd5Util {
     private fun getAppSignature(packageName: String): Array<Signature>? {
         if (packageName.isEmpty()) return null
         return try {
-            val pm = Utils.getApp().packageManager
-            @SuppressLint("PackageManagerGetSignatures")
-            val pi = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+            val pm = globalContext?.packageManager
+            val pi = pm?.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
             pi?.signatures
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (e: Exception) {
             e.printStackTrace()
             null
         }
     }
 
-    fun hashTemplate(data: ByteArray?, algorithm: String): ByteArray? {
+    private fun hashTemplate(data: ByteArray?, algorithm: String): ByteArray? {
         if (data == null || data.isEmpty()) return null
         return try {
             val md = MessageDigest.getInstance(algorithm)

@@ -7,7 +7,7 @@ import android.view.View;
 
 import org.jetbrains.annotations.NotNull;
 
-import constacne.UiType;
+import constant.UiType;
 import listener.Md5CheckResultListener;
 import listener.UpdateDownloadListener;
 import model.UiConfig;

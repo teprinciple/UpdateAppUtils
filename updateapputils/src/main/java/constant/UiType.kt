@@ -1,4 +1,4 @@
-package constacne
+package constant
 
 /**
  * desc: UI 类型

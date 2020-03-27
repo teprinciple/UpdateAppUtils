@@ -9,10 +9,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
-import com.teprinciple.updateapputils.R
+import extension.installApk
 import extension.no
 import extension.yes
-import util.Utils
 
 /**
  * desc: UpdateAppReceiver
@@ -75,9 +74,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         }
 
         // 安装apk
-        DownloadAppUtils.downloadUpdateApkFilePath.isNotEmpty().yes {
-            Utils.installApk(context, DownloadAppUtils.downloadUpdateApkFilePath)
-        }
+        context.installApk(DownloadAppUtils.downloadUpdateApkFilePath)
     }
 
     /**

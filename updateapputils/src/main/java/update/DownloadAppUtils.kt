@@ -8,16 +8,10 @@ import android.os.Environment
 import com.liulishuo.filedownloader.BaseDownloadTask
 import com.liulishuo.filedownloader.FileDownloadLargeFileListener
 import com.liulishuo.filedownloader.FileDownloader
-import extension.log
-import extension.no
-import extension.yes
-import model.UpdateInfo
-import util.*
+import extension.*
 import util.FileDownloadUtil
-import util.GlobalContextProvider
 import util.SPUtil
 import util.SignMd5Util
-import util.Utils
 import java.io.File
 
 /**
@@ -40,7 +34,7 @@ internal object DownloadAppUtils {
     /**
      * context
      */
-    private val context by lazy { GlobalContextProvider.getGlobalContext() }
+    private val context by lazy { globalContext!! }
 
     /**
      * 是否在下载中
@@ -108,7 +102,7 @@ internal object DownloadAppUtils {
         val apkName = if (updateInfo.config.apkSaveName.isNotEmpty()) {
             updateInfo.config.apkSaveName
         } else {
-            Utils.getAppName(context)
+            context.appName
         }
 
         val apkLocalPath = "$filePath/$apkName.apk"
@@ -145,8 +139,8 @@ internal object DownloadAppUtils {
 
                 override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
                     log("获取文件总长度失败出错，尝试HTTPURLConnection下载")
-                    Utils.deleteFile(downloadUpdateApkFilePath)
-                    Utils.deleteFile("$downloadUpdateApkFilePath.temp")
+                    downloadUpdateApkFilePath.deleteFile()
+                    "$downloadUpdateApkFilePath.temp".deleteFile()
                     downloadByHttpUrlConnection(filePath, apkName)
                 }
 
@@ -159,8 +153,8 @@ internal object DownloadAppUtils {
                     // FileDownloader 对码云或者阿里云上的apk文件会下载失败
                     // downloadError(e)
                     log("下载出错，尝试HTTPURLConnection下载")
-                    Utils.deleteFile(downloadUpdateApkFilePath)
-                    Utils.deleteFile("$downloadUpdateApkFilePath.temp")
+                    downloadUpdateApkFilePath.deleteFile()
+                    "$downloadUpdateApkFilePath.temp".deleteFile()
                     downloadByHttpUrlConnection(filePath, apkName)
                 }
 
@@ -229,7 +223,7 @@ internal object DownloadAppUtils {
     private fun downloadError(e: Throwable) {
         isDownloading = false
         log("error:${e.message}")
-        Utils.deleteFile(downloadUpdateApkFilePath)
+        downloadUpdateApkFilePath.deleteFile()
         this@DownloadAppUtils.onError.invoke()
         UpdateAppUtils.downloadListener?.onError(e)
         UpdateAppReceiver.send(context, -1000)

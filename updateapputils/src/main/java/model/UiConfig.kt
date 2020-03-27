@@ -1,8 +1,8 @@
 package model
 
 import com.teprinciple.updateapputils.R
-import constacne.UiType
-import util.GlobalContextProvider
+import constant.UiType
+import extension.string
 
 /**
  * desc: UiConfig UI 配置
@@ -27,18 +27,18 @@ data class UiConfig(
     var updateBtnBgRes: Int? = null,
     var updateBtnTextColor: Int? = null,
     var updateBtnTextSize: Float? = null,
-    var updateBtnText: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.update_now),
+    var updateBtnText: CharSequence = string(R.string.update_now),
     // 取消按钮相关设置
     var cancelBtnBgColor: Int? = null,
     var cancelBtnBgRes: Int? = null,
     var cancelBtnTextColor: Int? = null,
     var cancelBtnTextSize: Float? = null,
-    var cancelBtnText: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.update_cancel),
+    var cancelBtnText: CharSequence = string(R.string.update_cancel),
 
     // 开始下载时的Toast提示文字
-    var downloadingToastText: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.toast_download_apk),
+    var downloadingToastText: CharSequence = string(R.string.toast_download_apk),
     // 下载中 下载按钮以及通知栏标题前缀，进度自动拼接在后面
-    var downloadingBtnText: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.downloading),
+    var downloadingBtnText: CharSequence = string(R.string.downloading),
     // 下载出错时，下载按钮及通知栏标题
-    var downloadFailText: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.download_fail)
+    var downloadFailText: CharSequence = string(R.string.download_fail)
 )

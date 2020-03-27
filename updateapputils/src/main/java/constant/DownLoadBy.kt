@@ -1,4 +1,4 @@
-package constacne
+package constant
 
 /**
  * desc: 下载方式

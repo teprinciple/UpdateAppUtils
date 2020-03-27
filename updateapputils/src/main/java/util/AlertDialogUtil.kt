@@ -3,6 +3,7 @@ package util
 import android.app.Activity
 import android.app.AlertDialog
 import com.teprinciple.updateapputils.R
+import extension.string
 
 /**
  * desc: AlertDialogUtil
@@ -17,9 +18,9 @@ internal object AlertDialogUtil {
         onCancelClick: () -> Unit = {},
         onSureClick: () -> Unit = {},
         cancelable: Boolean = false,
-        title: String = GlobalContextProvider.getGlobalContext().getString(R.string.notice),
-        cancelText: String = GlobalContextProvider.getGlobalContext().getString(R.string.cancel),
-        sureText: String = GlobalContextProvider.getGlobalContext().getString(R.string.sure)
+        title: String = string(R.string.notice),
+        cancelText: String = string(R.string.cancel),
+        sureText: String = string(R.string.sure)
     ) {
         AlertDialog.Builder(activity, R.style.AlertDialog)
             .setTitle(title)
