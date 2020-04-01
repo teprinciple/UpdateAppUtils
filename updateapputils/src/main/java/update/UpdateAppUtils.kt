@@ -1,6 +1,8 @@
 package update
 
+import android.content.Context
 import extension.globalContext
+import extension.log
 import extension.no
 import extension.yes
 import listener.OnBtnClickListener
@@ -11,6 +13,7 @@ import model.UiConfig
 import model.UpdateConfig
 import model.UpdateInfo
 import ui.UpdateAppActivity
+import util.GlobalContextProvider
 import util.SPUtil
 
 
@@ -150,7 +153,14 @@ object UpdateAppUtils {
 
     /**
      * 获取单例对象
+     * @param context 提供全局context。解决部分手机 通过UpdateFileProvider 获取不到
      */
     @JvmStatic
-    fun getInstance() = this
+    fun getInstance(context: Context? = null): UpdateAppUtils{
+        context?.let {
+            GlobalContextProvider.mContext = context.applicationContext
+            log("外部初始化context")
+        }
+        return this
+    }
 }

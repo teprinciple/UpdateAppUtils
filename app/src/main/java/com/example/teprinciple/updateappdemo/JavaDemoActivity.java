@@ -43,7 +43,7 @@ public class JavaDemoActivity extends AppCompatActivity {
                 uiConfig.setUiType(UiType.PLENTIFUL);
 
                 UpdateAppUtils
-                        .getInstance()
+                        .getInstance(JavaDemoActivity.this)
                         .apkUrl(apkUrl)
                         .updateTitle(updateTitle)
                         .updateContent(updateContent)

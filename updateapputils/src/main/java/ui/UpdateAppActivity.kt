@@ -304,8 +304,8 @@ internal class UpdateAppActivity : AppCompatActivity() {
     }
 
     override fun finish() {
-        overridePendingTransition(R.anim.dialog_enter, R.anim.dialog_out)
         super.finish()
+        overridePendingTransition(0, 0)
     }
 
     companion object {
