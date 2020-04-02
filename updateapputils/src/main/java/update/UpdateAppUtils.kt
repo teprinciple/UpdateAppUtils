@@ -23,7 +23,7 @@ import util.SPUtil
 object UpdateAppUtils {
 
     // 更新信息对象
-    internal val updateInfo = UpdateInfo()
+    internal val updateInfo by lazy { UpdateInfo() }
 
     // 下载监听
     internal var downloadListener: UpdateDownloadListener? = null
@@ -124,7 +124,13 @@ object UpdateAppUtils {
      * 检查更新
      */
     fun update() {
-        val keyName = (globalContext?.packageName ?: "") + updateInfo.config.serverVersionName
+
+        if(globalContext() == null){
+            log("请先调用初始化init")
+            return
+        }
+
+        val keyName = (globalContext()?.packageName ?: "") + updateInfo.config.serverVersionName
         // 设置每次显示，设置本次显示及强制更新 每次都显示弹窗
         (updateInfo.config.alwaysShow || updateInfo.config.thisTimeShow || updateInfo.config.force).yes {
             UpdateAppActivity.launch()
@@ -153,14 +159,17 @@ object UpdateAppUtils {
 
     /**
      * 获取单例对象
-     * @param context 提供全局context。解决部分手机 通过UpdateFileProvider 获取不到
      */
     @JvmStatic
-    fun getInstance(context: Context? = null): UpdateAppUtils{
-        context?.let {
-            GlobalContextProvider.mContext = context.applicationContext
-            log("外部初始化context")
-        }
-        return this
+    fun getInstance() = this
+
+    /**
+     * 初始化，非必须。解决部分手机 通过UpdateFileProvider 获取不到context情况使用
+     * * @param context 提供全局context。
+     */
+    @JvmStatic
+    fun init(context: Context){
+        GlobalContextProvider.mContext = context.applicationContext
+        log("外部初始化context")
     }
 }

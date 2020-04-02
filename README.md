@@ -2,6 +2,7 @@
 
  [ ![](https://img.shields.io/badge/platform-android-green.svg) ](http://developer.android.com/index.html) 
  [ ![Download](https://api.bintray.com/packages/teprinciple/maven/updateapputils/images/download.svg) ](https://bintray.com/teprinciple/maven/updateapputils/_latestVersion)
+
 ### 一行代码，快速实现app在线下载更新  A simple library for Android update app
 
 #### UpdateAppUtils2.0 特点
@@ -24,22 +25,28 @@ UpdateAppUtils2.0功能结构变化巨大，建议使用2.0以上版本；[2.0�
 ### 集成
 ```
 repositories {
-   jcenter()    
+   jcenter()
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.2.1'
+implementation 'com.teprinciple:updateapputils:2.3.0'
 ```
 
 AndroidX项目
 ```
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.2.1'
+implementation 'com.teprinciple:updateapputilsX:2.3.0'
 ```
 
 ### 使用
 下面为kotlin使用示例，Java示例请参考[JavaDemo](https://github.com/teprinciple/UpdateAppUtils/blob/master/app/src/main/java/com/example/teprinciple/updateappdemo/JavaDemoActivity.java)
 #### 1、快速使用
+
+##### 注意：部分手机SDK内部初始化不了context，造成context空指针，建议在application或者使用SDK前先初始化
+```
+ UpdateAppUtils.init(context)
+```
+
 ```
  UpdateAppUtils
         .getInstance()
@@ -175,7 +182,7 @@ implementation 'com.teprinciple:updateapputilsX:2.2.1'
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/demo.png" width="220">
 
 ### 更新日志
-#### 2.2.1
-* 优化代码
-* 修复部分bug
+
+#### 2.3.0
+* 修复部分手机context空指针异常
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)

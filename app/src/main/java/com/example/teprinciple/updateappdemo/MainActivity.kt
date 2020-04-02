@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        UpdateAppUtils.init(this)
+
         // 基本使用
         btn_basic_use.setOnClickListener {
             UpdateAppUtils

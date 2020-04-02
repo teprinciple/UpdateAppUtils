@@ -19,7 +19,7 @@ import kotlin.system.exitProcess
 /**
  * 全局context
  */
-val globalContext by lazy { GlobalContextProvider.mContext }
+fun globalContext() = GlobalContextProvider.mContext
 
 
 /**
@@ -32,12 +32,12 @@ fun log(content: String?) = UpdateAppUtils.updateInfo.config.isDebug.yes {
 /**
  * 获取color
  */
-fun color(color: Int) = if (globalContext == null) 0 else ContextCompat.getColor(globalContext!!, color)
+fun color(color: Int) = if (globalContext() == null) 0 else ContextCompat.getColor(globalContext()!!, color)
 
 /**
  * 获取 String
  */
-fun string(string: Int) = globalContext?.getString(string) ?: ""
+fun string(string: Int) = globalContext()?.getString(string) ?: ""
 
 /**
  * view 显示隐藏
@@ -54,7 +54,7 @@ fun View.visibleOrGone(show: Boolean) {
  * 退出app
  */
 fun exitApp() {
-    val manager = globalContext!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    val manager = globalContext()!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         manager.appTasks.forEach { it.finishAndRemoveTask() }
     } else {

@@ -310,10 +310,10 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
     companion object {
 
-        fun launch() = globalContext.let {
+        fun launch() = globalContext()?.let {
             val intent = Intent(it, UpdateAppActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            it?.startActivity(intent)
+            it.startActivity(intent)
         }
 
         private const val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
