@@ -29,22 +29,27 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.2.3'
+implementation 'com.teprinciple:updateapputils:2.3.0'
 ```
 
 AndroidX项目
 ```
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.2.3'
+implementation 'com.teprinciple:updateapputilsX:2.3.0'
 ```
 
 ### 使用
 下面为kotlin使用示例，Java示例请参考[JavaDemo](https://github.com/teprinciple/UpdateAppUtils/blob/master/app/src/main/java/com/example/teprinciple/updateappdemo/JavaDemoActivity.java)
 #### 1、快速使用
+
+##### 注意：部分手机SDK内部初始化不了context，造成context空指针，建议在application或者使用SDK前先初始化
+```
+ UpdateAppUtils.init(context)
+```
+
 ```
  UpdateAppUtils
         .getInstance()
-        //.getInstance(context) // 如果报context空指针异常，需要再这里加入context
         .apkUrl(apkUrl)
         .updateTitle(updateTitle)
         .updateContent(updateContent)
@@ -178,7 +183,6 @@ implementation 'com.teprinciple:updateapputilsX:2.2.3'
 
 ### 更新日志
 
-#### 2.2.3
-* 优化代码
-* 修复部分bug
+#### 2.3.0
+* 修复部分手机context空指针异常
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)
