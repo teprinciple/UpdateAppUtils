@@ -30,6 +30,9 @@ public class JavaDemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_java_demo);
 
+
+        UpdateAppUtils.init(this);
+
         findViewById(R.id.btn_java).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +46,7 @@ public class JavaDemoActivity extends AppCompatActivity {
                 uiConfig.setUiType(UiType.PLENTIFUL);
 
                 UpdateAppUtils
-                        .getInstance(JavaDemoActivity.this)
+                        .getInstance()
                         .apkUrl(apkUrl)
                         .updateTitle(updateTitle)
                         .updateContent(updateContent)

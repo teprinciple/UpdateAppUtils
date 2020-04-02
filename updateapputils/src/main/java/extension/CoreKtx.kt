@@ -1,6 +1,5 @@
 package extension
 
-import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Build

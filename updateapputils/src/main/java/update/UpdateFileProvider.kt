@@ -14,7 +14,7 @@ class UpdateFileProvider : FileProvider() {
         val result = super.onCreate()
         (GlobalContextProvider.mContext == null && context != null).yes {
             GlobalContextProvider.mContext = context
-            log("Provider初始化context：" + GlobalContextProvider.mContext)
+            log("内部Provider初始化context：" + GlobalContextProvider.mContext)
         }
         return result
     }

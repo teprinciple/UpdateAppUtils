@@ -25,7 +25,6 @@ import update.DownloadAppUtils
 import update.UpdateAppService
 import update.UpdateAppUtils
 import util.AlertDialogUtil
-import util.GlobalContextProvider
 import util.SPUtil
 
 /**
@@ -57,10 +56,6 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (GlobalContextProvider.mContext == null){
-            GlobalContextProvider.mContext = this.applicationContext
-        }
 
         setContentView(
             when (uiConfig.uiType) {
