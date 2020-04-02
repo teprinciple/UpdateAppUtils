@@ -23,12 +23,15 @@ UpdateAppUtils2.0功能结构变化巨大，建议使用2.0以上版本；[2.0�
 <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_custom.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_downloading.png" width="285"> <img src="https://github.com/teprinciple/UpdateAppUtils/blob/master/img/update_ui_fail.png" width="285">
 
 ### 集成
+
 ```
 repositories {
    jcenter()
 }
+```
 
-// Support
+Support
+```
 implementation 'com.teprinciple:updateapputils:2.3.0'
 ```
 
