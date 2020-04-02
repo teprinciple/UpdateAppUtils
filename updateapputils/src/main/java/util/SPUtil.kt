@@ -34,7 +34,7 @@ internal object SPUtil {
     }
 
     private fun getSp(): SharedPreferences? {
-        if (globalContext == null) return null
-        return globalContext!!.getSharedPreferences(globalContext!!.packageName, Activity.MODE_PRIVATE)
+        if (globalContext() == null) return null
+        return globalContext()!!.getSharedPreferences(globalContext()!!.packageName, Activity.MODE_PRIVATE)
     }
 }

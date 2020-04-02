@@ -305,16 +305,16 @@ internal class UpdateAppActivity : AppCompatActivity() {
     }
 
     override fun finish() {
-        overridePendingTransition(R.anim.dialog_enter, R.anim.dialog_out)
         super.finish()
+        overridePendingTransition(0, 0)
     }
 
     companion object {
 
-        fun launch() = globalContext.let {
+        fun launch() = globalContext()?.let {
             val intent = Intent(it, UpdateAppActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            it?.startActivity(intent)
+            it.startActivity(intent)
         }
 
         private const val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE

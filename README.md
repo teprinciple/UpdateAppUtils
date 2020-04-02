@@ -29,13 +29,13 @@ repositories {
 }
 
 // Support
-implementation 'com.teprinciple:updateapputils:2.2.1'
+implementation 'com.teprinciple:updateapputils:2.2.3'
 ```
 
 AndroidX项目
 ```
 // AndroidX
-implementation 'com.teprinciple:updateapputilsX:2.2.1'
+implementation 'com.teprinciple:updateapputilsX:2.2.3'
 ```
 
 ### 使用
@@ -44,6 +44,7 @@ implementation 'com.teprinciple:updateapputilsX:2.2.1'
 ```
  UpdateAppUtils
         .getInstance()
+        //.getInstance(context) // 如果报context空指针异常，需要再这里加入context
         .apkUrl(apkUrl)
         .updateTitle(updateTitle)
         .updateContent(updateContent)
@@ -177,7 +178,7 @@ implementation 'com.teprinciple:updateapputilsX:2.2.1'
 
 ### 更新日志
 
-#### 2.2.1
+#### 2.2.3
 * 优化代码
 * 修复部分bug
 ##### [更多历史版本](https://github.com/teprinciple/UpdateAppUtils/blob/master/readme/version.md)

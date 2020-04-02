@@ -34,7 +34,7 @@ internal object DownloadAppUtils {
     /**
      * context
      */
-    private val context by lazy { globalContext!! }
+    private val context by lazy { globalContext()!! }
 
     /**
      * 是否在下载中

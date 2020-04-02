@@ -1,6 +1,8 @@
 package update
 
+import android.content.Context
 import extension.globalContext
+import extension.log
 import extension.no
 import extension.yes
 import listener.OnBtnClickListener
@@ -11,6 +13,7 @@ import model.UiConfig
 import model.UpdateConfig
 import model.UpdateInfo
 import ui.UpdateAppActivity
+import util.GlobalContextProvider
 import util.SPUtil
 
 
@@ -121,7 +124,8 @@ object UpdateAppUtils {
      * 检查更新
      */
     fun update() {
-        val keyName = (globalContext?.packageName ?: "") + updateInfo.config.serverVersionName
+        val keyName = (globalContext()?.packageName ?: "") + updateInfo.config.serverVersionName
+
         // 设置每次显示，设置本次显示及强制更新 每次都显示弹窗
         (updateInfo.config.alwaysShow || updateInfo.config.thisTimeShow || updateInfo.config.force).yes {
             UpdateAppActivity.launch()
@@ -150,7 +154,14 @@ object UpdateAppUtils {
 
     /**
      * 获取单例对象
+     * @param context 提供全局context。解决部分手机 通过UpdateFileProvider 获取不到
      */
     @JvmStatic
-    fun getInstance() = this
+    fun getInstance(context: Context? = null): UpdateAppUtils{
+        context?.let {
+            GlobalContextProvider.mContext = context.applicationContext
+            log("外部初始化context")
+        }
+        return this
+    }
 }
