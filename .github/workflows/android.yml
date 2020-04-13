@@ -1,19 +1,25 @@
+# workflow的名称，会显示在github 的项目的Actions的右边列表中，如下图
 name: Android CI
 
+# 在满足以下条件触发这个workflow
 on:
   push:
+    # 在指定的远程分支 master上，发生推送时
     branches: [ master ]
 
 jobs:
+  # 多个job，如果有多个，每个以“-”开头，这里只有一个 job
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # 该job 运行的系统环境，支持ubuntu 、windows、macOS
 
+    # 下面是多个step ，每个以“-”开头
     steps:
-    - uses: actions/checkout@v2
-    - name: set up JDK 1.8
-      uses: actions/setup-java@v1
+    - uses: actions/checkout@v2       # step：检查分支
+    - name: set up JDK 1.8            # step：设置jdk版本
+      uses: actions/setup-java@v1     # 引用公共action
       with:
         java-version: 1.8
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Build with Gradle         # step：打包apk
+      # 运行打包命令
+      run: chmod +x gradlew &&./gradlew assembleRealease
