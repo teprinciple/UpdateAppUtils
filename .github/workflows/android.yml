@@ -27,9 +27,8 @@ jobs:
         #step：上传apk 到action，在右上角查看
         # 官方文档 https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/persisting-workflow-data-using-artifacts#uploading-build-and-test-artifacts
       - name: Upload APK
-          uses: actions/upload-artifact@v1
-          with:
+        uses: actions/upload-artifact@v1
+        with:
             name: app
             path: app/build/outputs/apk/release/app-release.apk
 
-#      - name: Upload fir
