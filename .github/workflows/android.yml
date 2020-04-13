@@ -22,4 +22,4 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle         # step：打包apk
       # 运行打包命令
-      run: chmod +x gradlew &&./gradlew assembleRealease
+      run: chmod +x gradlew &&./gradlew assembleRelease
