@@ -1,6 +1,7 @@
 package update
 
 import android.content.Context
+import com.arialyy.aria.core.Aria
 import extension.globalContext
 import extension.log
 import extension.no
@@ -164,6 +165,7 @@ object UpdateAppUtils {
      */
     @JvmStatic
     fun init(context: Context){
+        Aria.init(context)
         GlobalContextProvider.mContext = context.applicationContext
         log("外部初始化context")
     }

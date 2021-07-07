@@ -5,9 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
-import com.liulishuo.filedownloader.BaseDownloadTask
-import com.liulishuo.filedownloader.FileDownloadLargeFileListener
-import com.liulishuo.filedownloader.FileDownloader
+import com.arialyy.aria.core.Aria
+import com.arialyy.aria.core.common.HttpOption
+import com.arialyy.aria.core.common.RequestEnum
+import com.arialyy.aria.core.download.DownloadTaskListener
+import com.arialyy.aria.core.task.DownloadTask
 import extension.*
 import util.FileDownloadUtil
 import util.SPUtil
@@ -17,14 +19,18 @@ import java.io.File
 /**
  * Created by Teprinciple on 2016/12/13.
  */
-internal object DownloadAppUtils {
-
+internal object DownloadAppUtils : DownloadTaskListener {
     const val KEY_OF_SP_APK_PATH = "KEY_OF_SP_APK_PATH"
 
     /**
      * apk 下载后本地文件路径
      */
     var downloadUpdateApkFilePath: String = ""
+
+    /**
+     * task id
+     */
+    var taskId: Long = 0
 
     /**
      * 更新信息
@@ -78,6 +84,7 @@ internal object DownloadAppUtils {
      * App下载APK包，下载完成后安装
      */
     fun download() {
+        Aria.download(this).register()
 
         (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED).no {
             log("没有SD卡")
@@ -105,62 +112,85 @@ internal object DownloadAppUtils {
             context.appName
         }
 
+        if (!File(filePath).exists()) {
+            File(filePath).mkdirs()
+        }
+
         val apkLocalPath = "$filePath/$apkName.apk"
 
         downloadUpdateApkFilePath = apkLocalPath
 
         SPUtil.putBase(KEY_OF_SP_APK_PATH, downloadUpdateApkFilePath)
 
-        FileDownloader.setup(context)
+        taskId = Aria.download(this)
+            .load(updateInfo.apkUrl)
+            .option(HttpOption().apply {
+                addHeader("Accept-Encoding", "identity")
+                addHeader(
+                    "User-Agent",
+                    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36"
+                )
+                setRequestType(RequestEnum.GET)
+            })
+            .setFilePath(apkLocalPath)
+            .ignoreFilePathOccupy()
+            .resetState()
+            .create()
+    }
 
-        val downloadTask = FileDownloader.getImpl().create(updateInfo.apkUrl)
-            .setPath(apkLocalPath)
+    override fun onWait(task: DownloadTask?) {
+    }
 
-        downloadTask
-            .addHeader("Accept-Encoding","identity")
-            .addHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36")
-            .setListener(object : FileDownloadLargeFileListener() {
+    override fun onPre(task: DownloadTask?) {
+        if (task != null) {
+            log("onPre:soFarBytes(${task.currentProgress}),totalBytes(${task.fileSize})")
+            downloadStart()
+            if (task.fileSize < 0) {
+                task.stop()
+            }
+        }
+    }
 
-                override fun pending(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
-                    log("----使用FileDownloader下载-------")
-                    log("pending:soFarBytes($soFarBytes),totalBytes($totalBytes)")
-                    downloadStart()
-                    if(totalBytes < 0){
-                        downloadTask.pause()
-                    }
-                }
+    override fun onTaskPre(task: DownloadTask?) {
+    }
 
-                override fun progress(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
-                    downloading(soFarBytes, totalBytes)
-                    if(totalBytes < 0){
-                        downloadTask.pause()
-                    }
-                }
+    override fun onTaskResume(task: DownloadTask?) {
+    }
 
-                override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
-                    log("获取文件总长度失败出错，尝试HTTPURLConnection下载")
-                    downloadUpdateApkFilePath.deleteFile()
-                    "$downloadUpdateApkFilePath.temp".deleteFile()
-                    downloadByHttpUrlConnection(filePath, apkName)
-                }
+    override fun onTaskStart(task: DownloadTask?) {
+    }
 
-                override fun completed(task: BaseDownloadTask) {
-                    downloadComplete()
-                }
+    override fun onTaskStop(task: DownloadTask?) {
+        log("获取文件总长度失败出错，尝试HTTPURLConnection下载")
+        downloadUpdateApkFilePath.deleteFile()
+        "$downloadUpdateApkFilePath.temp".deleteFile()
+        downloadByHttpUrlConnection(updateInfo.config.apkSavePath, updateInfo.config.apkSaveName)
+    }
 
-                override fun error(task: BaseDownloadTask, e: Throwable) {
-                    // FileDownloader 下载失败后，再调用 FileDownloadUtil 下载一次
-                    // FileDownloader 对码云或者阿里云上的apk文件会下载失败
-                    // downloadError(e)
-                    log("下载出错，尝试HTTPURLConnection下载")
-                    downloadUpdateApkFilePath.deleteFile()
-                    "$downloadUpdateApkFilePath.temp".deleteFile()
-                    downloadByHttpUrlConnection(filePath, apkName)
-                }
+    override fun onTaskCancel(task: DownloadTask?) {
+    }
 
-                override fun warn(task: BaseDownloadTask) {
-                }
-            }).start()
+    override fun onTaskFail(task: DownloadTask?, e: Exception?) {
+        log("下载出错，尝试HTTPURLConnection下载$e")
+        downloadUpdateApkFilePath.deleteFile()
+        "$downloadUpdateApkFilePath.temp".deleteFile()
+        downloadByHttpUrlConnection(updateInfo.config.apkSavePath, updateInfo.config.apkSaveName)
+    }
+
+    override fun onTaskComplete(task: DownloadTask?) {
+        downloadComplete()
+    }
+
+    override fun onTaskRunning(task: DownloadTask?) {
+        if (task != null) {
+            downloading(task.currentProgress, task.fileSize)
+            if (task.fileSize < 0) {
+                task.stop()
+            }
+        }
+    }
+
+    override fun onNoSupportBreakPoint(task: DownloadTask?) {
     }
 
     /**
@@ -209,6 +239,7 @@ internal object DownloadAppUtils {
         log("completed")
         this@DownloadAppUtils.onProgress.invoke(100)
         UpdateAppUtils.downloadListener?.onFinish()
+        Aria.download(this).unRegister()
         // 校验md5
         (updateInfo.config.needCheckMd5).yes {
             checkMd5(context)
